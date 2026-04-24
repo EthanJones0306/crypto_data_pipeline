@@ -15,3 +15,9 @@ cursor.execute('''
         timestamp DATETIME
     )
 ''')
+
+api_url = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,solana&vs_currencies=usd' # API endpoint for fetching cryptocurrency prices
+print("Fetching live crypto prices...")
+response = requests.get(api_url) # Make GET request to the API
+
+print(response.json()) # Print the JSON response for debugging
