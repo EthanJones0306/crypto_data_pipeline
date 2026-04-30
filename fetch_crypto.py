@@ -43,3 +43,5 @@ try:
 except Exception as e:
     print(f"Error fetching data: {e}") # Print error message if request fails
 
+finally:
+    conn.close() # Close database connection to free up resources
