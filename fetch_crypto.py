@@ -40,3 +40,6 @@ try:
     print(f"Stored: {coin_name} - ${price_usd} at {current_time}") # Print stored data to console 
 
     
+except Exception as e:
+    print(f"Error fetching data: {e}") # Print error message if request fails
+
