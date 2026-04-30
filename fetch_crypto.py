@@ -33,11 +33,12 @@ try:
 
         cursor.execute('''
             INSERT INTO crypto_prices (coin, price_usd, timestamp)
-            VALUES (?, ?, ?) # Prevnent SQL injection by using parameterised query
+            VALUES (?, ?, ?) 
         ''', (coin_name, price_usd, current_time)) # Insert coin name, price, and timestamp into database
+        print(f"Stored: {coin_name} - ${price_usd} at {current_time}") # Print stored data to console 
+
 
     conn.commit() # Commit changes to the database to ensure data is saved
-    print(f"Stored: {coin_name} - ${price_usd} at {current_time}") # Print stored data to console 
 
     
 except Exception as e:
@@ -47,3 +48,4 @@ finally:
     conn.close() # Close database connection to free up resources
 
 print("Fetch complete. Database connection closed.")
+
