@@ -31,4 +31,9 @@ try:
     for coin_name, price_info in data.items(): # Loop through all coins in response data
         price_usd = price_info['usd'] # Assign price in USD to variable
 
+        cursor.execute('''
+            INSERT INTO crypto_prices (coin, price_usd, timestamp)
+            VALUES (?, ?, ?)
+        ''', (coin_name, price_usd, current_time)) # Insert coin name, price, and timestamp into database
+
         
