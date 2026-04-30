@@ -20,5 +20,11 @@ api_url = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,so
 print("Fetching live crypto prices...")
 response = requests.get(api_url) # Make GET request to the API
 
-data = response.json() # Store the JSON response for debugging
-print(data)
+
+try:
+    response = requests.get(api_url) # Make GET request to the API
+    response.raise_for_status() # Check if request was successful
+    data = response.json() # Parse JSON response
+
+    
+
