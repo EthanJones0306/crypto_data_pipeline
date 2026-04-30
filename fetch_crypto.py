@@ -33,7 +33,7 @@ try:
 
         cursor.execute('''
             INSERT INTO crypto_prices (coin, price_usd, timestamp)
-            VALUES (?, ?, ?)
+            VALUES (?, ?, ?) # Prevnent SQL injection by using parameterised query
         ''', (coin_name, price_usd, current_time)) # Insert coin name, price, and timestamp into database
 
     conn.commit() # Commit changes to the database to ensure data is saved
@@ -45,3 +45,5 @@ except Exception as e:
 
 finally:
     conn.close() # Close database connection to free up resources
+
+print("Fetch complete. Database connection closed.")
