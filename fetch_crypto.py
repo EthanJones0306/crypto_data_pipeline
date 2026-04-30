@@ -36,4 +36,7 @@ try:
             VALUES (?, ?, ?)
         ''', (coin_name, price_usd, current_time)) # Insert coin name, price, and timestamp into database
 
-        
+    conn.commit() # Commit changes to the database to ensure data is saved
+    print(f"Stored: {coin_name} - ${price_usd} at {current_time}") # Print stored data to console 
+
+    
