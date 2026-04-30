@@ -26,5 +26,9 @@ try:
     response.raise_for_status() # Check if request was successful
     data = response.json() # Parse JSON response
 
-    
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S") # Get current timestamp in string format
 
+    for coin_name, price_info in data.items(): # Loop through all coins in response data
+        price_usd = price_info['usd'] # Assign price in USD to variable
+
+        
