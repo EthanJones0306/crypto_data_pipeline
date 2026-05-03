@@ -9,8 +9,18 @@ from database import initialise_db, store_prices, store_rates, store_stock_price
 from fetch_stocks import get_stock_prices
 import time
 from datetime import datetime
+try:
+    from dotenv import load_dotenv  # type: ignore[import]
+except ImportError:
+    def load_dotenv() -> bool:
+        return False
+import os
 
-API_KEY_stocks = '79MC5EWVII5262UH'
+load_dotenv()
+API_KEY_stocks = os.getenv('ALPHA_VANTAGE_API_KEY')
+
+if not API_KEY_stocks:
+    raise ValueError("ALPHA_VANTAGE_API_KEY not found in .env file")
 
 def run_pipeline():
     """Run the full data fetching pipeline"""
