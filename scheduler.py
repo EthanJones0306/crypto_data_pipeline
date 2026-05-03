@@ -1,4 +1,8 @@
-from apscheduler.schedulers.background import BackgroundScheduler
+#!/opt/anaconda3/bin/python
+try:
+    from apscheduler.schedulers.background import BackgroundScheduler  # type: ignore[import]
+except ImportError:
+    BackgroundScheduler = None
 from fetch_crypto import get_crypto_prices
 from currency_fetcher import get_zar_exchange_rates
 from database import initialise_db, store_prices, store_rates, store_stock_prices
@@ -44,6 +48,8 @@ def run_pipeline():
         print(f"Pipeline error: {e}\n")
 
 if __name__ == "__main__":
+    if BackgroundScheduler is None:
+        raise ImportError("APScheduler is not installed. Install it with: pip install apscheduler")
     
     scheduler = BackgroundScheduler() 
     scheduler.add_job(run_pipeline, 'cron', hour=0, minute=0)  # Run daily at midnight
