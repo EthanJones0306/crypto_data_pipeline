@@ -33,3 +33,30 @@ def store_prices(prices_data):
     
     conn.commit()
     conn.close()
+
+def store_rates(rates_data):
+    """Store exchange rates in the database"""
+    conn = sqlite3.connect('crypto.db')
+    cursor = conn.cursor()
+    
+    # First create the table if it doesn't exist
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS exchange_rates (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            currency TEXT,
+            zar_rate REAL,
+            timestamp DATETIME
+        )
+    ''')
+    
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    for currency, rate in rates_data.items():
+        cursor.execute('''
+            INSERT INTO exchange_rates (currency, zar_rate, timestamp)
+            VALUES (?, ?, ?)
+        ''', (currency, rate, current_time))
+        print(f"Stored: {currency} - {rate} ZAR at {current_time}")
+    
+    conn.commit()
+    conn.close()
