@@ -34,6 +34,36 @@ def store_prices(prices_data):
     conn.commit()
     conn.close()
 
+def store_stock_prices(stock_data):
+    """Store stock prices in the database"""
+    conn = sqlite3.connect('crypto.db')
+    cursor = conn.cursor()
+    
+    # Create table if it doesn't exist
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS stock_prices (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            symbol TEXT,
+            price REAL,
+            timestamp DATETIME
+        )
+    ''')
+    
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    # Parse Alpha Vantage response structure (now dict with symbols as keys)
+    for symbol, quote in stock_data.items():
+        if quote:  # Make sure quote isn't empty
+            price = float(quote['05. price'])
+            cursor.execute('''
+                INSERT INTO stock_prices (symbol, price, timestamp)
+                VALUES (?, ?, ?)
+            ''', (symbol, price, current_time))
+            print(f"Stored: {symbol} - ${price} at {current_time}")
+    
+    conn.commit()
+    conn.close()
+
 def store_rates(rates_data):
     """Store exchange rates in the database"""
     conn = sqlite3.connect('crypto.db')

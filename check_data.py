@@ -10,6 +10,13 @@ rows = cursor.fetchall()
 for row in rows:
     print(row)
 
+# View stock prices
+print("\n=== Stock Prices ===")
+cursor.execute('SELECT * FROM stock_prices')
+rows = cursor.fetchall()
+for row in rows:
+    print(row)
+
 # View exchange rates
 print("\n=== Exchange Rates (ZAR) ===")
 cursor.execute('SELECT * FROM exchange_rates')
