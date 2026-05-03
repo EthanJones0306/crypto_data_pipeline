@@ -1,5 +1,3 @@
-#!/opt/anaconda3/bin/python
-#!/opt/anaconda3/bin/python
 """
 Daily cryptocurrency and stock price data fetching scheduler.
 
