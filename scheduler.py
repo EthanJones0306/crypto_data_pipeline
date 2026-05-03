@@ -1,4 +1,16 @@
 #!/opt/anaconda3/bin/python
+#!/opt/anaconda3/bin/python
+"""
+Daily cryptocurrency and stock price data fetching scheduler.
+
+Runs the data pipeline automatically at 00:00 (midnight) every day,
+fetching crypto prices, stock prices, and exchange rates.
+
+Requires:
+- apscheduler: pip install apscheduler
+- python-dotenv: pip install python-dotenv
+- .env file with ALPHA_VANTAGE_API_KEY
+"""
 try:
     from apscheduler.schedulers.background import BackgroundScheduler  # type: ignore[import]
 except ImportError:
