@@ -32,3 +32,7 @@ def buy_asset(request: BuyRequest):
     conn.close()
     
     return {"status": "success", "message": f"Bought {request.quantity} {request.asset}"}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
