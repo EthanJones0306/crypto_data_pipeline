@@ -90,3 +90,36 @@ def store_rates(rates_data):
     
     conn.commit()
     conn.close()
+
+def store_transactions(transactions):
+    """Store asset transactions in the database"""
+    conn = sqlite3.connect('crypto.db')
+    cursor = conn.cursor()
+
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS transactions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            asset TEXT,
+            transaction_type TEXT,
+            quantity REAL,
+            price REAL,
+            timestamp DATETIME
+        )
+    ''')
+
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    try:
+        for transaction in transactions:
+            cursor.execute('''
+                INSERT INTO transactions (asset, transaction_type, quantity, price, timestamp)
+                VALUES (?, ?, ?, ?, ?)
+            ''', (transaction['asset'], transaction['type'], transaction['quantity'], transaction['price'], current_time))
+            print(f"Stored: {transaction['type']} {transaction['quantity']} {transaction['asset']} @ ${transaction['price']}")
+        
+        conn.commit()
+    except Exception as e:
+        print(f"Error storing transaction: {e}")
+        conn.rollback()
+    finally:
+        conn.close()

@@ -24,4 +24,20 @@ rows = cursor.fetchall()
 for row in rows:
     print(row)
 
+# Test storing transactions
+from database import store_transactions
+
+test_transactions = [
+    {'asset': 'BTC', 'type': 'BUY', 'quantity': 0.5, 'price': 78000},
+    {'asset': 'AAPL', 'type': 'BUY', 'quantity': 10, 'price': 280}
+]
+
+store_transactions(test_transactions)
+
+print("\n=== Transactions ===")
+cursor.execute('SELECT * FROM transactions')
+rows = cursor.fetchall()
+for row in rows:
+    print(row)
+
 conn.close() # Close the database connection to free up resources
