@@ -4,7 +4,7 @@ import sqlite3
 from datetime import datetime
 from fetch_crypto import get_crypto_prices
 from fetch_stocks import get_stock_prices
-from database import initialise_db, store_prices, store_stock_prices, store_transactions, store_buy_transaction
+from database import initialise_db, store_prices, store_stock_prices, store_transactions, store_buy_transaction, store_sell_transaction
 
 app = FastAPI()
 
@@ -43,17 +43,7 @@ def buy_stock(request: BuyRequest):
     current_price = float(stock_data[request.asset]['05. price'])
     total_cost = request.quantity * current_price
     
-    conn = sqlite3.connect('crypto.db')
-    cursor = conn.cursor()
-    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    
-    cursor.execute('''
-        INSERT INTO transactions (asset, transaction_type, quantity, price, timestamp)
-        VALUES (?, ?, ?, ?, ?)
-    ''', (request.asset, 'BUY', request.quantity, current_price, current_time))
-    
-    conn.commit()
-    conn.close()
+    store_buy_transaction(request.asset, request.quantity, current_price)
     
     return {"status": "success", "message": f"Bought {request.quantity} {request.asset} at ${current_price} (Total: ${total_cost:.2f})"}
 
@@ -65,18 +55,7 @@ def sell_crypto(request: SellRequest):
     store_prices(latest_prices)
     current_price = latest_prices[request.asset.lower()]['usd']
     
-    # Store transaction
-    conn = sqlite3.connect('crypto.db')
-    cursor = conn.cursor()
-    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    
-    cursor.execute('''
-        INSERT INTO transactions (asset, transaction_type, quantity, price, timestamp)
-        VALUES (?, ?, ?, ?, ?)
-    ''', (request.asset, 'SELL', request.quantity, current_price, current_time))
-    
-    conn.commit()
-    conn.close()
+    store_sell_transaction(request.asset, request.quantity, current_price)
     
     return {"status": "success", "message": f"Sold {request.quantity} {request.asset} at ${current_price}"}
 
@@ -89,18 +68,7 @@ def sell_stock(request: SellRequest):
     store_stock_prices(stock_data)
     current_price = float(stock_data[request.asset]['05. price'])
     
-    # Store transaction
-    conn = sqlite3.connect('crypto.db')
-    cursor = conn.cursor()
-    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    
-    cursor.execute('''
-        INSERT INTO transactions (asset, transaction_type, quantity, price, timestamp)
-        VALUES (?, ?, ?, ?, ?)
-    ''', (request.asset, 'SELL', request.quantity, current_price, current_time))
-    
-    conn.commit()
-    conn.close()
+    store_sell_transaction(request.asset, request.quantity, current_price)
     
     return {"status": "success", "message": f"Sold {request.quantity} {request.asset} at ${current_price}"}
 

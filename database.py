@@ -137,4 +137,18 @@ def store_buy_transaction(asset, quantity, price):
     
     conn.commit()
     conn.close()
+
+def store_sell_transaction(asset, quantity, price):
+    """Store a sell transaction in the database"""
+    conn = sqlite3.connect('crypto.db')
+    cursor = conn.cursor()
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    
+    cursor.execute('''
+        INSERT INTO transactions (asset, transaction_type, quantity, price, timestamp)
+        VALUES (?, ?, ?, ?, ?)
+    ''', (asset, 'SELL', quantity, price, current_time))
+    
+    conn.commit()
+    conn.close()
     
