@@ -5,8 +5,10 @@ from datetime import datetime
 from fetch_crypto import get_crypto_prices
 from fetch_stocks import get_stock_prices
 from database import initialise_db, store_prices, store_stock_prices, store_transactions, store_buy_transaction, store_sell_transaction
+from utils import normalize_crypto_asset
 
 app = FastAPI()
+
 
 class SellRequest(BaseModel):
     asset: str
@@ -24,14 +26,20 @@ def read_root():
 @app.post("/buy/crypto")
 def buy_crypto(request: BuyRequest):
     """Buy cryptocurrency at current market price"""
-    latest_prices = get_crypto_prices()
-    store_prices(latest_prices)
-    current_price = latest_prices[request.asset.lower()]['usd']
-    total_cost = request.quantity * current_price
-    
-    store_buy_transaction(request.asset, request.quantity, current_price)
-    
-    return {"status": "success", "message": f"Bought {request.quantity} {request.asset} at ${current_price} (Total: ${total_cost:.2f})"}
+    try:
+        crypto_key = normalize_crypto_asset(request.asset)
+        latest_prices = get_crypto_prices()
+        store_prices(latest_prices)
+        current_price = latest_prices[crypto_key]['usd']
+        total_cost = request.quantity * current_price
+        
+        store_buy_transaction(request.asset, request.quantity, current_price)
+        
+        return {"status": "success", "message": f"Bought {request.quantity} {request.asset} at ${current_price} (Total: ${total_cost:.2f})"}
+    except ValueError as e:
+        return {"status": "error", "message": str(e)}
+    except KeyError:
+        return {"status": "error", "message": "Crypto price data not available. Try again later."}
 
 @app.post("/buy/stock")
 def buy_stock(request: BuyRequest):
@@ -48,16 +56,21 @@ def buy_stock(request: BuyRequest):
     return {"status": "success", "message": f"Bought {request.quantity} {request.asset} at ${current_price} (Total: ${total_cost:.2f})"}
 
 @app.post("/sell/crypto")
-
 def sell_crypto(request: SellRequest):
     """Sell a cryptocurrency"""
-    latest_prices = get_crypto_prices()
-    store_prices(latest_prices)
-    current_price = latest_prices[request.asset.lower()]['usd']
-    
-    store_sell_transaction(request.asset, request.quantity, current_price)
-    
-    return {"status": "success", "message": f"Sold {request.quantity} {request.asset} at ${current_price}"}
+    try:
+        crypto_key = normalize_crypto_asset(request.asset)
+        latest_prices = get_crypto_prices()
+        store_prices(latest_prices)
+        current_price = latest_prices[crypto_key]['usd']
+        
+        store_sell_transaction(request.asset, request.quantity, current_price)
+        
+        return {"status": "success", "message": f"Sold {request.quantity} {request.asset} at ${current_price}"}
+    except ValueError as e:
+        return {"status": "error", "message": str(e)}
+    except KeyError:
+        return {"status": "error", "message": "Crypto price data not available. Try again later."}
 
 @app.post("/sell/stock")
 def sell_stock(request: SellRequest):
