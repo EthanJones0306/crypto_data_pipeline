@@ -114,6 +114,31 @@ def sell_stock(request: SellRequest):
     
     return {"status": "success", "message": f"Sold {request.quantity} {request.asset} at ${current_price}"}
 
+@app.get("/portfolio")
+def get_portfolio():
+    """Get current portfolio holdings and total value"""
+    conn = sqlite3.connect('crypto.db')
+    cursor = conn.cursor()
+    
+    # Get all holdings (buys minus sells grouped by asset)
+    cursor.execute('''
+        SELECT 
+            asset,
+            SUM(CASE WHEN transaction_type = 'BUY' THEN quantity 
+                     ELSE -quantity END) as total_quantity
+        FROM transactions
+        GROUP BY asset
+    ''')
+    
+    holdings = cursor.fetchall()
+    conn.close()
+    
+    portfolio = []
+    for asset, quantity in holdings:
+        if quantity > 0:  # Only include positive holdings
+            portfolio.append({"asset": asset, "quantity": quantity})
+    
+    return {"status": "success", "holdings": portfolio}
 
 if __name__ == "__main__":
     import uvicorn
