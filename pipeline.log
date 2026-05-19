@@ -1,0 +1,13 @@
+2026-05-19 15:48:31,966 - __main__ - INFO - Fetching cryptocurrency prices...
+2026-05-19 15:48:32,724 - __main__ - INFO - Fetching stock prices...
+2026-05-19 15:48:38,112 - __main__ - INFO - Fetching ZAR exchange rates...
+2026-05-19 15:48:38,677 - database - INFO - Stored: bitcoin - $76687 at 2026-05-19 15:48:38
+2026-05-19 15:48:38,677 - database - INFO - Stored: ethereum - $2112.02 at 2026-05-19 15:48:38
+2026-05-19 15:48:38,677 - database - INFO - Stored: solana - $84.63 at 2026-05-19 15:48:38
+2026-05-19 15:48:38,680 - database - INFO - Stored: AAPL - $297.84 at 2026-05-19 15:48:38
+2026-05-19 15:48:38,680 - database - INFO - Stored: GOOG - $393.11 at 2026-05-19 15:48:38
+2026-05-19 15:48:38,680 - database - INFO - Stored: NVDA - $222.32 at 2026-05-19 15:48:38
+2026-05-19 15:48:38,682 - database - INFO - Stored: USD - 16.62 ZAR at 2026-05-19 15:48:38
+2026-05-19 15:48:38,682 - database - INFO - Stored: EUR - 19.36 ZAR at 2026-05-19 15:48:38
+2026-05-19 15:48:38,683 - database - INFO - Stored: GBP - 22.25 ZAR at 2026-05-19 15:48:38
+2026-05-19 15:48:38,683 - __main__ - INFO - All data fetched and stored successfully!

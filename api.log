@@ -1,0 +1,5 @@
+2026-05-19 15:53:09,918 - services - INFO - Attempting to buy 0.1 bitcoin
+2026-05-19 15:53:10,612 - database - INFO - Stored: bitcoin - $76811 at 2026-05-19 15:53:10
+2026-05-19 15:53:10,612 - database - INFO - Stored: ethereum - $2119.57 at 2026-05-19 15:53:10
+2026-05-19 15:53:10,612 - database - INFO - Stored: solana - $84.75 at 2026-05-19 15:53:10
+2026-05-19 15:53:10,615 - services - INFO - Successfully bought 0.1 bitcoin at $76811
