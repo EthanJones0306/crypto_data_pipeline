@@ -1,8 +1,20 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 import sqlite3
+from datetime import datetime
+import logging
 from database import initialise_db
 from services import TradingService
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('api.log'),
+        logging.StreamHandler()
+    ]
+)
 
 app = FastAPI()
 trading_service = TradingService()
@@ -20,6 +32,28 @@ class BuyRequest(BaseModel):
 @app.get("/")
 def read_root(): 
     return {"message": "Welcome to the Crypto Data Pipeline API!"}
+
+@app.get("/health")
+def health_check():
+    """Check API and database health"""
+    try:
+        conn = sqlite3.connect('crypto.db')
+        cursor = conn.cursor()
+        cursor.execute('SELECT COUNT(*) FROM transactions')
+        transaction_count = cursor.fetchone()[0]
+        conn.close()
+        
+        return {
+            "status": "healthy",
+            "database": "connected",
+            "transactions_stored": transaction_count
+        }
+    except Exception as e:
+        return {
+            "status": "unhealthy",
+            "database": "disconnected",
+            "error": str(e)
+        }
 
 @app.post("/buy/crypto")
 def buy_crypto(request: BuyRequest):
@@ -90,6 +124,129 @@ def get_portfolio():
             portfolio.append({"asset": asset, "quantity": quantity})
     
     return {"status": "success", "holdings": portfolio}
+
+@app.get("/prices/latest")
+def get_latest_prices():
+    """Get latest cryptocurrency and stock prices"""
+    from fetch_crypto import get_crypto_prices
+    from fetch_stocks import get_stock_prices
+    import os
+    
+    try:
+        # Get crypto prices
+        crypto_prices = get_crypto_prices()
+        crypto_data = {coin: price['usd'] for coin, price in crypto_prices.items()} if crypto_prices else {}
+        
+        # Get stock prices
+        api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
+        stock_data_raw = get_stock_prices(api_key)
+        stock_data = {symbol: float(quote.get('05. price', 0)) for symbol, quote in stock_data_raw.items()} if stock_data_raw else {}
+        
+        return {
+            "status": "success",
+            "crypto_prices": crypto_data,
+            "stock_prices": stock_data,
+            "timestamp": datetime.now().isoformat()
+        }
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+@app.get("/transactions")
+def get_transactions(limit: int = 50):
+    """Get recent transactions"""
+    conn = sqlite3.connect('crypto.db')
+    cursor = conn.cursor()
+    
+    try:
+        cursor.execute('''
+            SELECT asset, transaction_type, quantity, price, timestamp
+            FROM transactions
+            ORDER BY timestamp DESC
+            LIMIT ?
+        ''', (limit,))
+        
+        transactions = cursor.fetchall()
+        conn.close()
+        
+        result = []
+        for asset, trans_type, quantity, price, timestamp in transactions:
+            result.append({
+                "asset": asset,
+                "type": trans_type,
+                "quantity": quantity,
+                "price": price,
+                "timestamp": timestamp
+            })
+        
+        return {"status": "success", "transactions": result}
+    except Exception as e:
+        conn.close()
+        return {"status": "error", "message": str(e)}
+
+@app.get("/portfolio/value")
+def get_portfolio_value():
+    """Get current portfolio value with asset breakdown"""
+    from fetch_crypto import get_crypto_prices
+    from fetch_stocks import get_stock_prices
+    import os
+    
+    conn = sqlite3.connect('crypto.db')
+    cursor = conn.cursor()
+    
+    try:
+        # Get holdings
+        cursor.execute('''
+            SELECT 
+                asset,
+                SUM(CASE WHEN transaction_type = 'BUY' THEN quantity 
+                         ELSE -quantity END) as total_quantity
+            FROM transactions
+            GROUP BY asset
+        ''')
+        
+        holdings = cursor.fetchall()
+        conn.close()
+        
+        # Get current prices
+        crypto_prices = get_crypto_prices() or {}
+        api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
+        stock_prices_raw = get_stock_prices(api_key) or {}
+        
+        portfolio_value = 0
+        holdings_breakdown = []
+        
+        for asset, quantity in holdings:
+            if quantity <= 0:
+                continue
+                
+            current_price = 0
+            asset_lower = asset.lower()
+            
+            # Try to get crypto price
+            if asset_lower in crypto_prices:
+                current_price = crypto_prices[asset_lower]['usd']
+            # Try to get stock price
+            elif asset in stock_prices_raw and stock_prices_raw[asset]:
+                current_price = float(stock_prices_raw[asset].get('05. price', 0))
+            
+            asset_value = quantity * current_price
+            portfolio_value += asset_value
+            
+            holdings_breakdown.append({
+                "asset": asset,
+                "quantity": quantity,
+                "current_price": current_price,
+                "total_value": asset_value
+            })
+        
+        return {
+            "status": "success",
+            "total_portfolio_value": portfolio_value,
+            "holdings": holdings_breakdown,
+            "timestamp": datetime.now().isoformat()
+        }
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
 
 if __name__ == "__main__":
     import uvicorn

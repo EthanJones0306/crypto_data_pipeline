@@ -1,5 +1,8 @@
 import sqlite3
 from datetime import datetime
+import logging
+
+logger = logging.getLogger(__name__)
 
 def initialise_db():
     """Create the crypto_prices table if it doesn't exist"""
@@ -29,7 +32,7 @@ def store_prices(prices_data):
             INSERT INTO crypto_prices (coin, price_usd, timestamp)
             VALUES (?, ?, ?)
         ''', (coin_name, price_usd, current_time))
-        print(f"Stored: {coin_name} - ${price_usd} at {current_time}")
+        logger.info(f"Stored: {coin_name} - ${price_usd} at {current_time}")
     
     conn.commit()
     conn.close()
@@ -59,7 +62,7 @@ def store_stock_prices(stock_data):
                 INSERT INTO stock_prices (symbol, price, timestamp)
                 VALUES (?, ?, ?)
             ''', (symbol, price, current_time))
-            print(f"Stored: {symbol} - ${price} at {current_time}")
+            logger.info(f"Stored: {symbol} - ${price} at {current_time}")
     
     conn.commit()
     conn.close()
@@ -86,7 +89,7 @@ def store_rates(rates_data):
             INSERT INTO exchange_rates (currency, zar_rate, timestamp)
             VALUES (?, ?, ?)
         ''', (currency, rate, current_time))
-        print(f"Stored: {currency} - {rate} ZAR at {current_time}")
+        logger.info(f"Stored: {currency} - {rate} ZAR at {current_time}")
     
     conn.commit()
     conn.close()
@@ -115,11 +118,11 @@ def store_transactions(transactions):
                 INSERT INTO transactions (asset, transaction_type, quantity, price, timestamp)
                 VALUES (?, ?, ?, ?, ?)
             ''', (transaction['asset'], transaction['type'], transaction['quantity'], transaction['price'], current_time))
-            print(f"Stored: {transaction['type']} {transaction['quantity']} {transaction['asset']} @ ${transaction['price']}")
+            logger.info(f"Stored: {transaction['type']} {transaction['quantity']} {transaction['asset']} @ ${transaction['price']}")
         
         conn.commit()
     except Exception as e:
-        print(f"Error storing transaction: {e}")
+        logger.error(f"Error storing transaction: {e}")
         conn.rollback()
     finally:
         conn.close()
