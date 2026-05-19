@@ -5,6 +5,8 @@ from datetime import datetime
 import logging
 from database import initialise_db
 from services import TradingService
+from fastapi.middleware.cors import CORSMiddleware
+
 
 # Configure logging
 logging.basicConfig(
@@ -20,6 +22,13 @@ app = FastAPI()
 trading_service = TradingService()
 
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Allow all origins (fine for local development)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 class SellRequest(BaseModel):
     asset: str
     quantity: float

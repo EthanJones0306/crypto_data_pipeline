@@ -19,9 +19,7 @@ function PortfolioValue() {
     };
 
     loadPortfolio();
-    // Refresh every 10 seconds
-    const interval = setInterval(loadPortfolio, 10000);
-    return () => clearInterval(interval);
+
   }, []);
 
   if (loading) return <div>Loading...</div>;
