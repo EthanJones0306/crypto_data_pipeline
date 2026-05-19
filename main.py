@@ -1,9 +1,12 @@
+import os
+from dotenv import load_dotenv
 from fetch_crypto import get_crypto_prices
 from currency_fetcher import get_zar_exchange_rates
 from database import initialise_db, store_prices, store_rates, store_stock_prices
 from fetch_stocks import get_stock_prices
 
-API_KEY_stocks = '79MC5EWVII5262UH'  # Replace with your actual Alpha Vantage API key
+load_dotenv()
+API_KEY_stocks = os.getenv('ALPHA_VANTAGE_API_KEY')
 
 # Initialise database
 initialise_db()
