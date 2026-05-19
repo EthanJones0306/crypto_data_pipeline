@@ -1,13 +1,11 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 import sqlite3
-from datetime import datetime
-from fetch_crypto import get_crypto_prices
-from fetch_stocks import get_stock_prices
-from database import initialise_db, store_prices, store_stock_prices, store_transactions, store_buy_transaction, store_sell_transaction
-from utils import normalize_crypto_asset
+from database import initialise_db
+from services import TradingService
 
 app = FastAPI()
+trading_service = TradingService()
 
 
 class SellRequest(BaseModel):
@@ -27,15 +25,8 @@ def read_root():
 def buy_crypto(request: BuyRequest):
     """Buy cryptocurrency at current market price"""
     try:
-        crypto_key = normalize_crypto_asset(request.asset)
-        latest_prices = get_crypto_prices()
-        store_prices(latest_prices)
-        current_price = latest_prices[crypto_key]['usd']
-        total_cost = request.quantity * current_price
-        
-        store_buy_transaction(request.asset, request.quantity, current_price)
-        
-        return {"status": "success", "message": f"Bought {request.quantity} {request.asset} at ${current_price} (Total: ${total_cost:.2f})"}
+        result = trading_service.buy_crypto(request.asset, request.quantity)
+        return {"status": "success", "message": f"Bought {request.quantity} {request.asset} at ${result['price']} (Total: ${result['total_cost']:.2f})"}
     except ValueError as e:
         return {"status": "error", "message": str(e)}
     except KeyError:
@@ -44,29 +35,20 @@ def buy_crypto(request: BuyRequest):
 @app.post("/buy/stock")
 def buy_stock(request: BuyRequest):
     """Buy stock at current market price"""
-    import os
-    api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
-    stock_data = get_stock_prices(api_key)
-    store_stock_prices(stock_data)
-    current_price = float(stock_data[request.asset]['05. price'])
-    total_cost = request.quantity * current_price
-    
-    store_buy_transaction(request.asset, request.quantity, current_price)
-    
-    return {"status": "success", "message": f"Bought {request.quantity} {request.asset} at ${current_price} (Total: ${total_cost:.2f})"}
+    try:
+        result = trading_service.buy_stock(request.asset, request.quantity)
+        return {"status": "success", "message": f"Bought {request.quantity} {request.asset} at ${result['price']} (Total: ${result['total_cost']:.2f})"}
+    except KeyError:
+        return {"status": "error", "message": "Stock price data not available. Try again later."}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
 
 @app.post("/sell/crypto")
 def sell_crypto(request: SellRequest):
     """Sell a cryptocurrency"""
     try:
-        crypto_key = normalize_crypto_asset(request.asset)
-        latest_prices = get_crypto_prices()
-        store_prices(latest_prices)
-        current_price = latest_prices[crypto_key]['usd']
-        
-        store_sell_transaction(request.asset, request.quantity, current_price)
-        
-        return {"status": "success", "message": f"Sold {request.quantity} {request.asset} at ${current_price}"}
+        result = trading_service.sell_crypto(request.asset, request.quantity)
+        return {"status": "success", "message": f"Sold {request.quantity} {request.asset} at ${result['price']}"}
     except ValueError as e:
         return {"status": "error", "message": str(e)}
     except KeyError:
@@ -75,15 +57,13 @@ def sell_crypto(request: SellRequest):
 @app.post("/sell/stock")
 def sell_stock(request: SellRequest):
     """Sell a stock"""
-    import os
-    api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
-    stock_data = get_stock_prices(api_key)
-    store_stock_prices(stock_data)
-    current_price = float(stock_data[request.asset]['05. price'])
-    
-    store_sell_transaction(request.asset, request.quantity, current_price)
-    
-    return {"status": "success", "message": f"Sold {request.quantity} {request.asset} at ${current_price}"}
+    try:
+        result = trading_service.sell_stock(request.asset, request.quantity)
+        return {"status": "success", "message": f"Sold {request.quantity} {request.asset} at ${result['price']}"}
+    except KeyError:
+        return {"status": "error", "message": "Stock price data not available. Try again later."}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
 
 @app.get("/portfolio")
 def get_portfolio():
