@@ -8,3 +8,27 @@
 2026-05-21 13:09:40,847 - database - INFO - Stored: ethereum - $2113.18 at 2026-05-21 13:09:40
 2026-05-21 13:09:40,847 - database - INFO - Stored: solana - $85.7 at 2026-05-21 13:09:40
 2026-05-21 13:09:40,848 - services - INFO - Successfully bought 1.0 bitcoin at $77163
+2026-05-21 13:36:35,893 - fetch_stocks - WARNING - No quote data for AAPL
+2026-05-21 13:36:37,572 - fetch_stocks - WARNING - No quote data for GOOG
+2026-05-21 13:36:39,247 - fetch_stocks - WARNING - No quote data for NVDA
+2026-05-21 13:36:41,443 - fetch_stocks - WARNING - No quote data for AAPL
+2026-05-21 13:36:43,095 - fetch_stocks - WARNING - No quote data for GOOG
+2026-05-21 13:36:44,751 - fetch_stocks - WARNING - No quote data for NVDA
+2026-05-21 13:37:01,017 - fetch_stocks - WARNING - No quote data for AAPL
+2026-05-21 13:37:02,667 - fetch_stocks - WARNING - No quote data for GOOG
+2026-05-21 13:37:04,344 - fetch_stocks - WARNING - No quote data for NVDA
+2026-05-21 13:37:06,544 - fetch_stocks - WARNING - No quote data for AAPL
+2026-05-21 13:37:08,202 - fetch_stocks - WARNING - No quote data for GOOG
+2026-05-21 13:37:09,875 - fetch_stocks - WARNING - No quote data for NVDA
+2026-05-21 13:39:33,781 - fetch_stocks - INFO - Alpha Vantage raw response for AAPL: {"Information": "We have detected your API key as 79MC5EWVII5262UH and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits."}
+2026-05-21 13:39:33,781 - fetch_stocks - WARNING - ✗ Empty quote data for AAPL. Full response: {"Information": "We have detected your API key as 79MC5EWVII5262UH and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits."}
+2026-05-21 13:39:35,446 - fetch_stocks - INFO - Alpha Vantage raw response for GOOG: {"Information": "We have detected your API key as 79MC5EWVII5262UH and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits."}
+2026-05-21 13:39:35,446 - fetch_stocks - WARNING - ✗ Empty quote data for GOOG. Full response: {"Information": "We have detected your API key as 79MC5EWVII5262UH and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits."}
+2026-05-21 13:39:37,091 - fetch_stocks - INFO - Alpha Vantage raw response for NVDA: {"Information": "We have detected your API key as 79MC5EWVII5262UH and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits."}
+2026-05-21 13:39:37,091 - fetch_stocks - WARNING - ✗ Empty quote data for NVDA. Full response: {"Information": "We have detected your API key as 79MC5EWVII5262UH and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits."}
+2026-05-21 13:39:39,318 - fetch_stocks - INFO - Alpha Vantage raw response for AAPL: {"Information": "We have detected your API key as 79MC5EWVII5262UH and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits."}
+2026-05-21 13:39:39,318 - fetch_stocks - WARNING - ✗ Empty quote data for AAPL. Full response: {"Information": "We have detected your API key as 79MC5EWVII5262UH and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits."}
+2026-05-21 13:39:40,984 - fetch_stocks - INFO - Alpha Vantage raw response for GOOG: {"Information": "We have detected your API key as 79MC5EWVII5262UH and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits."}
+2026-05-21 13:39:40,984 - fetch_stocks - WARNING - ✗ Empty quote data for GOOG. Full response: {"Information": "We have detected your API key as 79MC5EWVII5262UH and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits."}
+2026-05-21 13:39:42,647 - fetch_stocks - INFO - Alpha Vantage raw response for NVDA: {"Information": "We have detected your API key as 79MC5EWVII5262UH and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits."}
+2026-05-21 13:39:42,647 - fetch_stocks - WARNING - ✗ Empty quote data for NVDA. Full response: {"Information": "We have detected your API key as 79MC5EWVII5262UH and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits."}

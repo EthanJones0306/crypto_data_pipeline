@@ -6,7 +6,10 @@ import logging
 from database import initialise_db
 from services import TradingService
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
 
+# Load environment variables
+load_dotenv()
 
 # Configure logging
 logging.basicConfig(
@@ -160,6 +163,9 @@ def get_latest_prices():
     from fetch_crypto import get_crypto_prices
     from fetch_stocks import get_stock_prices
     import os
+    import logging
+    
+    logger = logging.getLogger(__name__)
     
     try:
         # Get crypto prices
@@ -169,7 +175,15 @@ def get_latest_prices():
         # Get stock prices
         api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
         stock_data_raw = get_stock_prices(api_key)
-        stock_data = {symbol: float(quote.get('05. price', 0)) for symbol, quote in stock_data_raw.items()} if stock_data_raw else {}
+        
+        logger.debug(f"Raw stock data: {stock_data_raw}")
+        
+        stock_data = {}
+        if stock_data_raw:
+            for symbol, quote in stock_data_raw.items():
+                price = float(quote.get('05. price', 0))
+                stock_data[symbol] = price
+                logger.info(f"Fetched {symbol}: ${price}")
         
         return {
             "status": "success",
@@ -178,6 +192,7 @@ def get_latest_prices():
             "timestamp": datetime.now().isoformat()
         }
     except Exception as e:
+        logger.error(f"Error in get_latest_prices: {e}")
         return {"status": "error", "message": str(e)}
 
 @app.get("/transactions")
