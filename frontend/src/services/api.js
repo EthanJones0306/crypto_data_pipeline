@@ -30,6 +30,12 @@ export const fetchExchangeRates = async () => {
   return response.json();
 };
 
+export const fetchGainsLosses = async () => {
+  const response = await fetch(`${API_BASE}/analytics/gains-losses`);
+  if (!response.ok) throw new Error('Failed to fetch gains/losses');
+  return response.json();
+};
+
 export const buyCrypto = async (asset, quantity) => {
   const response = await fetch(`${API_BASE}/buy/crypto`, {
     method: 'POST',
