@@ -24,6 +24,12 @@ export const fetchTransactions = async () => {
   return response.json();
 };
 
+export const fetchExchangeRates = async () => {
+  const response = await fetch(`${API_BASE}/exchange-rates`);
+  if (!response.ok) throw new Error('Failed to fetch exchange rates');
+  return response.json();
+};
+
 export const buyCrypto = async (asset, quantity) => {
   const response = await fetch(`${API_BASE}/buy/crypto`, {
     method: 'POST',

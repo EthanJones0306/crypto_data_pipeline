@@ -257,6 +257,30 @@ def get_portfolio_value():
     except Exception as e:
         return {"status": "error", "message": str(e)}
 
+@app.get("/exchange-rates")
+def get_exchange_rates():
+    """Get exchange rates for USD, EUR, GBP, ZAR"""
+    from currency_fetcher import get_zar_exchange_rates
+    
+    try:
+        rates = get_zar_exchange_rates()
+        if rates:
+            usd_to_zar = rates.get("USD", 1)  # How many ZAR per 1 USD
+            return {
+                "status": "success",
+                "rates": {
+                    "USD": 1.0,  # Base currency
+                    "EUR": usd_to_zar / rates.get("EUR", 1),  # USD to EUR
+                    "GBP": usd_to_zar / rates.get("GBP", 1),  # USD to GBP
+                    "ZAR": usd_to_zar  # USD to ZAR
+                },
+                "base_currency": "USD"
+            }
+        else:
+            return {"status": "error", "message": "Failed to fetch exchange rates"}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
