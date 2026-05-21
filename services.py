@@ -25,7 +25,11 @@ class TradingService:
     def buy_stock(self, symbol: str, quantity: float) -> dict:
         """Buy stock at current market price"""
         logger.info(f"Attempting to buy {quantity} {symbol}")
-        api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
+        provider = os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower()
+        if provider == 'finnhub':
+            api_key = os.getenv('FINNHUB_API_KEY')
+        else:
+            api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
         stock_data = get_stock_prices(api_key)
         store_stock_prices(stock_data)
         current_price = float(stock_data[symbol]['05. price'])
@@ -47,7 +51,11 @@ class TradingService:
     def sell_stock(self, symbol: str, quantity: float) -> dict:
         """Sell stock at current market price"""
         logger.info(f"Attempting to sell {quantity} {symbol}")
-        api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
+        provider = os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower()
+        if provider == 'finnhub':
+            api_key = os.getenv('FINNHUB_API_KEY')
+        else:
+            api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
         stock_data = get_stock_prices(api_key)
         store_stock_prices(stock_data)
         current_price = float(stock_data[symbol]['05. price'])

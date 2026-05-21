@@ -172,8 +172,13 @@ def get_latest_prices():
         crypto_prices = get_crypto_prices()
         crypto_data = {coin: price['usd'] for coin, price in crypto_prices.items()} if crypto_prices else {}
         
-        # Get stock prices
-        api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
+        # Get stock prices with correct API key based on provider
+        provider = os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower()
+        if provider == 'finnhub':
+            api_key = os.getenv('FINNHUB_API_KEY')
+        else:
+            api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
+        
         stock_data_raw = get_stock_prices(api_key)
         
         logger.debug(f"Raw stock data: {stock_data_raw}")
@@ -269,7 +274,11 @@ def get_portfolio_value():
         
         # Get current prices
         crypto_prices = get_crypto_prices() or {}
-        api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
+        provider = os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower()
+        if provider == 'finnhub':
+            api_key = os.getenv('FINNHUB_API_KEY')
+        else:
+            api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
         stock_prices_raw = get_stock_prices(api_key) or {}
         
         portfolio_value = 0
@@ -382,7 +391,11 @@ def get_gains_losses():
         
         # Get current prices
         crypto_prices = get_crypto_prices() or {}
-        api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
+        provider = os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower()
+        if provider == 'finnhub':
+            api_key = os.getenv('FINNHUB_API_KEY')
+        else:
+            api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
         stock_prices_raw = get_stock_prices(api_key) or {}
         
         # Calculate per-asset gains/losses, normalized
