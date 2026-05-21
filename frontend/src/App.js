@@ -5,10 +5,12 @@ import Prices from './components/Prices';
 import Transactions from './components/Transactions';
 import Trading from './components/Trading';
 import Analytics from './components/Analytics';
+import { resetDatabase } from './services/api';
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [activeTab, setActiveTab] = useState('portfolio');
+  const [isResetting, setIsResetting] = useState(false);
 
   // Save preference to localStorage
   useEffect(() => {
@@ -22,6 +24,25 @@ function App() {
       setIsDarkMode(false);
     }
   }, []);
+
+  const handleReset = async () => {
+    const confirmed = window.confirm(
+      '⚠️ Are you sure? This will permanently delete all transactions and reset your portfolio to $0. This action cannot be undone.'
+    );
+    
+    if (!confirmed) return;
+
+    setIsResetting(true);
+    try {
+      await resetDatabase();
+      alert('✅ Database reset successfully! All data has been cleared.');
+      window.location.reload(); // Reload to refresh all data
+    } catch (error) {
+      alert('❌ Error resetting database: ' + error.message);
+    } finally {
+      setIsResetting(false);
+    }
+  };
 
   const renderContent = () => {
     switch(activeTab) {
@@ -45,13 +66,23 @@ function App() {
       <header className="App-header">
         <div className="header-content">
           <h1>Portfolio Tracker</h1>
-          <button 
-            className="theme-toggle"
-            onClick={() => setIsDarkMode(!isDarkMode)}
-            title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-          >
-            {isDarkMode ? '☀️' : '🌙'}
-          </button>
+          <div className="header-controls">
+            <button 
+              className="reset-btn"
+              onClick={handleReset}
+              disabled={isResetting}
+              title="Reset database and clear all data"
+            >
+              {isResetting ? '⏳ Resetting...' : '🔄 Reset'}
+            </button>
+            <button 
+              className="theme-toggle"
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
+            >
+              {isDarkMode ? '☀️' : '🌙'}
+            </button>
+          </div>
         </div>
       </header>
       <main>

@@ -3,7 +3,7 @@ from pydantic import BaseModel
 import sqlite3
 from datetime import datetime
 import logging
-from database import initialise_db
+from database import initialise_db, reset_database
 from services import TradingService
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
@@ -482,6 +482,28 @@ def get_gains_losses():
         }
     except Exception as e:
         return {"status": "error", "message": str(e)}
+
+@app.post("/admin/reset-database")
+def reset_db():
+    """Reset database - clear all transactions and portfolio data"""
+    try:
+        success = reset_database()
+        if success:
+            return {
+                "status": "success",
+                "message": "Database reset successfully - all data cleared",
+                "timestamp": datetime.now().isoformat()
+            }
+        else:
+            return {
+                "status": "error",
+                "message": "Failed to reset database"
+            }
+    except Exception as e:
+        return {
+            "status": "error",
+            "message": f"Error resetting database: {str(e)}"
+        }
 
 if __name__ == "__main__":
     import uvicorn

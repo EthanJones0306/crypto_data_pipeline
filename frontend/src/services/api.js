@@ -75,3 +75,12 @@ export const sellStock = async (symbol, quantity) => {
   if (!response.ok) throw new Error('Failed to sell stock');
   return response.json();
 };
+
+export const resetDatabase = async () => {
+  const response = await fetch(`${API_BASE}/admin/reset-database`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' }
+  });
+  if (!response.ok) throw new Error('Failed to reset database');
+  return response.json();
+};

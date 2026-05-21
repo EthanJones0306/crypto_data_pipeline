@@ -64,3 +64,38 @@
 2026-05-21 14:58:42,554 - fetch_stocks - INFO - Using stock price provider: finnhub
 2026-05-21 14:58:42,554 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
 2026-05-21 14:58:42,554 - fetch_stocks - INFO - Using cached stock prices
+2026-05-21 15:52:25,885 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-21 15:52:25,888 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-21 15:52:25,888 - fetch_stocks - INFO - Using cached stock prices
+2026-05-21 15:52:26,550 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-21 15:52:26,551 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-21 15:52:26,551 - fetch_stocks - INFO - Using cached stock prices
+2026-05-21 15:52:33,802 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-21 15:52:33,802 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-21 15:52:33,803 - fetch_stocks - INFO - Using cached stock prices
+2026-05-21 15:52:34,340 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-21 15:52:34,340 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-21 15:52:34,340 - fetch_stocks - INFO - Using cached stock prices
+2026-05-21 15:55:46,330 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-21 15:55:46,331 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-21 15:55:46,331 - fetch_stocks - INFO - Using cached stock prices
+2026-05-21 15:56:32,528 - database - INFO - Database reset successfully - all tables cleared and reinitialized
+2026-05-21 15:58:12,632 - database - INFO - Database reset successfully - all tables cleared and reinitialized
+2026-05-21 15:59:21,618 - database - INFO - Database reset successfully - all tables cleared and reinitialized
+2026-05-21 15:59:24,413 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-21 15:59:24,414 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-21 15:59:24,414 - fetch_stocks - INFO - Using cached stock prices
+2026-05-21 15:59:24,952 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-21 15:59:24,952 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-21 15:59:24,953 - fetch_stocks - INFO - Using cached stock prices
+2026-05-21 15:59:33,722 - services - INFO - Attempting to buy 0.0003 bitcoin
+2026-05-21 15:59:34,424 - database - INFO - Stored: bitcoin - $77045 at 2026-05-21 15:59:34
+2026-05-21 15:59:34,424 - database - INFO - Stored: ethereum - $2118.38 at 2026-05-21 15:59:34
+2026-05-21 15:59:34,424 - database - INFO - Stored: solana - $85.94 at 2026-05-21 15:59:34
+2026-05-21 15:59:34,426 - services - INFO - Successfully bought 0.0003 bitcoin at $77045
+2026-05-21 15:59:36,752 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-21 15:59:36,753 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-21 15:59:36,753 - fetch_stocks - INFO - Using cached stock prices
+2026-05-21 15:59:37,277 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-21 15:59:37,278 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-21 15:59:37,278 - fetch_stocks - INFO - Using cached stock prices

@@ -5,9 +5,11 @@ import logging
 logger = logging.getLogger(__name__)
 
 def initialise_db():
-    """Create the crypto_prices table if it doesn't exist"""
+    """Create all required tables if they don't exist"""
     conn = sqlite3.connect('crypto.db')
     cursor = conn.cursor()
+    
+    # Create crypto_prices table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS crypto_prices (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -16,6 +18,39 @@ def initialise_db():
             timestamp DATETIME
         )
     ''')
+    
+    # Create stock_prices table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS stock_prices (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            symbol TEXT,
+            price REAL,
+            timestamp DATETIME
+        )
+    ''')
+    
+    # Create exchange_rates table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS exchange_rates (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            currency TEXT,
+            zar_rate REAL,
+            timestamp DATETIME
+        )
+    ''')
+    
+    # Create transactions table
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS transactions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            asset TEXT,
+            transaction_type TEXT,
+            quantity REAL,
+            price REAL,
+            timestamp DATETIME
+        )
+    ''')
+    
     conn.commit()
     conn.close()
 
@@ -154,4 +189,27 @@ def store_sell_transaction(asset, quantity, price):
     
     conn.commit()
     conn.close()
+
+def reset_database():
+    """Clear all tables and reset database to empty state"""
+    try:
+        conn = sqlite3.connect('crypto.db')
+        cursor = conn.cursor()
+        
+        # Drop all tables
+        cursor.execute('DROP TABLE IF EXISTS transactions')
+        cursor.execute('DROP TABLE IF EXISTS crypto_prices')
+        cursor.execute('DROP TABLE IF EXISTS stock_prices')
+        cursor.execute('DROP TABLE IF EXISTS exchange_rates')
+        
+        conn.commit()
+        conn.close()
+        
+        # Reinitialize database with empty tables
+        initialise_db()
+        logger.info("Database reset successfully - all tables cleared and reinitialized")
+        return True
+    except Exception as e:
+        logger.error(f"Error resetting database: {e}")
+        return False
     

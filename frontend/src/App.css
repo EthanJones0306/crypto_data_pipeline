@@ -185,6 +185,37 @@ body {
   transform: scale(1.2) rotate(20deg);
 }
 
+.header-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.reset-btn {
+  padding: 10px 20px;
+  font-size: 1em;
+  font-weight: 600;
+  border: 2px solid #c0444b;
+  background: rgba(192, 68, 75, 0.1);
+  color: #c0444b;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.reset-btn:hover:not(:disabled) {
+  background: rgba(192, 68, 75, 0.2);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(192, 68, 75, 0.3);
+}
+
+.reset-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
 main {
   max-width: 1200px;
   margin: 40px auto;
@@ -356,4 +387,122 @@ tr:last-child td {
 
 .tab:hover {
   transform: translateY(-2px);
+}
+
+/* SEMANTIC FINANCIAL INDICATORS */
+
+/* Profit/Gains - Green */
+.gain,
+.profit,
+.gain-value {
+  color: #17b89a;
+  font-weight: 600;
+}
+
+.App.dark-mode .gain {
+  color: #17b89a;
+}
+
+.App.light-mode .gain {
+  color: #0e7c6b;
+}
+
+/* Loss/Negative - Red */
+.loss,
+.negative,
+.loss-value {
+  color: #c0444b;
+  font-weight: 600;
+}
+
+.App.dark-mode .loss {
+  color: #c0444b;
+}
+
+.App.light-mode .loss {
+  color: #a03238;
+}
+
+/* Gain Card Background */
+.gain-card {
+  border: 2px solid #17b89a;
+  background: rgba(23, 184, 154, 0.05);
+}
+
+.App.dark-mode .gain-card {
+  border-color: #17b89a;
+  background: rgba(23, 184, 154, 0.08);
+}
+
+.App.light-mode .gain-card {
+  border-color: #0e7c6b;
+  background: rgba(14, 124, 107, 0.05);
+}
+
+/* Loss Card Background */
+.loss-card {
+  border: 2px solid #c0444b;
+  background: rgba(192, 68, 75, 0.05);
+}
+
+.App.dark-mode .loss-card {
+  border-color: #c0444b;
+  background: rgba(192, 68, 75, 0.08);
+}
+
+.App.light-mode .loss-card {
+  border-color: #a03238;
+  background: rgba(160, 50, 56, 0.05);
+}
+
+/* Data/Links - Blue */
+.data-link,
+.chart-element {
+  color: #4aa8e0;
+}
+
+.App.dark-mode .data-link {
+  color: #4aa8e0;
+}
+
+.App.dark-mode .data-link:hover {
+  color: #6bbcf0;
+}
+
+.App.light-mode .data-link {
+  color: #2a7bb8;
+}
+
+.App.light-mode .data-link:hover {
+  color: #4aa8e0;
+}
+
+/* Alerts/Signals - Gold */
+.alert,
+.signal,
+.watchlist-highlight {
+  color: #f0c040;
+  font-weight: 600;
+}
+
+.App.dark-mode .signal {
+  background: rgba(240, 192, 64, 0.1);
+  border-left: 3px solid #f0c040;
+}
+
+.App.light-mode .signal {
+  background: rgba(240, 192, 64, 0.08);
+  border-left: 3px solid #d4a627;
+}
+
+/* Secondary/Muted Text */
+.muted,
+.secondary-text {
+  color: #c8d8e8;
+  opacity: 0.8;
+}
+
+.App.light-mode .muted {
+  color: #7a8a9e;
+  opacity: 0.9;
 }
