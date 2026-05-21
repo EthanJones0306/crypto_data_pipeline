@@ -43,3 +43,23 @@ export const sellCrypto = async (asset, quantity) => {
   if (!response.ok) throw new Error('Failed to sell');
   return response.json();
 };
+
+export const buyStock = async (symbol, quantity) => {
+  const response = await fetch(`${API_BASE}/buy/stock`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ asset: symbol, quantity })
+  });
+  if (!response.ok) throw new Error('Failed to buy stock');
+  return response.json();
+};
+
+export const sellStock = async (symbol, quantity) => {
+  const response = await fetch(`${API_BASE}/sell/stock`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ asset: symbol, quantity })
+  });
+  if (!response.ok) throw new Error('Failed to sell stock');
+  return response.json();
+};

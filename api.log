@@ -3,3 +3,8 @@
 2026-05-19 15:53:10,612 - database - INFO - Stored: ethereum - $2119.57 at 2026-05-19 15:53:10
 2026-05-19 15:53:10,612 - database - INFO - Stored: solana - $84.75 at 2026-05-19 15:53:10
 2026-05-19 15:53:10,615 - services - INFO - Successfully bought 0.1 bitcoin at $76811
+2026-05-21 13:09:40,125 - services - INFO - Attempting to buy 1.0 bitcoin
+2026-05-21 13:09:40,846 - database - INFO - Stored: bitcoin - $77163 at 2026-05-21 13:09:40
+2026-05-21 13:09:40,847 - database - INFO - Stored: ethereum - $2113.18 at 2026-05-21 13:09:40
+2026-05-21 13:09:40,847 - database - INFO - Stored: solana - $85.7 at 2026-05-21 13:09:40
+2026-05-21 13:09:40,848 - services - INFO - Successfully bought 1.0 bitcoin at $77163

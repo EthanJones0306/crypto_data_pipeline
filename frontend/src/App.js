@@ -3,6 +3,7 @@ import './App.css';
 import PortfolioValue from './components/PortfolioValue';
 import Prices from './components/Prices';
 import Transactions from './components/Transactions';
+import Trading from './components/Trading';
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -29,6 +30,8 @@ function App() {
         return <Prices />;
       case 'transactions':
         return <Transactions />;
+      case 'trading':
+        return <Trading />;
       default:
         return <PortfolioValue />;
     }
@@ -67,6 +70,12 @@ function App() {
             onClick={() => setActiveTab('transactions')}
           >
             📝 Transactions
+          </button>
+          <button 
+            className={`tab ${activeTab === 'trading' ? 'active' : ''}`}
+            onClick={() => setActiveTab('trading')}
+          >
+            💱 Trading
           </button>
         </div>
         {renderContent()}
