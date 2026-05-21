@@ -1,5 +1,11 @@
 const API_BASE = 'http://localhost:8000';
 
+export const fetchHealth = async () => {
+  const response = await fetch(`${API_BASE}/health`);
+  if (!response.ok) throw new Error('Failed to fetch health');
+  return response.json();
+};
+
 export const fetchPortfolioValue = async () => {
   const response = await fetch(`${API_BASE}/portfolio/value`);
   if (!response.ok) throw new Error('Failed to fetch portfolio');

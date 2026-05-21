@@ -62,6 +62,16 @@ body {
   background: #1e293b;
 }
 
+.App.dark-mode .stat-card {
+  background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
+  border: 1px solid #475569;
+}
+
+.App.dark-mode .stat-card:hover {
+  border-color: #60a5fa;
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.15);
+}
+
 /* LIGHT MODE */
 .App.light-mode {
   min-height: 100vh;
@@ -112,6 +122,16 @@ body {
   background: #f1f5f9;
 }
 
+.App.light-mode .stat-card {
+  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+  border: 1px solid #cbd5e1;
+}
+
+.App.light-mode .stat-card:hover {
+  border-color: #3b82f6;
+  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.1);
+}
+
 /* SHARED STYLES */
 .App {
   min-height: 100vh;
@@ -120,7 +140,6 @@ body {
 
 .App-header {
   padding: 40px 20px;
-  text-align: center;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }
@@ -134,7 +153,7 @@ body {
 }
 
 .App-header h1 {
-  font-size: 3em;
+  font-size: 2.5em;
   font-weight: 700;
   transition: all 0.3s ease;
   margin: 0;
@@ -148,18 +167,14 @@ body {
   padding: 10px;
   border-radius: 50%;
   transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .theme-toggle:hover {
   transform: scale(1.2) rotate(20deg);
-  background: rgba(0, 0, 0, 0.1);
 }
 
 main {
-  max-width: 1400px;
+  max-width: 1200px;
   margin: 40px auto;
   padding: 0 20px;
 }
@@ -171,7 +186,7 @@ main {
 }
 
 .portfolio-container h2 {
-  font-size: 1.5em;
+  font-size: 1.8em;
   margin-bottom: 20px;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -179,7 +194,7 @@ main {
 }
 
 .total-value {
-  font-size: 4em;
+  font-size: 3.5em;
   font-weight: 700;
   background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
   -webkit-background-clip: text;
@@ -188,6 +203,53 @@ main {
   margin: 30px 0;
   font-family: 'Courier New', monospace;
   letter-spacing: 2px;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin: 40px 0;
+}
+
+.stat-card {
+  padding: 25px;
+  border-radius: 12px;
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  transition: all 0.3s ease;
+}
+
+.stat-icon {
+  font-size: 2.5em;
+  line-height: 1;
+  min-width: 50px;
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-label {
+  font-size: 0.8em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+  opacity: 0.75;
+}
+
+.stat-value {
+  font-size: 1.6em;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.stat-subtitle {
+  font-size: 0.75em;
+  opacity: 0.6;
 }
 
 .portfolio-container h3 {
