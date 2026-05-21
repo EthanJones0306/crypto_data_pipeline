@@ -285,3 +285,63 @@ td {
 tr:last-child td {
   border-bottom: none;
 }
+/* Tabs Navigation */
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+  border-bottom: 2px solid transparent;
+}
+
+.App.dark-mode .tabs {
+  border-bottom-color: #334155;
+}
+
+.App.light-mode .tabs {
+  border-bottom-color: #cbd5e1;
+}
+
+.tab {
+  padding: 12px 24px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  border-bottom: 3px solid transparent;
+  position: relative;
+  bottom: -2px;
+}
+
+.App.dark-mode .tab {
+  color: #94a3b8;
+}
+
+.App.dark-mode .tab:hover {
+  color: #cbd5e1;
+}
+
+.App.dark-mode .tab.active {
+  color: #60a5fa;
+  border-bottom-color: #60a5fa;
+}
+
+.App.light-mode .tab {
+  color: #64748b;
+}
+
+.App.light-mode .tab:hover {
+  color: #475569;
+}
+
+.App.light-mode .tab.active {
+  color: #1d4ed8;
+  border-bottom-color: #1d4ed8;
+}
+
+.tab:hover {
+  transform: translateY(-2px);
+}

@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
 import PortfolioValue from './components/PortfolioValue';
+import Prices from './components/Prices';
+import Transactions from './components/Transactions';
 
 function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
+  const [activeTab, setActiveTab] = useState('portfolio');
 
   // Save preference to localStorage
   useEffect(() => {
@@ -17,6 +20,19 @@ function App() {
       setIsDarkMode(false);
     }
   }, []);
+
+  const renderContent = () => {
+    switch(activeTab) {
+      case 'portfolio':
+        return <PortfolioValue />;
+      case 'prices':
+        return <Prices />;
+      case 'transactions':
+        return <Transactions />;
+      default:
+        return <PortfolioValue />;
+    }
+  };
 
   return (
     <div className={`App ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
@@ -33,7 +49,27 @@ function App() {
         </div>
       </header>
       <main>
-        <PortfolioValue />
+        <div className="tabs">
+          <button 
+            className={`tab ${activeTab === 'portfolio' ? 'active' : ''}`}
+            onClick={() => setActiveTab('portfolio')}
+          >
+            📊 Portfolio
+          </button>
+          <button 
+            className={`tab ${activeTab === 'prices' ? 'active' : ''}`}
+            onClick={() => setActiveTab('prices')}
+          >
+            💹 Prices
+          </button>
+          <button 
+            className={`tab ${activeTab === 'transactions' ? 'active' : ''}`}
+            onClick={() => setActiveTab('transactions')}
+          >
+            📝 Transactions
+          </button>
+        </div>
+        {renderContent()}
       </main>
     </div>
   );
