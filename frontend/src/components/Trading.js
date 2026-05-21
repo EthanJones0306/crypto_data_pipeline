@@ -14,7 +14,7 @@ function Trading() {
 
   const handleTrade = async (e) => {
     e.preventDefault();
-    if (!quantity || quantity <= 0) {
+    if (!quantity || quantity <= 0 || isNaN(quantity)) {
       setMessage({ type: 'error', text: 'Enter a valid quantity' });
       return;
     }
