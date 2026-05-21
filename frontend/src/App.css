@@ -12,80 +12,92 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+:root {
+  --void-black: #0f1923;
+  --midnight-slate: #162534;
+  --ocean-floor: #1e3448;
+  --emerald-tide: #0e7c6b;
+  --profit-green: #17b89a;
+  --loss-red: #c0444b;
+  --gold-signal: #f0c040;
+  --data-blue: #4aa8e0;
+  --muted-text: #c8d8e8;
+}
+
 /* DARK MODE (default) */
 .App.dark-mode {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-  color: #e2e8f0;
+  background: linear-gradient(135deg, #0f1923 0%, #162534 100%);
+  color: #c8d8e8;
 }
 
 .App.dark-mode .App-header {
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-  border-bottom: 1px solid #334155;
+  background: linear-gradient(135deg, #162534 0%, #0f1923 100%);
+  border-bottom: 2px solid #1e3448;
 }
 
 .App.dark-mode .App-header h1 {
-  background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
+  background: linear-gradient(135deg, #17b89a 0%, #4aa8e0 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
 .App.dark-mode .portfolio-container {
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-  border: 1px solid #334155;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(135deg, #162534 0%, #0f1923 100%);
+  border: 1px solid #1e3448;
+  box-shadow: 0 10px 30px rgba(30, 52, 72, 0.4);
 }
 
 .App.dark-mode .portfolio-container:hover {
-  border-color: #475569;
-  box-shadow: 0 15px 40px rgba(59, 130, 246, 0.1);
+  border-color: #4aa8e0;
+  box-shadow: 0 15px 40px rgba(74, 168, 224, 0.2);
 }
 
 .App.dark-mode .portfolio-container h2,
 .App.dark-mode .portfolio-container h3 {
-  color: #cbd5e1;
+  color: #c8d8e8;
 }
 
 .App.dark-mode th {
-  background: #0f172a;
-  color: #60a5fa;
-  border-bottom: 2px solid #334155;
+  background: #0f1923;
+  color: #4aa8e0;
+  border-bottom: 2px solid #1e3448;
 }
 
 .App.dark-mode td {
-  border-bottom: 1px solid #334155;
-  color: #e2e8f0;
+  border-bottom: 1px solid #162534;
+  color: #c8d8e8;
 }
 
 .App.dark-mode tr:hover {
-  background: #1e293b;
+  background: #162534;
 }
 
 .App.dark-mode .stat-card {
-  background: linear-gradient(135deg, #334155 0%, #1e293b 100%);
-  border: 1px solid #475569;
+  background: linear-gradient(135deg, #1e3448 0%, #162534 100%);
+  border: 1px solid #4aa8e0;
 }
 
 .App.dark-mode .stat-card:hover {
-  border-color: #60a5fa;
-  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.15);
+  border-color: #17b89a;
+  box-shadow: 0 8px 20px rgba(23, 184, 154, 0.2);
 }
 
 /* LIGHT MODE */
 .App.light-mode {
   min-height: 100vh;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-  color: #1e293b;
+  background: linear-gradient(135deg, #f5f8fc 0%, #f0f3f8 100%);
+  color: #0f1923;
 }
 
 .App.light-mode .App-header {
-  background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
-  border-bottom: 1px solid #cbd5e1;
+  background: linear-gradient(135deg, #162534 0%, #0f1923 100%);
+  border-bottom: 2px solid #1e3448;
 }
 
 .App.light-mode .App-header h1 {
-  background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  background: linear-gradient(135deg, #17b89a 0%, #4aa8e0 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -93,43 +105,43 @@ body {
 
 .App.light-mode .portfolio-container {
   background: #ffffff;
-  border: 1px solid #cbd5e1;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  border: 2px solid #1e3448;
+  box-shadow: 0 10px 30px rgba(15, 25, 35, 0.08);
 }
 
 .App.light-mode .portfolio-container:hover {
-  border-color: #94a3b8;
-  box-shadow: 0 15px 40px rgba(59, 130, 246, 0.15);
+  border-color: #4aa8e0;
+  box-shadow: 0 15px 40px rgba(74, 168, 224, 0.12);
 }
 
 .App.light-mode .portfolio-container h2,
 .App.light-mode .portfolio-container h3 {
-  color: #1e293b;
+  color: #0f1923;
 }
 
 .App.light-mode th {
-  background: #f8fafc;
-  color: #1d4ed8;
-  border-bottom: 2px solid #cbd5e1;
+  background: #162534;
+  color: #c8d8e8;
+  border-bottom: 2px solid #1e3448;
 }
 
 .App.light-mode td {
-  border-bottom: 1px solid #cbd5e1;
-  color: #334155;
+  border-bottom: 1px solid #f0f3f8;
+  color: #0f1923;
 }
 
 .App.light-mode tr:hover {
-  background: #f1f5f9;
+  background: #f5f8fc;
 }
 
 .App.light-mode .stat-card {
-  background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-  border: 1px solid #cbd5e1;
+  background: linear-gradient(135deg, #1e3448 0%, #162534 100%);
+  border: 2px solid #0f1923;
 }
 
 .App.light-mode .stat-card:hover {
-  border-color: #3b82f6;
-  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.1);
+  border-color: #17b89a;
+  box-shadow: 0 8px 20px rgba(23, 184, 154, 0.12);
 }
 
 /* SHARED STYLES */
@@ -196,7 +208,7 @@ main {
 .total-value {
   font-size: 3.5em;
   font-weight: 700;
-  background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+  background: linear-gradient(135deg, #17b89a 0%, #4aa8e0 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -294,11 +306,11 @@ tr:last-child td {
 }
 
 .App.dark-mode .tabs {
-  border-bottom-color: #334155;
+  border-bottom-color: #1e3448;
 }
 
 .App.light-mode .tabs {
-  border-bottom-color: #cbd5e1;
+  border-bottom-color: #4aa8e0;
 }
 
 .tab {
@@ -317,29 +329,29 @@ tr:last-child td {
 }
 
 .App.dark-mode .tab {
-  color: #94a3b8;
+  color: #c8d8e8;
 }
 
 .App.dark-mode .tab:hover {
-  color: #cbd5e1;
+  color: #4aa8e0;
 }
 
 .App.dark-mode .tab.active {
-  color: #60a5fa;
-  border-bottom-color: #60a5fa;
+  color: #17b89a;
+  border-bottom-color: #17b89a;
 }
 
 .App.light-mode .tab {
-  color: #64748b;
+  color: #162534;
 }
 
 .App.light-mode .tab:hover {
-  color: #475569;
+  color: #4aa8e0;
 }
 
 .App.light-mode .tab.active {
-  color: #1d4ed8;
-  border-bottom-color: #1d4ed8;
+  color: #0f1923;
+  border-bottom-color: #17b89a;
 }
 
 .tab:hover {

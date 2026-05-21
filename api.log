@@ -32,3 +32,35 @@
 2026-05-21 13:39:40,984 - fetch_stocks - WARNING - ✗ Empty quote data for GOOG. Full response: {"Information": "We have detected your API key as 79MC5EWVII5262UH and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits."}
 2026-05-21 13:39:42,647 - fetch_stocks - INFO - Alpha Vantage raw response for NVDA: {"Information": "We have detected your API key as 79MC5EWVII5262UH and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits."}
 2026-05-21 13:39:42,647 - fetch_stocks - WARNING - ✗ Empty quote data for NVDA. Full response: {"Information": "We have detected your API key as 79MC5EWVII5262UH and our standard API rate limit is 25 requests per day. Please subscribe to any of the premium plans at https://www.alphavantage.co/premium/ to instantly remove all daily rate limits."}
+2026-05-21 14:46:10,083 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-21 14:46:10,502 - fetch_stocks - INFO - ✓ Fetched AAPL from Finnhub: $302.25
+2026-05-21 14:46:10,996 - fetch_stocks - INFO - ✓ Fetched GOOG from Finnhub: $384.9
+2026-05-21 14:46:11,515 - fetch_stocks - INFO - ✓ Fetched NVDA from Finnhub: $223.47
+2026-05-21 14:46:11,623 - fetch_stocks - INFO - Cached stock prices saved
+2026-05-21 14:46:12,177 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-21 14:46:12,177 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-21 14:46:12,177 - fetch_stocks - INFO - Using cached stock prices
+2026-05-21 14:47:39,934 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-21 14:47:39,935 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-21 14:47:39,935 - fetch_stocks - INFO - Using cached stock prices
+2026-05-21 14:47:39,935 - api - INFO - Fetched AAPL: $302.25
+2026-05-21 14:47:39,935 - api - INFO - Fetched GOOG: $384.9
+2026-05-21 14:47:39,935 - api - INFO - Fetched NVDA: $223.47
+2026-05-21 14:47:40,498 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-21 14:47:40,498 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-21 14:47:40,498 - fetch_stocks - INFO - Using cached stock prices
+2026-05-21 14:47:40,498 - api - INFO - Fetched AAPL: $302.25
+2026-05-21 14:47:40,498 - api - INFO - Fetched GOOG: $384.9
+2026-05-21 14:47:40,499 - api - INFO - Fetched NVDA: $223.47
+2026-05-21 14:49:07,517 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-21 14:49:07,518 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-21 14:49:07,518 - fetch_stocks - INFO - Using cached stock prices
+2026-05-21 14:49:08,063 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-21 14:49:08,064 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-21 14:49:08,064 - fetch_stocks - INFO - Using cached stock prices
+2026-05-21 14:58:42,007 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-21 14:58:42,009 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-21 14:58:42,009 - fetch_stocks - INFO - Using cached stock prices
+2026-05-21 14:58:42,554 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-21 14:58:42,554 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-21 14:58:42,554 - fetch_stocks - INFO - Using cached stock prices

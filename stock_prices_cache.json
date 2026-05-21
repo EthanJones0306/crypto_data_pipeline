@@ -1,0 +1,20 @@
+{
+  "timestamp": "2026-05-21T14:46:11.623163",
+  "data": {
+    "AAPL": {
+      "05. price": "302.25",
+      "02. name": "AAPL",
+      "10. volume": "0"
+    },
+    "GOOG": {
+      "05. price": "384.9",
+      "02. name": "GOOG",
+      "10. volume": "0"
+    },
+    "NVDA": {
+      "05. price": "223.47",
+      "02. name": "NVDA",
+      "10. volume": "0"
+    }
+  }
+}
