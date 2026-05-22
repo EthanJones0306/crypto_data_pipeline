@@ -17,11 +17,13 @@ function PortfolioDonutChart() {
       const response = await fetchPortfolioValue();
       
       if (response.holdings && response.holdings.length > 0) {
-        // Format data for the donut chart
-        const chartData = response.holdings.map(holding => ({
-          name: holding.asset,
-          value: parseFloat(holding.value_usd) || 0
-        }));
+        // Format data for the donut chart - ONLY include holdings with value > 0
+        const chartData = response.holdings
+          .map(holding => ({
+            name: holding.asset,
+            value: parseFloat(holding.total_value) || 0
+          }))
+          .filter(item => item.value > 0);  // Filter out zero values
         
         setData(chartData);
       }
