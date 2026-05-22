@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { fetchPortfolioValue, fetchHealth, fetchExchangeRates } from '../services/api';
 import StatCard from './StatCard';
+import PortfolioDonutChart from './PortfolioDonutChart';
 
 function PortfolioValue() {
   const [portfolio, setPortfolio] = useState(null);
@@ -111,6 +112,8 @@ function PortfolioValue() {
           icon="📊"
         />
       </div>
+      
+      <PortfolioDonutChart />
       
       <h3>Holdings Breakdown</h3>
       <table>

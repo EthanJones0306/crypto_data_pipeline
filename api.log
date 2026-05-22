@@ -99,3 +99,304 @@
 2026-05-21 15:59:37,277 - fetch_stocks - INFO - Using stock price provider: finnhub
 2026-05-21 15:59:37,278 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
 2026-05-21 15:59:37,278 - fetch_stocks - INFO - Using cached stock prices
+2026-05-21 17:39:56,962 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-21 17:39:56,964 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-21 17:39:56,964 - fetch_stocks - INFO - Using cached stock prices
+2026-05-21 17:39:57,511 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-21 17:39:57,511 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-21 17:39:57,511 - fetch_stocks - INFO - Using cached stock prices
+2026-05-21 17:40:23,837 - services - INFO - Attempting to buy 1.0 solana
+2026-05-21 17:40:24,153 - database - INFO - Stored: bitcoin - $77047 at 2026-05-21 17:40:24
+2026-05-21 17:40:24,154 - database - INFO - Stored: ethereum - $2126.79 at 2026-05-21 17:40:24
+2026-05-21 17:40:24,154 - database - INFO - Stored: solana - $86.38 at 2026-05-21 17:40:24
+2026-05-21 17:40:24,155 - services - INFO - Successfully bought 1.0 solana at $86.38
+2026-05-21 17:40:26,071 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-21 17:40:26,071 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-21 17:40:26,071 - fetch_stocks - INFO - Using cached stock prices
+2026-05-21 17:40:26,132 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-21 17:40:26,132 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-21 17:40:26,132 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:01:26,366 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:01:26,369 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:01:26,369 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:01:26,417 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:01:26,417 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:01:26,418 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:01:50,290 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:01:50,292 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:01:50,293 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:01:50,335 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:01:50,336 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:01:50,336 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:01:50,922 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:01:50,925 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:01:50,925 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:01:51,003 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:01:51,003 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:01:51,003 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:02:02,363 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:02:02,365 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:02:02,365 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:02:02,409 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:02:02,410 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:02:02,410 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:02:02,458 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:02:02,458 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:02:02,459 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:02:02,563 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:02:02,563 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:02:02,563 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:02:23,708 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:02:23,710 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:02:23,710 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:02:23,765 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:02:23,766 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:02:23,766 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:02:23,810 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:02:23,810 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:02:23,810 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:02:23,850 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:02:23,851 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:02:23,851 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:02:41,383 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:02:41,425 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:02:41,426 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:02:41,601 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:02:41,601 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:02:41,602 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:02:41,639 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:02:41,639 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:02:41,639 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:02:41,676 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:02:41,676 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:02:41,676 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:04:09,011 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:04:09,012 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:04:09,012 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:04:09,058 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:04:09,058 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:04:09,058 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:04:09,110 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:04:09,111 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:04:09,111 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:04:09,170 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:04:09,170 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:04:09,170 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:04:57,476 - services - INFO - Attempting to buy 1.0 bitcoin
+2026-05-22 06:04:57,798 - database - INFO - Stored: bitcoin - $77730 at 2026-05-22 06:04:57
+2026-05-22 06:04:57,798 - database - INFO - Stored: ethereum - $2137.0 at 2026-05-22 06:04:57
+2026-05-22 06:04:57,798 - database - INFO - Stored: solana - $86.98 at 2026-05-22 06:04:57
+2026-05-22 06:04:57,799 - services - INFO - Successfully bought 1.0 bitcoin at $77730
+2026-05-22 06:04:59,741 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:04:59,742 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:04:59,742 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:04:59,785 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:04:59,787 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:04:59,787 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:04:59,830 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:04:59,830 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:04:59,830 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:04:59,877 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:04:59,877 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:04:59,877 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:05:14,983 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:05:14,984 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:05:14,984 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:05:15,057 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:05:15,073 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:05:15,073 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:05:15,196 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:05:15,196 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:05:15,197 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:05:15,258 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:05:15,258 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:05:15,258 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:05:24,971 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:05:24,971 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:05:24,971 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:05:24,971 - api - INFO - Fetched AAPL: $302.25
+2026-05-22 06:05:24,972 - api - INFO - Fetched GOOG: $384.9
+2026-05-22 06:05:24,972 - api - INFO - Fetched NVDA: $223.47
+2026-05-22 06:05:25,021 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:05:25,022 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:05:25,022 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:05:25,022 - api - INFO - Fetched AAPL: $302.25
+2026-05-22 06:05:25,022 - api - INFO - Fetched GOOG: $384.9
+2026-05-22 06:05:25,022 - api - INFO - Fetched NVDA: $223.47
+2026-05-22 06:06:22,509 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:06:22,509 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:06:22,510 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:06:22,510 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:06:22,510 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:06:22,510 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:06:22,584 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:06:22,585 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:06:22,585 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:06:22,586 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:06:22,586 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:06:22,586 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:06:30,121 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:06:30,122 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:06:30,122 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:06:30,122 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:06:30,122 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:06:30,122 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:06:30,122 - api - INFO - Fetched AAPL: $302.25
+2026-05-22 06:06:30,122 - api - INFO - Fetched AAPL: $302.25
+2026-05-22 06:06:30,122 - api - INFO - Fetched GOOG: $384.9
+2026-05-22 06:06:30,123 - api - INFO - Fetched GOOG: $384.9
+2026-05-22 06:06:30,123 - api - INFO - Fetched NVDA: $223.47
+2026-05-22 06:06:30,123 - api - INFO - Fetched NVDA: $223.47
+2026-05-22 06:06:32,703 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:06:32,703 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:06:32,703 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:06:32,717 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:06:32,719 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:06:32,720 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:06:32,821 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:06:32,822 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:06:32,822 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:06:32,822 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:06:32,822 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:06:32,822 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:07:04,834 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:07:04,835 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:07:04,835 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:07:04,835 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:07:04,836 - api - INFO - Fetched AAPL: $302.25
+2026-05-22 06:07:04,836 - api - INFO - Fetched GOOG: $384.9
+2026-05-22 06:07:04,836 - api - INFO - Fetched NVDA: $223.47
+2026-05-22 06:07:04,836 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:07:04,836 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:07:04,836 - api - INFO - Fetched AAPL: $302.25
+2026-05-22 06:07:04,836 - api - INFO - Fetched GOOG: $384.9
+2026-05-22 06:07:04,836 - api - INFO - Fetched NVDA: $223.47
+2026-05-22 06:07:10,095 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:07:10,096 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:07:10,096 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:07:10,096 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:07:10,096 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:07:10,096 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:07:10,096 - api - INFO - Fetched AAPL: $302.25
+2026-05-22 06:07:10,096 - api - INFO - Fetched AAPL: $302.25
+2026-05-22 06:07:10,096 - api - INFO - Fetched GOOG: $384.9
+2026-05-22 06:07:10,096 - api - INFO - Fetched GOOG: $384.9
+2026-05-22 06:07:10,096 - api - INFO - Fetched NVDA: $223.47
+2026-05-22 06:07:10,097 - api - INFO - Fetched NVDA: $223.47
+2026-05-22 06:08:11,819 - services - INFO - Attempting to buy 2.0 AAPL
+2026-05-22 06:08:11,819 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:08:11,820 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:08:11,820 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:08:11,821 - database - INFO - Stored: AAPL - $302.25 at 2026-05-22 06:08:11
+2026-05-22 06:08:11,821 - database - INFO - Stored: GOOG - $384.9 at 2026-05-22 06:08:11
+2026-05-22 06:08:11,822 - database - INFO - Stored: NVDA - $223.47 at 2026-05-22 06:08:11
+2026-05-22 06:08:11,823 - services - INFO - Successfully bought 2.0 AAPL at $302.25
+2026-05-22 06:08:18,712 - services - INFO - Attempting to sell 1.0 bitcoin
+2026-05-22 06:08:19,017 - database - INFO - Stored: bitcoin - $77759 at 2026-05-22 06:08:19
+2026-05-22 06:08:19,017 - database - INFO - Stored: ethereum - $2138.02 at 2026-05-22 06:08:19
+2026-05-22 06:08:19,017 - database - INFO - Stored: solana - $87.03 at 2026-05-22 06:08:19
+2026-05-22 06:08:19,018 - services - INFO - Successfully sold 1.0 bitcoin at $77759
+2026-05-22 06:08:20,194 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:08:20,195 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:08:20,195 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:08:20,247 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:08:20,247 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:08:20,247 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:08:20,469 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:08:20,470 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:08:20,470 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:08:20,521 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:08:20,523 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:08:20,524 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:08:28,267 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:08:28,268 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:08:28,268 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:08:28,268 - api - INFO - Fetched AAPL: $302.25
+2026-05-22 06:08:28,268 - api - INFO - Fetched GOOG: $384.9
+2026-05-22 06:08:28,268 - api - INFO - Fetched NVDA: $223.47
+2026-05-22 06:08:28,310 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:08:28,310 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:08:28,310 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:08:28,310 - api - INFO - Fetched AAPL: $302.25
+2026-05-22 06:08:28,310 - api - INFO - Fetched GOOG: $384.9
+2026-05-22 06:08:28,310 - api - INFO - Fetched NVDA: $223.47
+2026-05-22 06:09:27,227 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:09:27,228 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:09:27,228 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:09:51,937 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:09:51,940 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:09:51,940 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:09:51,996 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:09:51,997 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:09:51,997 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:09:52,057 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:09:52,057 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:09:52,057 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:09:52,123 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:09:52,123 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:09:52,123 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:09:56,045 - database - INFO - Database reset successfully - all tables cleared and reinitialized
+2026-05-22 06:09:59,616 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:09:59,617 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:09:59,617 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:09:59,668 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:09:59,668 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:09:59,668 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:09:59,720 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:09:59,720 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:09:59,720 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:09:59,761 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:09:59,761 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:09:59,761 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:10:06,782 - services - INFO - Attempting to buy 1.0 AAPL
+2026-05-22 06:10:06,782 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:10:06,782 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:10:06,782 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:10:06,783 - database - INFO - Stored: AAPL - $302.25 at 2026-05-22 06:10:06
+2026-05-22 06:10:06,783 - database - INFO - Stored: GOOG - $384.9 at 2026-05-22 06:10:06
+2026-05-22 06:10:06,783 - database - INFO - Stored: NVDA - $223.47 at 2026-05-22 06:10:06
+2026-05-22 06:10:06,784 - services - INFO - Successfully bought 1.0 AAPL at $302.25
+2026-05-22 06:10:11,318 - services - INFO - Attempting to buy 1.0 NVDA
+2026-05-22 06:10:11,318 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:10:11,319 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:10:11,319 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:10:11,319 - database - INFO - Stored: AAPL - $302.25 at 2026-05-22 06:10:11
+2026-05-22 06:10:11,319 - database - INFO - Stored: GOOG - $384.9 at 2026-05-22 06:10:11
+2026-05-22 06:10:11,319 - database - INFO - Stored: NVDA - $223.47 at 2026-05-22 06:10:11
+2026-05-22 06:10:11,320 - services - INFO - Successfully bought 1.0 NVDA at $223.47
+2026-05-22 06:10:13,102 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:10:13,102 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:10:13,103 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:10:13,138 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:10:13,138 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:10:13,138 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:10:13,179 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:10:13,179 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:10:13,179 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:10:13,218 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:10:13,218 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:10:13,218 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:10:17,784 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:10:17,784 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:10:17,784 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:10:17,784 - api - INFO - Fetched AAPL: $302.25
+2026-05-22 06:10:17,784 - api - INFO - Fetched GOOG: $384.9
+2026-05-22 06:10:17,784 - api - INFO - Fetched NVDA: $223.47
+2026-05-22 06:10:17,824 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:10:17,825 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:10:17,825 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:10:17,825 - api - INFO - Fetched AAPL: $302.25
+2026-05-22 06:10:17,825 - api - INFO - Fetched GOOG: $384.9
+2026-05-22 06:10:17,825 - api - INFO - Fetched NVDA: $223.47
+2026-05-22 06:10:20,284 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:10:20,284 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:10:20,284 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:10:20,326 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:10:20,327 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:10:20,327 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:10:20,363 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:10:20,363 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:10:20,363 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:10:20,416 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:10:20,416 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:10:20,416 - fetch_stocks - INFO - Using cached stock prices
