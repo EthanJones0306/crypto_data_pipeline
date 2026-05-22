@@ -706,3 +706,66 @@
 2026-05-22 06:20:52,268 - api - INFO - Fetched AAPL: $302.25
 2026-05-22 06:20:52,268 - api - INFO - Fetched GOOG: $384.9
 2026-05-22 06:20:52,268 - api - INFO - Fetched NVDA: $223.47
+2026-05-22 06:35:30,612 - api - INFO - 🔍 Crypto search for 'bitcoin': found 10 results
+2026-05-22 06:35:39,076 - api - INFO - 🔍 Stock search for 'apple': found 1 results
+2026-05-22 06:35:50,059 - api - INFO - 🔍 Crypto search for 'doge': found 10 results
+2026-05-22 06:38:01,300 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko...
+2026-05-22 06:38:01,653 - fetch_crypto - INFO - ✅ Successfully fetched from CoinGecko: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 06:38:01,654 - fetch_crypto - INFO - Cached crypto prices saved
+2026-05-22 06:38:01,655 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:38:01,655 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:38:01,655 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:38:01,657 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko...
+2026-05-22 06:38:01,702 - fetch_crypto - INFO - ✅ Successfully fetched from CoinGecko: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 06:38:01,703 - fetch_crypto - INFO - Cached crypto prices saved
+2026-05-22 06:38:01,704 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:38:01,704 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:38:01,704 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:38:01,730 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko...
+2026-05-22 06:38:01,784 - fetch_crypto - INFO - ✅ Successfully fetched from CoinGecko: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 06:38:01,785 - fetch_crypto - INFO - Cached crypto prices saved
+2026-05-22 06:38:01,786 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:38:01,786 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:38:01,786 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:38:01,789 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko...
+2026-05-22 06:38:01,860 - fetch_crypto - INFO - ✅ Successfully fetched from CoinGecko: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 06:38:01,862 - fetch_crypto - INFO - Cached crypto prices saved
+2026-05-22 06:38:01,863 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:38:01,865 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:38:01,865 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:38:16,849 - api - INFO - 🔍 Crypto search for 'eth': found 10 results
+2026-05-22 06:38:55,811 - api - INFO - 🔍 Crypto search for 'pal': found 10 results
+2026-05-22 06:39:21,708 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko...
+2026-05-22 06:39:22,041 - fetch_crypto - INFO - ✅ Successfully fetched from CoinGecko: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 06:39:22,042 - fetch_crypto - INFO - Cached crypto prices saved
+2026-05-22 06:39:22,043 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:39:22,044 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:39:22,044 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:39:22,046 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko...
+2026-05-22 06:39:22,101 - fetch_crypto - INFO - ✅ Successfully fetched from CoinGecko: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 06:39:22,102 - fetch_crypto - INFO - Cached crypto prices saved
+2026-05-22 06:39:22,104 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:39:22,105 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:39:22,106 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:39:22,110 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko...
+2026-05-22 06:39:22,159 - fetch_crypto - INFO - ✅ Successfully fetched from CoinGecko: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 06:39:22,159 - fetch_crypto - INFO - Cached crypto prices saved
+2026-05-22 06:39:22,160 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:39:22,161 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:39:22,161 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:39:22,163 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko...
+2026-05-22 06:39:22,209 - fetch_crypto - WARNING - ❌ HTTP error from CoinGecko: 429
+2026-05-22 06:39:22,210 - fetch_crypto - INFO - Trying cached prices...
+2026-05-22 06:39:22,210 - fetch_crypto - INFO - Using cached crypto prices (age: 0.0 hours)
+2026-05-22 06:39:22,210 - fetch_crypto - INFO - 📦 Using cached prices for: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 06:39:22,212 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:39:22,213 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:39:22,213 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:39:37,432 - api - INFO - 🔍 Stock search for 'tes': found 1 results
+2026-05-22 06:39:41,751 - api - INFO - 🔍 Stock search for 'n': found 23 results
+2026-05-22 06:39:42,386 - api - INFO - 🔍 Stock search for 'nasp': found 0 results
+2026-05-22 06:39:44,273 - api - INFO - 🔍 Stock search for 'nas': found 0 results
+2026-05-22 06:39:45,864 - api - INFO - 🔍 Stock search for 'na': found 0 results
+2026-05-22 06:39:46,779 - api - INFO - 🔍 Stock search for 'n': found 23 results
+2026-05-22 06:39:54,567 - api - INFO - 🔍 Stock search for 'morg': found 1 results
+2026-05-22 06:39:57,613 - api - INFO - 🔍 Stock search for 'm': found 14 results
