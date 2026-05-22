@@ -159,3 +159,60 @@ def get_stock_prices(api_key):
     
     return None
 
+def get_stock_price(symbol, api_key=None):
+    """
+    Fetch price for a single stock symbol on demand
+    
+    Args:
+        symbol: Stock ticker symbol (e.g., 'TSLA', 'AAPL')
+        api_key: API key for stock price provider
+    
+    Returns:
+        dict with '05. price' key, or None if not found
+    """
+    if not api_key:
+        api_key = os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower()
+        if api_key == 'finnhub':
+            api_key = os.getenv('FINNHUB_API_KEY')
+        else:
+            api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
+    
+    if not api_key:
+        logger.warning(f"No API key available to fetch {symbol}")
+        return None
+    
+    provider = os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower()
+    
+    try:
+        if provider == 'finnhub':
+            url = f'https://finnhub.io/api/v1/quote?symbol={symbol}&token={api_key}'
+            response = requests.get(url, timeout=5)
+            response.raise_for_status()
+            data = response.json()
+            
+            if data.get('c'):
+                result = {
+                    '05. price': str(data['c']),
+                    '02. name': symbol,
+                    '10. volume': str(int(data.get('v', 0)))
+                }
+                logger.info(f"✅ Fetched {symbol} from Finnhub: ${data['c']}")
+                return result
+        
+        elif provider == 'alphavantage':
+            url = f'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={symbol}&apikey={api_key}'
+            response = requests.get(url, timeout=5)
+            response.raise_for_status()
+            data = response.json()
+            
+            quote = data.get('Global Quote', {})
+            if quote and quote.get('05. price'):
+                logger.info(f"✅ Fetched {symbol} from Alpha Vantage: ${quote.get('05. price')}")
+                return quote
+    
+    except Exception as e:
+        logger.warning(f"⚠️ Could not fetch {symbol}: {e}")
+    
+    logger.warning(f"❌ No price available for {symbol}")
+    return None
+

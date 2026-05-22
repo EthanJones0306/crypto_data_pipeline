@@ -769,3 +769,329 @@
 2026-05-22 06:39:46,779 - api - INFO - 🔍 Stock search for 'n': found 23 results
 2026-05-22 06:39:54,567 - api - INFO - 🔍 Stock search for 'morg': found 1 results
 2026-05-22 06:39:57,613 - api - INFO - 🔍 Stock search for 'm': found 14 results
+2026-05-22 06:41:12,494 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko...
+2026-05-22 06:41:12,842 - fetch_crypto - INFO - ✅ Successfully fetched from CoinGecko: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 06:41:12,844 - fetch_crypto - INFO - Cached crypto prices saved
+2026-05-22 06:41:12,845 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:41:12,845 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:41:12,845 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:41:12,847 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko...
+2026-05-22 06:41:12,900 - fetch_crypto - INFO - ✅ Successfully fetched from CoinGecko: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 06:41:12,901 - fetch_crypto - INFO - Cached crypto prices saved
+2026-05-22 06:41:12,902 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:41:12,902 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:41:12,902 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:41:12,906 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko...
+2026-05-22 06:41:12,961 - fetch_crypto - INFO - ✅ Successfully fetched from CoinGecko: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 06:41:12,961 - fetch_crypto - INFO - Cached crypto prices saved
+2026-05-22 06:41:12,962 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:41:12,963 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:41:12,963 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:41:12,965 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko...
+2026-05-22 06:41:13,003 - fetch_crypto - INFO - ✅ Successfully fetched from CoinGecko: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 06:41:13,003 - fetch_crypto - INFO - Cached crypto prices saved
+2026-05-22 06:41:13,004 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:41:13,004 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:41:13,004 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:41:19,111 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko...
+2026-05-22 06:41:19,599 - fetch_crypto - INFO - ✅ Successfully fetched from CoinGecko: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 06:41:19,600 - fetch_crypto - INFO - Cached crypto prices saved
+2026-05-22 06:41:19,602 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:41:19,602 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:41:19,602 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:41:19,603 - api - INFO - Fetched AAPL: $302.25
+2026-05-22 06:41:19,603 - api - INFO - Fetched GOOG: $384.9
+2026-05-22 06:41:19,603 - api - INFO - Fetched NVDA: $223.47
+2026-05-22 06:41:19,609 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko...
+2026-05-22 06:41:19,654 - fetch_crypto - WARNING - ❌ HTTP error from CoinGecko: 429
+2026-05-22 06:41:19,654 - fetch_crypto - INFO - Trying cached prices...
+2026-05-22 06:41:19,654 - fetch_crypto - INFO - Using cached crypto prices (age: 0.0 hours)
+2026-05-22 06:41:19,654 - fetch_crypto - INFO - 📦 Using cached prices for: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 06:41:19,656 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:41:19,656 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:41:19,656 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:41:19,656 - api - INFO - Fetched AAPL: $302.25
+2026-05-22 06:41:19,656 - api - INFO - Fetched GOOG: $384.9
+2026-05-22 06:41:19,656 - api - INFO - Fetched NVDA: $223.47
+2026-05-22 06:41:31,445 - api - INFO - 🔍 Crypto search for 'doge': found 10 results
+2026-05-22 06:41:35,365 - services - INFO - Attempting to buy 1.0 dogecoin
+2026-05-22 06:41:36,556 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko...
+2026-05-22 06:41:36,614 - fetch_crypto - WARNING - ❌ HTTP error from CoinGecko: 429
+2026-05-22 06:41:36,614 - fetch_crypto - INFO - Trying cached prices...
+2026-05-22 06:41:36,615 - fetch_crypto - INFO - Using cached crypto prices (age: 0.0 hours)
+2026-05-22 06:41:36,615 - fetch_crypto - INFO - 📦 Using cached prices for: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 06:41:36,616 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:41:36,618 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:41:36,618 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:41:36,622 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko...
+2026-05-22 06:41:36,663 - fetch_crypto - WARNING - ❌ HTTP error from CoinGecko: 429
+2026-05-22 06:41:36,663 - fetch_crypto - INFO - Trying cached prices...
+2026-05-22 06:41:36,663 - fetch_crypto - INFO - Using cached crypto prices (age: 0.0 hours)
+2026-05-22 06:41:36,663 - fetch_crypto - INFO - 📦 Using cached prices for: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 06:41:36,665 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:41:36,665 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:41:36,665 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:41:36,668 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko...
+2026-05-22 06:41:36,707 - fetch_crypto - WARNING - ❌ HTTP error from CoinGecko: 429
+2026-05-22 06:41:36,707 - fetch_crypto - INFO - Trying cached prices...
+2026-05-22 06:41:36,707 - fetch_crypto - INFO - Using cached crypto prices (age: 0.0 hours)
+2026-05-22 06:41:36,707 - fetch_crypto - INFO - 📦 Using cached prices for: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 06:41:36,708 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:41:36,708 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:41:36,708 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:41:36,710 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko...
+2026-05-22 06:41:36,752 - fetch_crypto - WARNING - ❌ HTTP error from CoinGecko: 429
+2026-05-22 06:41:36,752 - fetch_crypto - INFO - Trying cached prices...
+2026-05-22 06:41:36,752 - fetch_crypto - INFO - Using cached crypto prices (age: 0.0 hours)
+2026-05-22 06:41:36,752 - fetch_crypto - INFO - 📦 Using cached prices for: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 06:41:36,754 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:41:36,754 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:41:36,754 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:42:01,519 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko...
+2026-05-22 06:42:01,563 - fetch_crypto - WARNING - ❌ HTTP error from CoinGecko: 429
+2026-05-22 06:42:01,563 - fetch_crypto - INFO - Trying cached prices...
+2026-05-22 06:42:01,563 - fetch_crypto - INFO - Using cached crypto prices (age: 0.0 hours)
+2026-05-22 06:42:01,563 - fetch_crypto - INFO - 📦 Using cached prices for: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 06:42:01,565 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:42:01,565 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:42:01,565 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:42:01,565 - api - INFO - Fetched AAPL: $302.25
+2026-05-22 06:42:01,565 - api - INFO - Fetched GOOG: $384.9
+2026-05-22 06:42:01,565 - api - INFO - Fetched NVDA: $223.47
+2026-05-22 06:42:01,569 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko...
+2026-05-22 06:42:01,611 - fetch_crypto - WARNING - ❌ HTTP error from CoinGecko: 429
+2026-05-22 06:42:01,611 - fetch_crypto - INFO - Trying cached prices...
+2026-05-22 06:42:01,612 - fetch_crypto - INFO - Using cached crypto prices (age: 0.0 hours)
+2026-05-22 06:42:01,612 - fetch_crypto - INFO - 📦 Using cached prices for: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 06:42:01,613 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:42:01,613 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:42:01,613 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:42:01,613 - api - INFO - Fetched AAPL: $302.25
+2026-05-22 06:42:01,614 - api - INFO - Fetched GOOG: $384.9
+2026-05-22 06:42:01,614 - api - INFO - Fetched NVDA: $223.47
+2026-05-22 06:42:07,091 - api - INFO - 🔍 Crypto search for 'doeg': found 1 results
+2026-05-22 06:42:11,690 - services - INFO - Attempting to buy 1.0 doeg-wif-rerart
+2026-05-22 06:42:26,015 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko...
+2026-05-22 06:42:26,315 - fetch_crypto - INFO - ✅ Successfully fetched from CoinGecko: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 06:42:26,316 - fetch_crypto - INFO - Cached crypto prices saved
+2026-05-22 06:42:26,317 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:42:26,317 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:42:26,317 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:42:26,320 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko...
+2026-05-22 06:42:26,368 - fetch_crypto - INFO - ✅ Successfully fetched from CoinGecko: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 06:42:26,368 - fetch_crypto - INFO - Cached crypto prices saved
+2026-05-22 06:42:26,369 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:42:26,369 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:42:26,369 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:42:26,371 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko...
+2026-05-22 06:42:26,413 - fetch_crypto - INFO - ✅ Successfully fetched from CoinGecko: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 06:42:26,413 - fetch_crypto - INFO - Cached crypto prices saved
+2026-05-22 06:42:26,414 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:42:26,414 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:42:26,415 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:42:26,418 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko...
+2026-05-22 06:42:26,461 - fetch_crypto - WARNING - ❌ HTTP error from CoinGecko: 429
+2026-05-22 06:42:26,461 - fetch_crypto - INFO - Trying cached prices...
+2026-05-22 06:42:26,461 - fetch_crypto - INFO - Using cached crypto prices (age: 0.0 hours)
+2026-05-22 06:42:26,461 - fetch_crypto - INFO - 📦 Using cached prices for: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 06:42:26,462 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:42:26,463 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:42:26,463 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:46:02,973 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:46:02,974 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:46:02,975 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:46:02,975 - api - INFO - Fetched stock AAPL: $302.25
+2026-05-22 06:46:02,975 - api - INFO - Fetched stock NVDA: $223.47
+2026-05-22 06:46:03,125 - fetch_crypto - INFO - ✅ Fetched price for bitcoin: $77617
+2026-05-22 06:46:03,128 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:46:03,129 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:46:03,129 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:46:03,129 - api - INFO - Fetched stock AAPL: $302.25
+2026-05-22 06:46:03,129 - api - INFO - Fetched stock NVDA: $223.47
+2026-05-22 06:46:03,182 - fetch_crypto - INFO - ✅ Fetched price for bitcoin: $77617
+2026-05-22 06:46:03,191 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:46:03,191 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:46:03,191 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:46:03,191 - api - INFO - Fetched stock AAPL: $302.25
+2026-05-22 06:46:03,191 - api - INFO - Fetched stock NVDA: $223.47
+2026-05-22 06:46:03,237 - fetch_crypto - INFO - ✅ Fetched price for bitcoin: $77617
+2026-05-22 06:46:03,249 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:46:03,249 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:46:03,249 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:46:03,250 - api - INFO - Fetched stock AAPL: $302.25
+2026-05-22 06:46:03,250 - api - INFO - Fetched stock NVDA: $223.47
+2026-05-22 06:46:03,304 - fetch_crypto - INFO - ✅ Fetched price for bitcoin: $77617
+2026-05-22 06:46:07,472 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko for: ['bitcoin', 'ethereum', 'solana']...
+2026-05-22 06:46:07,768 - fetch_crypto - INFO - ✅ Successfully fetched from CoinGecko: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 06:46:07,768 - fetch_crypto - INFO - Cached crypto prices saved
+2026-05-22 06:46:07,770 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:46:07,770 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:46:07,770 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:46:07,770 - api - INFO - Fetched AAPL: $302.25
+2026-05-22 06:46:07,770 - api - INFO - Fetched GOOG: $384.9
+2026-05-22 06:46:07,770 - api - INFO - Fetched NVDA: $223.47
+2026-05-22 06:46:07,772 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko for: ['bitcoin', 'ethereum', 'solana']...
+2026-05-22 06:46:07,811 - fetch_crypto - WARNING - ❌ HTTP error from CoinGecko: 429
+2026-05-22 06:46:07,811 - fetch_crypto - INFO - Trying cached prices...
+2026-05-22 06:46:07,811 - fetch_crypto - INFO - 📦 Using cached crypto prices (age: 0.0 hours)
+2026-05-22 06:46:07,811 - fetch_crypto - INFO - 📦 Using cached prices for: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 06:46:07,813 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:46:07,813 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:46:07,813 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:46:07,813 - api - INFO - Fetched AAPL: $302.25
+2026-05-22 06:46:07,813 - api - INFO - Fetched GOOG: $384.9
+2026-05-22 06:46:07,813 - api - INFO - Fetched NVDA: $223.47
+2026-05-22 06:46:12,853 - api - INFO - 🔍 Crypto search for 'doge': found 10 results
+2026-05-22 06:46:16,326 - services - INFO - Attempting to buy 1.0 dogecoin
+2026-05-22 06:46:16,371 - fetch_crypto - WARNING - ⚠️ Using fallback price for dogecoin: $0.18
+2026-05-22 06:46:16,377 - services - INFO - Successfully bought 1.0 dogecoin at $0.18
+2026-05-22 06:46:18,623 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:46:18,624 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:46:18,625 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:46:18,626 - api - INFO - Fetched stock AAPL: $302.25
+2026-05-22 06:46:18,626 - api - INFO - Fetched stock NVDA: $223.47
+2026-05-22 06:46:18,674 - fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-22 06:46:18,725 - fetch_crypto - WARNING - ⚠️ Using fallback price for dogecoin: $0.18
+2026-05-22 06:46:18,729 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:46:18,730 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:46:18,730 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:46:18,730 - api - INFO - Fetched stock AAPL: $302.25
+2026-05-22 06:46:18,730 - api - INFO - Fetched stock NVDA: $223.47
+2026-05-22 06:46:18,771 - fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-22 06:46:18,804 - fetch_crypto - WARNING - ⚠️ Using fallback price for dogecoin: $0.18
+2026-05-22 06:46:18,808 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:46:18,808 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:46:18,809 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:46:18,809 - api - INFO - Fetched stock AAPL: $302.25
+2026-05-22 06:46:18,809 - api - INFO - Fetched stock NVDA: $223.47
+2026-05-22 06:46:18,844 - fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-22 06:46:18,881 - fetch_crypto - WARNING - ⚠️ Using fallback price for dogecoin: $0.18
+2026-05-22 06:46:18,884 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:46:18,884 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:46:18,884 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:46:18,884 - api - INFO - Fetched stock AAPL: $302.25
+2026-05-22 06:46:18,884 - api - INFO - Fetched stock NVDA: $223.47
+2026-05-22 06:46:18,921 - fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-22 06:46:18,955 - fetch_crypto - WARNING - ⚠️ Using fallback price for dogecoin: $0.18
+2026-05-22 06:46:32,920 - api - INFO - 🔍 Crypto search for 'tesk': found 0 results
+2026-05-22 06:46:33,214 - api - INFO - 🔍 Crypto search for 'tes': found 10 results
+2026-05-22 06:46:34,302 - api - INFO - 🔍 Stock search for 'tes': found 1 results
+2026-05-22 06:46:40,664 - services - INFO - Attempting to buy 3.0 TSLA
+2026-05-22 06:46:40,664 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:46:40,665 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:46:40,665 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:46:40,667 - database - INFO - Stored: AAPL - $302.25 at 2026-05-22 06:46:40
+2026-05-22 06:46:40,667 - database - INFO - Stored: GOOG - $384.9 at 2026-05-22 06:46:40
+2026-05-22 06:46:40,667 - database - INFO - Stored: NVDA - $223.47 at 2026-05-22 06:46:40
+2026-05-22 06:46:43,756 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:46:43,756 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:46:43,756 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:46:43,757 - api - INFO - Fetched stock AAPL: $302.25
+2026-05-22 06:46:43,757 - api - INFO - Fetched stock NVDA: $223.47
+2026-05-22 06:46:43,793 - fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-22 06:46:43,828 - fetch_crypto - WARNING - ⚠️ Using fallback price for dogecoin: $0.18
+2026-05-22 06:46:43,832 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:46:43,832 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:46:43,832 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:46:43,832 - api - INFO - Fetched stock AAPL: $302.25
+2026-05-22 06:46:43,832 - api - INFO - Fetched stock NVDA: $223.47
+2026-05-22 06:46:43,874 - fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-22 06:46:43,909 - fetch_crypto - WARNING - ⚠️ Using fallback price for dogecoin: $0.18
+2026-05-22 06:46:43,911 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:46:43,912 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:46:43,912 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:46:43,912 - api - INFO - Fetched stock AAPL: $302.25
+2026-05-22 06:46:43,912 - api - INFO - Fetched stock NVDA: $223.47
+2026-05-22 06:46:43,947 - fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-22 06:46:43,983 - fetch_crypto - WARNING - ⚠️ Using fallback price for dogecoin: $0.18
+2026-05-22 06:46:43,988 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:46:43,988 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:46:43,988 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:46:43,988 - api - INFO - Fetched stock AAPL: $302.25
+2026-05-22 06:46:43,988 - api - INFO - Fetched stock NVDA: $223.47
+2026-05-22 06:46:44,026 - fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-22 06:46:44,060 - fetch_crypto - WARNING - ⚠️ Using fallback price for dogecoin: $0.18
+2026-05-22 06:49:10,853 - api - INFO - 🔍 Stock search for 'tes': found 1 results
+2026-05-22 06:49:11,657 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:49:11,658 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:49:11,658 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:49:11,736 - fetch_crypto - INFO - ✅ Fetched price for bitcoin: $77582
+2026-05-22 06:49:12,046 - fetch_crypto - INFO - ✅ Fetched price for dogecoin: $0.105636
+2026-05-22 06:49:12,134 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:49:12,134 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:49:12,135 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:49:12,189 - fetch_crypto - INFO - ✅ Fetched price for bitcoin: $77582
+2026-05-22 06:49:12,232 - fetch_crypto - INFO - ✅ Fetched price for dogecoin: $0.105636
+2026-05-22 06:49:14,618 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:49:14,619 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:49:14,619 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:49:14,697 - fetch_crypto - INFO - ✅ Fetched price for bitcoin: $77582
+2026-05-22 06:49:14,730 - fetch_crypto - WARNING - ⚠️ Using fallback price for dogecoin: $0.18
+2026-05-22 06:49:14,733 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:49:14,733 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:49:14,733 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:49:14,771 - fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-22 06:49:14,806 - fetch_crypto - WARNING - ⚠️ Using fallback price for dogecoin: $0.18
+2026-05-22 06:49:21,928 - api - INFO - 🔍 Crypto search for 'tesla': found 7 results
+2026-05-22 06:49:23,811 - api - INFO - 🔍 Stock search for 'tesla': found 1 results
+2026-05-22 06:49:27,058 - services - INFO - Attempting to buy 3.0 TSLA
+2026-05-22 06:49:27,058 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:49:27,058 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:49:27,059 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:49:27,060 - database - INFO - Stored: AAPL - $302.25 at 2026-05-22 06:49:27
+2026-05-22 06:49:27,060 - database - INFO - Stored: GOOG - $384.9 at 2026-05-22 06:49:27
+2026-05-22 06:49:27,060 - database - INFO - Stored: NVDA - $223.47 at 2026-05-22 06:49:27
+2026-05-22 06:49:28,574 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:49:28,575 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:49:28,575 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:49:28,575 - api - INFO - Fetched stock AAPL: $302.25
+2026-05-22 06:49:28,576 - api - INFO - Fetched stock NVDA: $223.47
+2026-05-22 06:49:28,633 - fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-22 06:49:28,680 - fetch_crypto - WARNING - ⚠️ Using fallback price for dogecoin: $0.18
+2026-05-22 06:49:28,684 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:49:28,684 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:49:28,684 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:49:28,684 - api - INFO - Fetched stock AAPL: $302.25
+2026-05-22 06:49:28,684 - api - INFO - Fetched stock NVDA: $223.47
+2026-05-22 06:49:28,720 - fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-22 06:49:28,757 - fetch_crypto - WARNING - ⚠️ Using fallback price for dogecoin: $0.18
+2026-05-22 06:49:28,760 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:49:28,761 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:49:28,761 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:49:28,761 - api - INFO - Fetched stock AAPL: $302.25
+2026-05-22 06:49:28,761 - api - INFO - Fetched stock NVDA: $223.47
+2026-05-22 06:49:28,792 - fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-22 06:49:28,828 - fetch_crypto - WARNING - ⚠️ Using fallback price for dogecoin: $0.18
+2026-05-22 06:49:28,830 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:49:28,831 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:49:28,831 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:49:28,831 - api - INFO - Fetched stock AAPL: $302.25
+2026-05-22 06:49:28,831 - api - INFO - Fetched stock NVDA: $223.47
+2026-05-22 06:49:28,866 - fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-22 06:49:28,901 - fetch_crypto - WARNING - ⚠️ Using fallback price for dogecoin: $0.18
+2026-05-22 06:51:22,121 - services - INFO - Attempting to buy 1.0 TSLA
+2026-05-22 06:51:22,123 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:51:22,124 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:51:22,125 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:51:22,130 - database - INFO - Stored: AAPL - $302.25 at 2026-05-22 06:51:22
+2026-05-22 06:51:22,130 - database - INFO - Stored: GOOG - $384.9 at 2026-05-22 06:51:22
+2026-05-22 06:51:22,130 - database - INFO - Stored: NVDA - $223.47 at 2026-05-22 06:51:22
+2026-05-22 06:52:09,553 - services - INFO - Attempting to buy 3.0 TSLA
+2026-05-22 06:52:10,082 - fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $417.85
+2026-05-22 06:52:10,085 - services - INFO - Successfully bought 3.0 TSLA at $417.85
+2026-05-22 06:52:26,336 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:52:26,337 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:52:26,337 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:52:26,337 - api - INFO - Fetched stock AAPL: $302.25
+2026-05-22 06:52:26,337 - api - INFO - Fetched stock NVDA: $223.47
+2026-05-22 06:52:26,660 - fetch_crypto - ERROR - ❌ No price available for TSLA
+2026-05-22 06:52:26,714 - fetch_crypto - INFO - ✅ Fetched price for bitcoin: $77586
+2026-05-22 06:52:27,001 - fetch_crypto - INFO - ✅ Fetched price for dogecoin: $0.105639
+2026-05-22 06:53:02,616 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:53:02,617 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:53:02,617 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:53:03,068 - fetch_stocks - INFO - ✅ Fetched AAPL from Finnhub: $304.99
+2026-05-22 06:53:03,523 - fetch_stocks - INFO - ✅ Fetched NVDA from Finnhub: $219.51
+2026-05-22 06:53:04,007 - fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $417.85
+2026-05-22 06:53:04,054 - fetch_crypto - INFO - ✅ Fetched price for bitcoin: $77597
+2026-05-22 06:53:04,094 - fetch_crypto - INFO - ✅ Fetched price for dogecoin: $0.105639
