@@ -4,6 +4,7 @@ import logging
 import json
 import os
 from datetime import datetime, timedelta
+from api_status import log_api_call
 
 logger = logging.getLogger(__name__)
 CACHE_FILE = 'stock_prices_cache.json'
@@ -55,6 +56,13 @@ def get_finnhub_prices(api_key):
             response.raise_for_status()
             data = response.json()
             
+            # Extract rate limit info from headers
+            calls_remaining = response.headers.get('X-Ratelimit-Remaining')
+            if calls_remaining:
+                log_api_call('finnhub', int(calls_remaining), 60)
+            else:
+                log_api_call('finnhub', rate_limit=60)
+            
             logger.debug(f"Finnhub response for {symbol}: {json.dumps(data)}")
             
             if 'error' in data:
@@ -88,6 +96,9 @@ def get_alphavantage_prices(api_key):
             response = requests.get(api_url, timeout=10)
             response.raise_for_status()
             data = response.json()
+            
+            # Log the call
+            log_api_call('alphavantage', rate_limit=25)
             
             logger.debug(f"Alpha Vantage response for {symbol}: {json.dumps(data)}")
             
@@ -190,6 +201,13 @@ def get_stock_price(symbol, api_key=None):
             response.raise_for_status()
             data = response.json()
             
+            # Extract rate limit info
+            calls_remaining = response.headers.get('X-Ratelimit-Remaining')
+            if calls_remaining:
+                log_api_call('finnhub', int(calls_remaining), 60)
+            else:
+                log_api_call('finnhub', rate_limit=60)
+            
             if data.get('c'):
                 result = {
                     '05. price': str(data['c']),
@@ -204,6 +222,9 @@ def get_stock_price(symbol, api_key=None):
             response = requests.get(url, timeout=5)
             response.raise_for_status()
             data = response.json()
+            
+            # Log the call
+            log_api_call('alphavantage', rate_limit=25)
             
             quote = data.get('Global Quote', {})
             if quote and quote.get('05. price'):

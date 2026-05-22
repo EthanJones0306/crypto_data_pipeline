@@ -7,9 +7,13 @@ from database import initialise_db, reset_database
 from services import TradingService
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
+from api_status import get_status_summary, initialize_status
 
 # Load environment variables
 load_dotenv()
+
+# Initialize API status tracking
+initialize_status()
 
 # Configure logging
 logging.basicConfig(
@@ -592,6 +596,42 @@ def search_stocks(q: str = ""):
         }
     except Exception as e:
         logger.error(f"❌ Error searching stocks: {e}")
+        return {"status": "error", "message": str(e)}
+
+@app.get("/api/status")
+def get_api_status():
+    """Get API usage status for all providers"""
+    logger = logging.getLogger(__name__)
+    try:
+        status_summary = get_status_summary()
+        
+        # Add color-coded status indicators
+        status_with_indicators = {}
+        for provider, data in status_summary['providers'].items():
+            indicator = "🟢"  # Green
+            if data['status'] == 'warning':
+                indicator = "🟡"  # Yellow
+            elif data['status'] == 'critical':
+                indicator = "🔴"  # Red
+            elif data['status'] == 'unknown':
+                indicator = "⚪"  # Gray
+            
+            status_with_indicators[provider] = {
+                **data,
+                'indicator': indicator
+            }
+        
+        # Create status log string
+        status_parts = [f"{k}({v['indicator']})" for k, v in status_with_indicators.items()]
+        logger.info(f"📊 API Status: {', '.join(status_parts)}")
+        
+        return {
+            "status": "success",
+            "timestamp": status_summary['timestamp'],
+            "providers": status_with_indicators
+        }
+    except Exception as e:
+        logger.error(f"Error getting API status: {e}")
         return {"status": "error", "message": str(e)}
 
 if __name__ == "__main__":

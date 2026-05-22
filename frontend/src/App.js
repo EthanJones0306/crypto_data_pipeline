@@ -5,6 +5,7 @@ import Prices from './components/Prices';
 import Transactions from './components/Transactions';
 import Trading from './components/Trading';
 import Analytics from './components/Analytics';
+import Status from './components/Status';
 import { resetDatabase } from './services/api';
 
 function App() {
@@ -56,6 +57,8 @@ function App() {
         return <Trading />;
       case 'analytics':
         return <Analytics />;
+      case 'status':
+        return <Status />;
       default:
         return <PortfolioValue />;
     }
@@ -116,6 +119,12 @@ function App() {
             onClick={() => setActiveTab('trading')}
           >
             💱 Trading
+          </button>
+          <button 
+            className={`tab ${activeTab === 'status' ? 'active' : ''}`}
+            onClick={() => setActiveTab('status')}
+          >
+            🔌 API Status
           </button>
         </div>
         {renderContent()}

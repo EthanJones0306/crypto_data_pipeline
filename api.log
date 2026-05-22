@@ -1175,3 +1175,35 @@
 2026-05-22 06:55:52,291 - fetch_stocks - INFO - Using cached stock prices
 2026-05-22 06:55:52,767 - fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $417.85
 2026-05-22 06:55:52,798 - fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-22 07:01:29,911 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 07:01:29,966 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 07:01:29,966 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 07:01:30,469 - fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $417.85
+2026-05-22 07:01:30,790 - fetch_crypto - INFO - ✅ Fetched price for chutes: $19.68
+2026-05-22 07:01:30,801 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 07:01:30,801 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 07:01:30,801 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 07:01:31,202 - fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $417.85
+2026-05-22 07:01:31,254 - fetch_crypto - INFO - ✅ Fetched price for chutes: $19.68
+2026-05-22 07:01:31,263 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 07:01:31,263 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 07:01:31,263 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 07:01:31,720 - fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $417.85
+2026-05-22 07:01:31,765 - fetch_crypto - INFO - ✅ Fetched price for chutes: $19.68
+2026-05-22 07:01:31,769 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 07:01:31,769 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 07:01:31,769 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 07:01:32,172 - fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $417.85
+2026-05-22 07:01:32,253 - fetch_crypto - INFO - ✅ Fetched price for chutes: $19.68
+2026-05-22 07:11:25,733 - api - INFO - 📊 API Status: finnhub(⚪), alphavantage(⚪), coingecko(⚪)
+2026-05-22 07:11:32,223 - api - INFO - 📊 API Status: finnhub(⚪), alphavantage(⚪), coingecko(⚪)
+2026-05-22 07:11:49,363 - api - INFO - 🔍 Crypto search for 'bitcoin': found 10 results
+2026-05-22 07:11:49,416 - api - INFO - 🔍 Crypto search for 'bitcoin': found 10 results
+2026-05-22 07:11:49,476 - api - INFO - 🔍 Crypto search for 'bitcoin': found 10 results
+2026-05-22 07:11:49,527 - api - INFO - 🔍 Crypto search for 'bitcoin': found 10 results
+2026-05-22 07:11:49,583 - api - INFO - 🔍 Crypto search for 'bitcoin': found 10 results
+2026-05-22 07:11:49,596 - api - INFO - 📊 API Status: finnhub(⚪), alphavantage(⚪), coingecko(⚪)
+2026-05-22 07:12:00,061 - services - INFO - Attempting to buy 0.01 bitcoin
+2026-05-22 07:12:00,109 - fetch_crypto - INFO - ✅ Fetched price for bitcoin: $77627
+2026-05-22 07:12:00,115 - services - INFO - Successfully bought 0.01 bitcoin at $77627
+2026-05-22 07:12:00,128 - api - INFO - 📊 API Status: finnhub(⚪), alphavantage(⚪), coingecko(🟢)

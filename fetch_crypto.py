@@ -2,6 +2,7 @@ import requests
 import json
 import logging
 from datetime import datetime
+from api_status import log_api_call
 
 logger = logging.getLogger(__name__)
 
@@ -82,11 +83,15 @@ def get_crypto_price(crypto_id):
         response.raise_for_status()
         data = response.json()
         
+        # Log the API call (CoinGecko doesn't have strict rate limits in headers)
+        log_api_call('coingecko', rate_limit=1000)
+        
         if crypto_id in data:
             logger.info(f"✅ Fetched price for {crypto_id}: ${data[crypto_id]['usd']}")
             return data[crypto_id]
     except Exception as e:
         logger.debug(f"Could not fetch {crypto_id} from CoinGecko: {e}")
+        log_api_call('coingecko', rate_limit=1000)
     
     # Fallback: Use hardcoded price
     if crypto_id in FALLBACK_PRICES:
@@ -120,6 +125,10 @@ def get_crypto_prices(asset_ids=None):
         response = requests.get(api_url, timeout=5)  # 5 second timeout
         response.raise_for_status()
         data = response.json()
+        
+        # Log the API call
+        log_api_call('coingecko', rate_limit=1000)
+        
         logger.info(f"✅ Successfully fetched from CoinGecko: {list(data.keys())}")
         
         # Save to cache on success
@@ -128,12 +137,16 @@ def get_crypto_prices(asset_ids=None):
         
     except requests.exceptions.Timeout:
         logger.warning("⏱️ CoinGecko API timeout (rate limited or slow)")
+        log_api_call('coingecko', rate_limit=1000)
     except requests.exceptions.ConnectionError:
         logger.warning("❌ Connection error to CoinGecko API")
+        log_api_call('coingecko', rate_limit=1000)
     except requests.exceptions.HTTPError as e:
         logger.warning(f"❌ HTTP error from CoinGecko: {e.response.status_code}")
+        log_api_call('coingecko', rate_limit=1000)
     except Exception as e:
         logger.warning(f"❌ Error fetching from CoinGecko: {e}")
+        log_api_call('coingecko', rate_limit=1000)
     
     # Fallback 1: Try cached prices
     logger.info("Trying cached prices...")

@@ -1,0 +1,26 @@
+{
+  "timestamp": "2026-05-22T07:05:18.568396",
+  "providers": {
+    "finnhub": {
+      "calls_today": 0,
+      "rate_limit": 60,
+      "calls_remaining": 60,
+      "last_call": null,
+      "status": "unknown"
+    },
+    "alphavantage": {
+      "calls_today": 0,
+      "rate_limit": 25,
+      "calls_remaining": 25,
+      "last_call": null,
+      "status": "unknown"
+    },
+    "coingecko": {
+      "calls_today": 1,
+      "rate_limit": 1000,
+      "calls_remaining": 999,
+      "last_call": "2026-05-22T07:12:00.109492",
+      "status": "ok"
+    }
+  }
+}
