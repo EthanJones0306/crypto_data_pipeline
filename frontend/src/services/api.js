@@ -84,3 +84,15 @@ export const resetDatabase = async () => {
   if (!response.ok) throw new Error('Failed to reset database');
   return response.json();
 };
+
+export const searchCrypto = async (query) => {
+  const response = await fetch(`${API_BASE}/search/crypto?q=${encodeURIComponent(query)}`);
+  if (!response.ok) throw new Error('Failed to search crypto');
+  return response.json();
+};
+
+export const searchStocks = async (query) => {
+  const response = await fetch(`${API_BASE}/search/stocks?q=${encodeURIComponent(query)}`);
+  if (!response.ok) throw new Error('Failed to search stocks');
+  return response.json();
+};

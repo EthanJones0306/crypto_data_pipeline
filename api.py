@@ -505,6 +505,108 @@ def reset_db():
             "message": f"Error resetting database: {str(e)}"
         }
 
+@app.get("/search/crypto")
+def search_crypto(q: str = ""):
+    """Search for cryptocurrencies by name or symbol"""
+    import requests
+    
+    logger = logging.getLogger(__name__)
+    
+    if not q or len(q) < 1:
+        return {"status": "error", "message": "Search query too short"}
+    
+    try:
+        # Use CoinGecko search API
+        search_url = f"https://api.coingecko.com/api/v3/search?query={q}"
+        response = requests.get(search_url, timeout=5)
+        response.raise_for_status()
+        data = response.json()
+        
+        # Extract coins from search results
+        coins = data.get('coins', [])[:10]  # Limit to 10 results
+        
+        results = [
+            {
+                "id": coin['id'],
+                "name": coin['name'],
+                "symbol": coin['symbol'].upper(),
+                "image": coin.get('large', '')
+            }
+            for coin in coins
+        ]
+        
+        logger.info(f"🔍 Crypto search for '{q}': found {len(results)} results")
+        return {
+            "status": "success",
+            "query": q,
+            "results": results
+        }
+    except requests.exceptions.Timeout:
+        logger.warning(f"⏱️ CoinGecko search timeout for query: {q}")
+        return {"status": "error", "message": "Search timeout - try again"}
+    except Exception as e:
+        logger.error(f"❌ Error searching crypto: {e}")
+        return {"status": "error", "message": str(e)}
+
+@app.get("/search/stocks")
+def search_stocks(q: str = ""):
+    """Search for stock symbols"""
+    logger = logging.getLogger(__name__)
+    
+    # Common US stocks database
+    STOCKS_DATABASE = {
+        'AAPL': 'Apple Inc.',
+        'MSFT': 'Microsoft Corporation',
+        'GOOGL': 'Alphabet Inc.',
+        'GOOG': 'Alphabet Inc.',
+        'AMZN': 'Amazon.com Inc.',
+        'NVDA': 'NVIDIA Corporation',
+        'META': 'Meta Platforms Inc.',
+        'TSLA': 'Tesla Inc.',
+        'JPM': 'JPMorgan Chase & Co.',
+        'JNJ': 'Johnson & Johnson',
+        'V': 'Visa Inc.',
+        'WMT': 'Walmart Inc.',
+        'PG': 'Procter & Gamble',
+        'UNH': 'UnitedHealth Group',
+        'HD': 'Home Depot Inc.',
+        'DIS': 'Disney Corporation',
+        'VZ': 'Verizon Communications',
+        'KO': 'Coca-Cola Company',
+        'INTC': 'Intel Corporation',
+        'AMD': 'Advanced Micro Devices',
+        'BA': 'Boeing Company',
+        'GS': 'Goldman Sachs',
+        'IBM': 'IBM Corporation',
+        'ORCL': 'Oracle Corporation',
+        'CSCO': 'Cisco Systems',
+    }
+    
+    if not q or len(q) < 1:
+        return {"status": "error", "message": "Search query too short"}
+    
+    try:
+        query_upper = q.upper()
+        results = []
+        
+        # Search by symbol or name
+        for symbol, name in STOCKS_DATABASE.items():
+            if query_upper in symbol or query_upper in name.upper():
+                results.append({
+                    "symbol": symbol,
+                    "name": name
+                })
+        
+        logger.info(f"🔍 Stock search for '{q}': found {len(results)} results")
+        return {
+            "status": "success",
+            "query": q,
+            "results": results[:10]  # Limit to 10 results
+        }
+    except Exception as e:
+        logger.error(f"❌ Error searching stocks: {e}")
+        return {"status": "error", "message": str(e)}
+
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
