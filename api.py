@@ -7,9 +7,13 @@ from database import initialise_db, reset_database
 from services import TradingService
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
+from api_status import get_status_summary, initialize_status
 
 # Load environment variables
 load_dotenv()
+
+# Initialize API status tracking
+initialize_status()
 
 # Configure logging
 logging.basicConfig(
@@ -235,25 +239,9 @@ def get_transactions(limit: int = 50):
 @app.get("/portfolio/value")
 def get_portfolio_value():
     """Get current portfolio value with asset breakdown"""
-    from fetch_crypto import get_crypto_prices
-    from fetch_stocks import get_stock_prices
+    from fetch_crypto import get_crypto_price
+    from fetch_stocks import get_stock_price, get_stock_prices
     import os
-    
-    # Asset name normalization mapping
-    CRYPTO_MAPPING = {
-        'bitcoin': 'bitcoin', 'btc': 'bitcoin', 'BTC': 'bitcoin',
-        'ethereum': 'ethereum', 'eth': 'ethereum', 'ETH': 'ethereum',
-        'solana': 'solana', 'sol': 'solana', 'SOL': 'solana'
-    }
-    STOCK_SYMBOLS = ['AAPL', 'GOOG', 'NVDA']
-    
-    def normalize_asset(asset):
-        """Normalize asset name to canonical form"""
-        if asset in CRYPTO_MAPPING:
-            return CRYPTO_MAPPING[asset]
-        if asset.upper() in STOCK_SYMBOLS:
-            return asset.upper()
-        return asset
     
     conn = sqlite3.connect('crypto.db')
     cursor = conn.cursor()
@@ -272,13 +260,14 @@ def get_portfolio_value():
         holdings = cursor.fetchall()
         conn.close()
         
-        # Get current prices
-        crypto_prices = get_crypto_prices() or {}
+        # Get API keys
         provider = os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower()
         if provider == 'finnhub':
             api_key = os.getenv('FINNHUB_API_KEY')
         else:
             api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
+        
+        # Get cached stock prices for reference
         stock_prices_raw = get_stock_prices(api_key) or {}
         
         portfolio_value = 0
@@ -288,26 +277,34 @@ def get_portfolio_value():
             if quantity <= 0:
                 continue
             
-            normalized = normalize_asset(asset)
             current_price = 0
             
-            # Try to get crypto price
-            if normalized in crypto_prices:
-                current_price = crypto_prices[normalized]['usd']
-            # Try to get stock price
-            elif normalized.upper() in stock_prices_raw and stock_prices_raw[normalized.upper()]:
-                current_price = float(stock_prices_raw[normalized.upper()].get('05. price', 0))
+            # Check if it's a stock (uppercase, commonly looks like a stock ticker)
+            if len(asset) <= 5 and asset.isupper():
+                # Try to fetch as stock
+                stock_data = get_stock_price(asset, api_key)
+                if stock_data:
+                    try:
+                        current_price = float(stock_data.get('05. price', 0))
+                    except:
+                        pass
+            
+            # If not a stock or stock fetch failed, try as crypto
+            if current_price == 0:
+                price_data = get_crypto_price(asset)
+                if price_data:
+                    current_price = price_data['usd']
             
             asset_value = quantity * current_price
             portfolio_value += asset_value
             
-            # Aggregate normalized holdings
-            if normalized in holdings_breakdown_dict:
-                holdings_breakdown_dict[normalized]['quantity'] += quantity
-                holdings_breakdown_dict[normalized]['total_value'] += asset_value
+            # Store holding
+            if asset in holdings_breakdown_dict:
+                holdings_breakdown_dict[asset]['quantity'] += quantity
+                holdings_breakdown_dict[asset]['total_value'] += asset_value
             else:
-                holdings_breakdown_dict[normalized] = {
-                    "asset": normalized,
+                holdings_breakdown_dict[asset] = {
+                    "asset": asset,
                     "quantity": quantity,
                     "current_price": current_price,
                     "total_value": asset_value
@@ -322,6 +319,8 @@ def get_portfolio_value():
             "timestamp": datetime.now().isoformat()
         }
     except Exception as e:
+        logger = logging.getLogger(__name__)
+        logger.error(f"Error in get_portfolio_value: {e}")
         return {"status": "error", "message": str(e)}
 
 @app.get("/exchange-rates")
@@ -351,25 +350,9 @@ def get_exchange_rates():
 @app.get("/analytics/gains-losses")
 def get_gains_losses():
     """Get gains/losses analysis for the portfolio"""
-    from fetch_crypto import get_crypto_prices
-    from fetch_stocks import get_stock_prices
+    from fetch_crypto import get_crypto_price
+    from fetch_stocks import get_stock_price, get_stock_prices
     import os
-    
-    # Asset name normalization mapping
-    CRYPTO_MAPPING = {
-        'bitcoin': 'bitcoin', 'btc': 'bitcoin', 'BTC': 'bitcoin',
-        'ethereum': 'ethereum', 'eth': 'ethereum', 'ETH': 'ethereum',
-        'solana': 'solana', 'sol': 'solana', 'SOL': 'solana'
-    }
-    STOCK_SYMBOLS = ['AAPL', 'GOOG', 'NVDA']
-    
-    def normalize_asset(asset):
-        """Normalize asset name to canonical form"""
-        if asset in CRYPTO_MAPPING:
-            return CRYPTO_MAPPING[asset]
-        if asset.upper() in STOCK_SYMBOLS:
-            return asset.upper()
-        return asset
     
     conn = sqlite3.connect('crypto.db')
     cursor = conn.cursor()
@@ -389,26 +372,22 @@ def get_gains_losses():
         transactions = cursor.fetchall()
         conn.close()
         
-        # Get current prices
-        crypto_prices = get_crypto_prices() or {}
+        # Get API key for stock fetching
         provider = os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower()
         if provider == 'finnhub':
             api_key = os.getenv('FINNHUB_API_KEY')
         else:
             api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
-        stock_prices_raw = get_stock_prices(api_key) or {}
         
-        # Calculate per-asset gains/losses, normalized
+        # Calculate per-asset gains/losses (no normalization)
         asset_data = {}
         total_invested = 0
         total_realized_gains = 0
         
         for asset, trans_type, quantity, price in transactions:
-            # Normalize asset name
-            normalized_asset = normalize_asset(asset)
-            
-            if normalized_asset not in asset_data:
-                asset_data[normalized_asset] = {
+            # Keep asset as-is (don't normalize)
+            if asset not in asset_data:
+                asset_data[asset] = {
                     'buys': [],
                     'sells': [],
                     'total_bought': 0,
@@ -418,15 +397,15 @@ def get_gains_losses():
                 }
             
             if trans_type == 'BUY':
-                asset_data[normalized_asset]['buys'].append({'quantity': quantity, 'price': price})
-                asset_data[normalized_asset]['total_bought'] += quantity
-                asset_data[normalized_asset]['cost_basis'] += quantity * price
+                asset_data[asset]['buys'].append({'quantity': quantity, 'price': price})
+                asset_data[asset]['total_bought'] += quantity
+                asset_data[asset]['cost_basis'] += quantity * price
                 total_invested += quantity * price
             else:  # SELL
-                asset_data[normalized_asset]['sells'].append({'quantity': quantity, 'price': price})
-                asset_data[normalized_asset]['total_sold'] += quantity
-                asset_data[normalized_asset]['proceeds'] += quantity * price
-                total_realized_gains += (quantity * price) - (quantity * (asset_data[normalized_asset]['cost_basis'] / asset_data[normalized_asset]['total_bought'] if asset_data[normalized_asset]['total_bought'] > 0 else 0))
+                asset_data[asset]['sells'].append({'quantity': quantity, 'price': price})
+                asset_data[asset]['total_sold'] += quantity
+                asset_data[asset]['proceeds'] += quantity * price
+                total_realized_gains += (quantity * price) - (quantity * (asset_data[asset]['cost_basis'] / asset_data[asset]['total_bought'] if asset_data[asset]['total_bought'] > 0 else 0))
         
         # Calculate unrealized gains per asset
         holdings_analysis = []
@@ -439,13 +418,23 @@ def get_gains_losses():
             if current_quantity <= 0:
                 continue
             
-            # Get current price (asset is already normalized at this point)
+            # Get current price - try stock first (if it looks like a ticker), then crypto
             current_price = 0
             
-            if asset in crypto_prices:
-                current_price = crypto_prices[asset]['usd']
-            elif asset.upper() in stock_prices_raw and stock_prices_raw[asset.upper()]:
-                current_price = float(stock_prices_raw[asset.upper()].get('05. price', 0))
+            if len(asset) <= 5 and asset.isupper():
+                # Try to fetch as stock
+                stock_data = get_stock_price(asset, api_key)
+                if stock_data:
+                    try:
+                        current_price = float(stock_data.get('05. price', 0))
+                    except:
+                        pass
+            
+            # If not a stock or stock fetch failed, try as crypto
+            if current_price == 0:
+                price_data = get_crypto_price(asset)
+                if price_data:
+                    current_price = price_data['usd']
             
             avg_entry_price = data['cost_basis'] / data['total_bought'] if data['total_bought'] > 0 else 0
             current_value = current_quantity * current_price
@@ -481,6 +470,8 @@ def get_gains_losses():
             "timestamp": datetime.now().isoformat()
         }
     except Exception as e:
+        logger = logging.getLogger(__name__)
+        logger.error(f"Error in get_gains_losses: {e}")
         return {"status": "error", "message": str(e)}
 
 @app.post("/admin/reset-database")
@@ -504,6 +495,144 @@ def reset_db():
             "status": "error",
             "message": f"Error resetting database: {str(e)}"
         }
+
+@app.get("/search/crypto")
+def search_crypto(q: str = ""):
+    """Search for cryptocurrencies by name or symbol"""
+    import requests
+    
+    logger = logging.getLogger(__name__)
+    
+    if not q or len(q) < 1:
+        return {"status": "error", "message": "Search query too short"}
+    
+    try:
+        # Use CoinGecko search API
+        search_url = f"https://api.coingecko.com/api/v3/search?query={q}"
+        response = requests.get(search_url, timeout=5)
+        response.raise_for_status()
+        data = response.json()
+        
+        # Extract coins from search results
+        coins = data.get('coins', [])[:10]  # Limit to 10 results
+        
+        results = [
+            {
+                "id": coin['id'],
+                "name": coin['name'],
+                "symbol": coin['symbol'].upper(),
+                "image": coin.get('large', '')
+            }
+            for coin in coins
+        ]
+        
+        logger.info(f"🔍 Crypto search for '{q}': found {len(results)} results")
+        return {
+            "status": "success",
+            "query": q,
+            "results": results
+        }
+    except requests.exceptions.Timeout:
+        logger.warning(f"⏱️ CoinGecko search timeout for query: {q}")
+        return {"status": "error", "message": "Search timeout - try again"}
+    except Exception as e:
+        logger.error(f"❌ Error searching crypto: {e}")
+        return {"status": "error", "message": str(e)}
+
+@app.get("/search/stocks")
+def search_stocks(q: str = ""):
+    """Search for stock symbols"""
+    logger = logging.getLogger(__name__)
+    
+    # Common US stocks database
+    STOCKS_DATABASE = {
+        'AAPL': 'Apple Inc.',
+        'MSFT': 'Microsoft Corporation',
+        'GOOGL': 'Alphabet Inc.',
+        'GOOG': 'Alphabet Inc.',
+        'AMZN': 'Amazon.com Inc.',
+        'NVDA': 'NVIDIA Corporation',
+        'META': 'Meta Platforms Inc.',
+        'TSLA': 'Tesla Inc.',
+        'JPM': 'JPMorgan Chase & Co.',
+        'JNJ': 'Johnson & Johnson',
+        'V': 'Visa Inc.',
+        'WMT': 'Walmart Inc.',
+        'PG': 'Procter & Gamble',
+        'UNH': 'UnitedHealth Group',
+        'HD': 'Home Depot Inc.',
+        'DIS': 'Disney Corporation',
+        'VZ': 'Verizon Communications',
+        'KO': 'Coca-Cola Company',
+        'INTC': 'Intel Corporation',
+        'AMD': 'Advanced Micro Devices',
+        'BA': 'Boeing Company',
+        'GS': 'Goldman Sachs',
+        'IBM': 'IBM Corporation',
+        'ORCL': 'Oracle Corporation',
+        'CSCO': 'Cisco Systems',
+    }
+    
+    if not q or len(q) < 1:
+        return {"status": "error", "message": "Search query too short"}
+    
+    try:
+        query_upper = q.upper()
+        results = []
+        
+        # Search by symbol or name
+        for symbol, name in STOCKS_DATABASE.items():
+            if query_upper in symbol or query_upper in name.upper():
+                results.append({
+                    "symbol": symbol,
+                    "name": name
+                })
+        
+        logger.info(f"🔍 Stock search for '{q}': found {len(results)} results")
+        return {
+            "status": "success",
+            "query": q,
+            "results": results[:10]  # Limit to 10 results
+        }
+    except Exception as e:
+        logger.error(f"❌ Error searching stocks: {e}")
+        return {"status": "error", "message": str(e)}
+
+@app.get("/api/status")
+def get_api_status():
+    """Get API usage status for all providers"""
+    logger = logging.getLogger(__name__)
+    try:
+        status_summary = get_status_summary()
+        
+        # Add color-coded status indicators
+        status_with_indicators = {}
+        for provider, data in status_summary['providers'].items():
+            indicator = "🟢"  # Green
+            if data['status'] == 'warning':
+                indicator = "🟡"  # Yellow
+            elif data['status'] == 'critical':
+                indicator = "🔴"  # Red
+            elif data['status'] == 'unknown':
+                indicator = "⚪"  # Gray
+            
+            status_with_indicators[provider] = {
+                **data,
+                'indicator': indicator
+            }
+        
+        # Create status log string
+        status_parts = [f"{k}({v['indicator']})" for k, v in status_with_indicators.items()]
+        logger.info(f"📊 API Status: {', '.join(status_parts)}")
+        
+        return {
+            "status": "success",
+            "timestamp": status_summary['timestamp'],
+            "providers": status_with_indicators
+        }
+    except Exception as e:
+        logger.error(f"Error getting API status: {e}")
+        return {"status": "error", "message": str(e)}
 
 if __name__ == "__main__":
     import uvicorn

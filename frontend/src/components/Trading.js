@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
 import { buyCrypto, sellCrypto, buyStock, sellStock } from '../services/api';
+import SearchBar from './SearchBar';
 import { getDisplayName } from '../constants/assetNames';
 
 function Trading() {
-  const [asset, setAsset] = useState('bitcoin');
+  const [asset, setAsset] = useState('');
+  const [assetType, setAssetType] = useState('crypto');
   const [quantity, setQuantity] = useState('');
   const [type, setType] = useState('buy');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
 
-  const cryptoAssets = ['bitcoin', 'ethereum', 'solana'];
-  const stockAssets = ['AAPL', 'GOOG', 'NVDA'];
-
   const handleTrade = async (e) => {
     e.preventDefault();
+    
+    if (!asset) {
+      setMessage({ type: 'error', text: 'Please select an asset' });
+      return;
+    }
+    
     if (!quantity || quantity <= 0 || isNaN(quantity)) {
       setMessage({ type: 'error', text: 'Enter a valid quantity' });
       return;
@@ -21,7 +26,7 @@ function Trading() {
 
     setLoading(true);
     try {
-      if (cryptoAssets.includes(asset)) {
+      if (assetType === 'crypto') {
         if (type === 'buy') {
           await buyCrypto(asset, parseFloat(quantity));
         } else {
@@ -40,10 +45,15 @@ function Trading() {
         text: `Successfully ${type === 'buy' ? 'bought' : 'sold'} ${quantity} ${getDisplayName(asset)}!` 
       });
       setQuantity('');
+      setAsset('');
     } catch (err) {
       setMessage({ type: 'error', text: err.message });
     }
     setLoading(false);
+  };
+
+  const handleAssetSelect = (selectedAsset) => {
+    setAsset(selectedAsset);
   };
 
   return (
@@ -53,30 +63,72 @@ function Trading() {
       <form onSubmit={handleTrade} style={{ maxWidth: '400px', margin: '30px 0' }}>
         <div style={{ marginBottom: '20px' }}>
           <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600' }}>
-            Select Asset
+            Asset Type
           </label>
-          <select 
-            value={asset} 
-            onChange={(e) => setAsset(e.target.value)}
-            style={{
-              width: '100%',
-              padding: '10px',
-              borderRadius: '8px',
-              border: '1px solid #475569',
-              fontSize: '1em'
-            }}
-          >
-            <optgroup label="Cryptocurrencies">
-              {cryptoAssets.map(a => (
-                <option key={a} value={a}>{getDisplayName(a)}</option>
-              ))}
-            </optgroup>
-            <optgroup label="Stocks">
-              {stockAssets.map(a => (
-                <option key={a} value={a}>{getDisplayName(a)}</option>
-              ))}
-            </optgroup>
-          </select>
+          <div style={{ display: 'flex', gap: '10px' }}>
+            <button
+              type="button"
+              onClick={() => {
+                setAssetType('crypto');
+                setAsset('');
+              }}
+              style={{
+                flex: 1,
+                padding: '10px',
+                borderRadius: '8px',
+                border: assetType === 'crypto' ? '2px solid #4aa8e0' : '1px solid #475569',
+                backgroundColor: assetType === 'crypto' ? 'rgba(74, 168, 224, 0.1)' : 'transparent',
+                color: assetType === 'crypto' ? '#4aa8e0' : '#94a3b8',
+                fontWeight: '600',
+                cursor: 'pointer'
+              }}
+            >
+              💰 Crypto
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                setAssetType('stocks');
+                setAsset('');
+              }}
+              style={{
+                flex: 1,
+                padding: '10px',
+                borderRadius: '8px',
+                border: assetType === 'stocks' ? '2px solid #4aa8e0' : '1px solid #475569',
+                backgroundColor: assetType === 'stocks' ? 'rgba(74, 168, 224, 0.1)' : 'transparent',
+                color: assetType === 'stocks' ? '#4aa8e0' : '#94a3b8',
+                fontWeight: '600',
+                cursor: 'pointer'
+              }}
+            >
+              📈 Stocks
+            </button>
+          </div>
+        </div>
+
+        <div style={{ marginBottom: '20px' }}>
+          <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600' }}>
+            Search {assetType === 'crypto' ? 'Cryptocurrency' : 'Stock'}
+          </label>
+          <SearchBar
+            assetType={assetType}
+            onSelect={handleAssetSelect}
+            placeholder={assetType === 'crypto' ? 'Search for crypto (e.g., Bitcoin, Ethereum)...' : 'Search for stock (e.g., AAPL, GOOG)...'}
+          />
+          {asset && (
+            <div style={{
+              marginTop: '8px',
+              padding: '8px 10px',
+              backgroundColor: 'rgba(14, 124, 107, 0.1)',
+              borderRadius: '6px',
+              color: '#17b89a',
+              fontSize: '0.9em',
+              fontWeight: '500'
+            }}>
+              Selected: {getDisplayName(asset)}
+            </div>
+          )}
         </div>
 
         <div style={{ marginBottom: '20px' }}>
@@ -141,7 +193,7 @@ function Trading() {
 
         <button
           type="submit"
-          disabled={loading}
+          disabled={loading || !asset}
           style={{
             width: '100%',
             padding: '12px',

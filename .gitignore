@@ -2,4 +2,4 @@
 __pycache__/
 *.pyc
 crypto.db
-.DS_Store
+.DS_Store__pycache__/
