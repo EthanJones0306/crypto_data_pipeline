@@ -1095,3 +1095,83 @@
 2026-05-22 06:53:04,007 - fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $417.85
 2026-05-22 06:53:04,054 - fetch_crypto - INFO - ✅ Fetched price for bitcoin: $77597
 2026-05-22 06:53:04,094 - fetch_crypto - INFO - ✅ Fetched price for dogecoin: $0.105639
+2026-05-22 06:54:11,053 - services - INFO - Attempting to buy 2.0 AMZN
+2026-05-22 06:54:11,536 - fetch_stocks - INFO - ✅ Fetched AMZN from Finnhub: $268.46
+2026-05-22 06:54:11,539 - services - INFO - Successfully bought 2.0 AMZN at $268.46
+2026-05-22 06:54:18,506 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:54:18,507 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:54:18,507 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:54:19,034 - fetch_stocks - INFO - ✅ Fetched AAPL from Finnhub: $304.99
+2026-05-22 06:54:19,460 - fetch_stocks - INFO - ✅ Fetched AMZN from Finnhub: $268.46
+2026-05-22 06:54:19,901 - fetch_stocks - INFO - ✅ Fetched NVDA from Finnhub: $219.51
+2026-05-22 06:54:20,308 - fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $417.85
+2026-05-22 06:54:20,368 - fetch_crypto - INFO - ✅ Fetched price for bitcoin: $77595
+2026-05-22 06:54:20,658 - fetch_crypto - INFO - ✅ Fetched price for dogecoin: $0.105669
+2026-05-22 06:54:28,449 - fetch_stocks - INFO - ✅ Fetched AAPL from Finnhub: $304.99
+2026-05-22 06:54:28,873 - fetch_stocks - INFO - ✅ Fetched AMZN from Finnhub: $268.46
+2026-05-22 06:54:29,295 - fetch_stocks - INFO - ✅ Fetched NVDA from Finnhub: $219.51
+2026-05-22 06:54:29,696 - fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $417.85
+2026-05-22 06:54:29,740 - fetch_crypto - INFO - ✅ Fetched price for bitcoin: $77595
+2026-05-22 06:54:29,786 - fetch_crypto - INFO - ✅ Fetched price for dogecoin: $0.105669
+2026-05-22 06:54:54,624 - database - INFO - Database reset successfully - all tables cleared and reinitialized
+2026-05-22 06:54:56,617 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:54:56,621 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:54:56,622 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:54:56,630 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:54:56,630 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:54:56,631 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:55:01,033 - api - INFO - 🔍 Crypto search for 'tes': found 10 results
+2026-05-22 06:55:05,587 - services - INFO - Attempting to buy 1.0 chutes
+2026-05-22 06:55:05,907 - fetch_crypto - INFO - ✅ Fetched price for chutes: $19.68
+2026-05-22 06:55:05,910 - services - INFO - Successfully bought 1.0 chutes at $19.68
+2026-05-22 06:55:09,671 - api - INFO - 🔍 Stock search for 'tes': found 1 results
+2026-05-22 06:55:13,749 - services - INFO - Attempting to buy 3.0 TSLA
+2026-05-22 06:55:14,165 - fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $417.85
+2026-05-22 06:55:14,167 - services - INFO - Successfully bought 3.0 TSLA at $417.85
+2026-05-22 06:55:15,660 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:55:15,661 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:55:15,661 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:55:16,106 - fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $417.85
+2026-05-22 06:55:16,141 - fetch_crypto - INFO - ✅ Fetched price for chutes: $19.68
+2026-05-22 06:55:16,145 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:55:16,145 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:55:16,145 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:55:16,574 - fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $417.85
+2026-05-22 06:55:16,617 - fetch_crypto - INFO - ✅ Fetched price for chutes: $19.68
+2026-05-22 06:55:16,620 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:55:16,620 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:55:16,620 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:55:17,076 - fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $417.85
+2026-05-22 06:55:17,110 - fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-22 06:55:17,112 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:55:17,113 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:55:17,113 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:55:17,516 - fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $417.85
+2026-05-22 06:55:17,547 - fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-22 06:55:29,249 - fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $417.85
+2026-05-22 06:55:29,287 - fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-22 06:55:29,676 - fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $417.85
+2026-05-22 06:55:29,706 - fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-22 06:55:41,300 - api - INFO - 🔍 Crypto search for 'tet': found 10 results
+2026-05-22 06:55:48,537 - services - INFO - Attempting to buy 19.9997 tether
+2026-05-22 06:55:48,592 - fetch_crypto - ERROR - ❌ No price available for tether
+2026-05-22 06:55:50,712 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:55:50,712 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:55:50,712 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:55:51,155 - fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $417.85
+2026-05-22 06:55:51,185 - fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-22 06:55:51,188 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:55:51,188 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:55:51,188 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:55:51,744 - fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $417.85
+2026-05-22 06:55:51,780 - fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-22 06:55:51,783 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:55:51,784 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:55:51,784 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:55:52,255 - fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $417.85
+2026-05-22 06:55:52,288 - fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-22 06:55:52,291 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 06:55:52,291 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 06:55:52,291 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 06:55:52,767 - fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $417.85
+2026-05-22 06:55:52,798 - fetch_crypto - ERROR - ❌ No price available for chutes
