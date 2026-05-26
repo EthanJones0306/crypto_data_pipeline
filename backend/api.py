@@ -3,11 +3,11 @@ from pydantic import BaseModel
 import sqlite3
 from datetime import datetime
 import logging
-from database import initialise_db, reset_database
-from services import TradingService
+from .database import initialise_db, reset_database
+from .services import TradingService
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
-from api_status import get_status_summary, initialize_status
+from .api_status import get_status_summary, initialize_status
 
 # Load environment variables
 load_dotenv()
@@ -164,8 +164,8 @@ def get_portfolio():
 @app.get("/prices/latest")
 def get_latest_prices():
     """Get latest cryptocurrency and stock prices"""
-    from fetch_crypto import get_crypto_prices
-    from fetch_stocks import get_stock_prices
+    from .fetch_crypto import get_crypto_prices
+    from .fetch_stocks import get_stock_prices
     import os
     import logging
     
@@ -239,8 +239,8 @@ def get_transactions(limit: int = 50):
 @app.get("/portfolio/value")
 def get_portfolio_value():
     """Get current portfolio value with asset breakdown"""
-    from fetch_crypto import get_crypto_price
-    from fetch_stocks import get_stock_price, get_stock_prices
+    from .fetch_crypto import get_crypto_price
+    from .fetch_stocks import get_stock_price, get_stock_prices
     import os
     
     conn = sqlite3.connect('crypto.db')
@@ -326,7 +326,7 @@ def get_portfolio_value():
 @app.get("/exchange-rates")
 def get_exchange_rates():
     """Get exchange rates for USD, EUR, GBP, ZAR"""
-    from currency_fetcher import get_zar_exchange_rates
+    from .currency_fetcher import get_zar_exchange_rates
     
     try:
         rates = get_zar_exchange_rates()

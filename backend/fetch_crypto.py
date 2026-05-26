@@ -2,7 +2,7 @@ import requests
 import json
 import logging
 from datetime import datetime
-from api_status import log_api_call
+from .api_status import log_api_call
 
 logger = logging.getLogger(__name__)
 

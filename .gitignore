@@ -2,4 +2,9 @@
 __pycache__/
 *.pyc
 crypto.db
-.DS_Store__pycache__/
+.DS_Store
+backend/crypto.db
+backend/api_status.json
+backend/crypto_prices_cache.json
+backend/stock_prices_cache.json
+backend/*.log

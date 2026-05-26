@@ -4,7 +4,7 @@ import logging
 import json
 import os
 from datetime import datetime, timedelta
-from api_status import log_api_call
+from .api_status import log_api_call
 
 logger = logging.getLogger(__name__)
 CACHE_FILE = 'stock_prices_cache.json'

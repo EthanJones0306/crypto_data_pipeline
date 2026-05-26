@@ -1,6 +1,7 @@
 import sqlite3
 from datetime import datetime
 import logging
+from .api_status import log_api_call
 
 logger = logging.getLogger(__name__)
 
