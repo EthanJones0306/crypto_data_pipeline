@@ -1,9 +1,9 @@
 import os
 import logging
-from fetch_crypto import get_crypto_price, get_crypto_prices
-from fetch_stocks import get_stock_price, get_stock_prices
-from database import store_prices, store_stock_prices, store_buy_transaction, store_sell_transaction
-from utils import normalize_crypto_asset
+from .fetch_crypto import get_crypto_price, get_crypto_prices
+from .fetch_stocks import get_stock_price, get_stock_prices
+from .database import store_prices, store_stock_prices, store_buy_transaction, store_sell_transaction
+from .utils import normalize_crypto_asset
 
 logger = logging.getLogger(__name__)
 

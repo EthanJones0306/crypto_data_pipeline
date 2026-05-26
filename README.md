@@ -42,23 +42,27 @@ Built with a **React** frontend and a **FastAPI** Python backend, pulling live m
 
 ## 📁 Project Structure
 portfolio-tracker/
+├── backend/                    # FastAPI backend and Python scripts
+│   ├── api.py                  # FastAPI app & all REST endpoints
+│   ├── services.py             # Trading service layer (buy/sell logic)
+│   ├── database.py             # SQLite schema & all DB operations
+│   ├── fetch_crypto.py         # CoinGecko integration with caching & fallback
+│   ├── fetch_stocks.py         # Finnhub / Alpha Vantage integration with caching
+│   ├── currency_fetcher.py     # Frankfurter exchange rate fetcher
+│   ├── api_status.py           # API rate limit tracker
+│   ├── scheduler.py            # APScheduler daily pipeline runner
+│   ├── main.py                 # Manual pipeline entry point
+│   ├── visualise_data.py       # Terminal price table viewer
+│   ├── check_data.py           # Raw database inspection helper
+│   └── requirements.txt        # Python dependencies
 ├── frontend/                   # React frontend
 │   └── src/
 │       ├── components/         # PortfolioValue, Trading, Analytics, Prices, etc.
 │       ├── services/api.js     # All API calls to the backend
 │       └── constants/          # Asset name mappings
-├── api.py                      # FastAPI app & all REST endpoints
-├── services.py                 # Trading service layer (buy/sell logic)
-├── database.py                 # SQLite schema & all DB operations
-├── fetch_crypto.py             # CoinGecko integration with caching & fallback
-├── fetch_stocks.py             # Finnhub / Alpha Vantage integration with caching
-├── currency_fetcher.py         # Frankfurter exchange rate fetcher
-├── api_status.py               # API rate limit tracker
-├── scheduler.py                # APScheduler daily pipeline runner
-├── main.py                     # Manual pipeline entry point
-├── visualise_data.py           # Terminal price table viewer
-├── requirements.txt
-└── .env                        # API keys (not committed — see below)
+└── backend/.env                # API keys (not committed — see below)
+
+> 💡 Tip: View this README on GitHub for best formatting.
 
 ---
 
@@ -84,10 +88,11 @@ cd crypto_data_pipeline
 ### 2. Set up the backend
 
 ```bash
+cd backend
 pip install -r requirements.txt
 ```
 
-Create a `.env` file in the root directory:
+Create a `.env` file in the backend directory:
 
 ```env
 FINNHUB_API_KEY=your_finnhub_key_here
@@ -122,12 +127,14 @@ The app opens at `http://localhost:3000`.
 ### 4. (Optional) Run the data pipeline manually
 
 ```bash
+cd backend
 python main.py
 ```
 
 Or start the automated daily scheduler:
 
 ```bash
+cd backend
 python scheduler.py
 ```
 

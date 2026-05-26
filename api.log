@@ -1333,3 +1333,257 @@
 2026-05-22 07:14:00,631 - fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
 2026-05-22 07:14:00,666 - fetch_crypto - WARNING - ⚠️ Using fallback price for cardano: $0.5
 2026-05-22 07:14:00,702 - fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-22 08:12:06,292 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko for: ['bitcoin', 'ethereum', 'solana']...
+2026-05-22 08:12:06,682 - fetch_crypto - INFO - ✅ Successfully fetched from CoinGecko: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 08:12:06,683 - fetch_crypto - INFO - Cached crypto prices saved
+2026-05-22 08:12:06,684 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 08:12:06,684 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 08:12:06,684 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 08:12:06,685 - api - INFO - Fetched AAPL: $302.25
+2026-05-22 08:12:06,685 - api - INFO - Fetched GOOG: $384.9
+2026-05-22 08:12:06,685 - api - INFO - Fetched NVDA: $223.47
+2026-05-22 08:12:06,689 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko for: ['bitcoin', 'ethereum', 'solana']...
+2026-05-22 08:12:06,732 - fetch_crypto - INFO - ✅ Successfully fetched from CoinGecko: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 08:12:06,733 - fetch_crypto - INFO - Cached crypto prices saved
+2026-05-22 08:12:06,734 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 08:12:06,734 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 08:12:06,734 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 08:12:06,734 - api - INFO - Fetched AAPL: $302.25
+2026-05-22 08:12:06,734 - api - INFO - Fetched GOOG: $384.9
+2026-05-22 08:12:06,734 - api - INFO - Fetched NVDA: $223.47
+2026-05-22 08:12:16,519 - api - INFO - 📊 API Status: finnhub(🟢), alphavantage(⚪), coingecko(🟢)
+2026-05-22 08:12:16,545 - api - INFO - 📊 API Status: finnhub(🟢), alphavantage(⚪), coingecko(🟢)
+2026-05-22 08:12:18,129 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 08:12:18,129 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 08:12:18,129 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 08:12:18,549 - fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $417.85
+2026-05-22 08:12:18,595 - fetch_crypto - INFO - ✅ Fetched price for bitcoin: $77390
+2026-05-22 08:12:18,887 - fetch_crypto - INFO - ✅ Fetched price for cardano: $0.251387
+2026-05-22 08:12:19,202 - fetch_crypto - INFO - ✅ Fetched price for chutes: $19.61
+2026-05-22 08:12:19,205 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 08:12:19,206 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 08:12:19,206 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 08:12:19,653 - fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $417.85
+2026-05-22 08:12:19,710 - fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-22 08:12:19,748 - fetch_crypto - WARNING - ⚠️ Using fallback price for cardano: $0.5
+2026-05-22 08:12:19,783 - fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-22 08:12:20,103 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko for: ['bitcoin', 'ethereum', 'solana']...
+2026-05-22 08:12:20,146 - fetch_crypto - WARNING - ❌ HTTP error from CoinGecko: 429
+2026-05-22 08:12:20,147 - fetch_crypto - INFO - Trying cached prices...
+2026-05-22 08:12:20,147 - fetch_crypto - INFO - 📦 Using cached crypto prices (age: 0.0 hours)
+2026-05-22 08:12:20,147 - fetch_crypto - INFO - 📦 Using cached prices for: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 08:12:20,148 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 08:12:20,148 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 08:12:20,148 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 08:12:20,148 - api - INFO - Fetched AAPL: $302.25
+2026-05-22 08:12:20,148 - api - INFO - Fetched GOOG: $384.9
+2026-05-22 08:12:20,148 - api - INFO - Fetched NVDA: $223.47
+2026-05-22 08:12:20,150 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko for: ['bitcoin', 'ethereum', 'solana']...
+2026-05-22 08:12:20,190 - fetch_crypto - WARNING - ❌ HTTP error from CoinGecko: 429
+2026-05-22 08:12:20,191 - fetch_crypto - INFO - Trying cached prices...
+2026-05-22 08:12:20,192 - fetch_crypto - INFO - 📦 Using cached crypto prices (age: 0.0 hours)
+2026-05-22 08:12:20,192 - fetch_crypto - INFO - 📦 Using cached prices for: ['bitcoin', 'ethereum', 'solana']
+2026-05-22 08:12:20,195 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 08:12:20,196 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 08:12:20,196 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 08:12:20,196 - api - INFO - Fetched AAPL: $302.25
+2026-05-22 08:12:20,196 - api - INFO - Fetched GOOG: $384.9
+2026-05-22 08:12:20,196 - api - INFO - Fetched NVDA: $223.47
+2026-05-22 08:12:20,887 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 08:12:20,887 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 08:12:20,888 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 08:12:21,308 - fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $417.85
+2026-05-22 08:12:21,345 - fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-22 08:12:21,384 - fetch_crypto - WARNING - ⚠️ Using fallback price for cardano: $0.5
+2026-05-22 08:12:21,421 - fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-22 08:12:21,425 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-22 08:12:21,425 - fetch_stocks - INFO - Using cached stock prices from 2026-05-21 14:46:11.623163
+2026-05-22 08:12:21,425 - fetch_stocks - INFO - Using cached stock prices
+2026-05-22 08:12:21,808 - fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $417.85
+2026-05-22 08:12:21,868 - fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-22 08:12:21,916 - fetch_crypto - WARNING - ⚠️ Using fallback price for cardano: $0.5
+2026-05-22 08:12:21,950 - fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-26 10:49:09,911 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-26 10:49:09,913 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-26 07:20:38.077172
+2026-05-26 10:49:09,913 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-26 10:49:10,414 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $426.01
+2026-05-26 10:49:10,989 - backend.fetch_crypto - INFO - ✅ Fetched price for bitcoin: $76723
+2026-05-26 10:49:11,550 - backend.fetch_crypto - INFO - ✅ Fetched price for cardano: $0.24186
+2026-05-26 10:49:12,251 - backend.fetch_crypto - INFO - ✅ Fetched price for chutes: $19.36
+2026-05-26 10:49:12,258 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-26 10:49:12,258 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-26 07:20:38.077172
+2026-05-26 10:49:12,259 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-26 10:49:12,630 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $426.01
+2026-05-26 10:49:13,196 - backend.fetch_crypto - INFO - ✅ Fetched price for bitcoin: $76723
+2026-05-26 10:49:13,765 - backend.fetch_crypto - INFO - ✅ Fetched price for cardano: $0.24186
+2026-05-26 10:49:14,319 - backend.fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-26 10:49:14,329 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-26 10:49:14,329 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-26 07:20:38.077172
+2026-05-26 10:49:14,329 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-26 10:49:14,696 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $426.01
+2026-05-26 10:49:15,246 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-26 10:49:15,790 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for cardano: $0.5
+2026-05-26 10:49:16,330 - backend.fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-26 10:49:16,341 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-26 10:49:16,341 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-26 07:20:38.077172
+2026-05-26 10:49:16,341 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-26 10:49:16,781 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $426.01
+2026-05-26 10:49:17,316 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-26 10:49:17,851 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for cardano: $0.5
+2026-05-26 10:49:18,401 - backend.fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-26 10:49:26,831 - backend.api - INFO - 🔍 Crypto search for 'card': found 10 results
+2026-05-26 10:49:31,992 - backend.services - INFO - Attempting to sell 1.0 cardano
+2026-05-26 10:49:32,538 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for cardano: $0.5
+2026-05-26 10:49:32,545 - backend.services - INFO - Successfully sold 1.0 cardano at $0.5
+2026-05-26 10:49:34,355 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-26 10:49:34,357 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-26 07:20:38.077172
+2026-05-26 10:49:34,357 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-26 10:49:34,735 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $426.01
+2026-05-26 10:49:35,275 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-26 10:49:35,824 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for cardano: $0.5
+2026-05-26 10:49:36,383 - backend.fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-26 10:49:36,390 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-26 10:49:36,390 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-26 07:20:38.077172
+2026-05-26 10:49:36,391 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-26 10:49:36,778 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $426.01
+2026-05-26 10:49:37,336 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-26 10:49:37,880 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for cardano: $0.5
+2026-05-26 10:49:38,422 - backend.fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-26 10:49:38,431 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-26 10:49:38,431 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-26 07:20:38.077172
+2026-05-26 10:49:38,431 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-26 10:49:38,902 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $426.01
+2026-05-26 10:49:39,453 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-26 10:49:40,016 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for cardano: $0.5
+2026-05-26 10:49:40,566 - backend.fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-26 10:49:40,572 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-26 10:49:40,572 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-26 07:20:38.077172
+2026-05-26 10:49:40,572 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-26 10:49:41,027 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $426.01
+2026-05-26 10:49:41,567 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-26 10:49:42,113 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for cardano: $0.5
+2026-05-26 10:49:42,657 - backend.fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-26 10:49:49,816 - backend.fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko for: ['bitcoin', 'ethereum', 'solana']...
+2026-05-26 10:49:50,362 - backend.fetch_crypto - WARNING - ❌ HTTP error from CoinGecko: 429
+2026-05-26 10:49:50,363 - backend.fetch_crypto - INFO - Trying cached prices...
+2026-05-26 10:49:50,364 - backend.fetch_crypto - INFO - 📦 Using cached crypto prices (age: 3.5 hours)
+2026-05-26 10:49:50,364 - backend.fetch_crypto - INFO - 📦 Using cached prices for: ['bitcoin', 'ethereum', 'solana']
+2026-05-26 10:49:50,368 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-26 10:49:50,368 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-26 07:20:38.077172
+2026-05-26 10:49:50,369 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-26 10:49:50,369 - backend.api - INFO - Fetched AAPL: $308.82
+2026-05-26 10:49:50,369 - backend.api - INFO - Fetched GOOG: $379.38
+2026-05-26 10:49:50,369 - backend.api - INFO - Fetched NVDA: $215.33
+2026-05-26 10:49:50,371 - backend.fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko for: ['bitcoin', 'ethereum', 'solana']...
+2026-05-26 10:49:50,920 - backend.fetch_crypto - WARNING - ❌ HTTP error from CoinGecko: 429
+2026-05-26 10:49:50,922 - backend.fetch_crypto - INFO - Trying cached prices...
+2026-05-26 10:49:50,922 - backend.fetch_crypto - INFO - 📦 Using cached crypto prices (age: 3.5 hours)
+2026-05-26 10:49:50,922 - backend.fetch_crypto - INFO - 📦 Using cached prices for: ['bitcoin', 'ethereum', 'solana']
+2026-05-26 10:49:50,926 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-26 10:49:50,927 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-26 07:20:38.077172
+2026-05-26 10:49:50,927 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-26 10:49:50,927 - backend.api - INFO - Fetched AAPL: $308.82
+2026-05-26 10:49:50,927 - backend.api - INFO - Fetched GOOG: $379.38
+2026-05-26 10:49:50,927 - backend.api - INFO - Fetched NVDA: $215.33
+2026-05-26 10:49:53,865 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-26 10:49:53,866 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-26 07:20:38.077172
+2026-05-26 10:49:53,867 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-26 10:49:54,306 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $426.01
+2026-05-26 10:49:54,875 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-26 10:49:55,422 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for cardano: $0.5
+2026-05-26 10:49:55,976 - backend.fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-26 10:49:55,984 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-26 10:49:55,985 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-26 07:20:38.077172
+2026-05-26 10:49:55,985 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-26 10:49:56,515 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $426.01
+2026-05-26 10:49:57,077 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-26 10:49:57,628 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for cardano: $0.5
+2026-05-26 10:49:58,200 - backend.fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-26 10:49:58,207 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-26 10:49:58,208 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-26 07:20:38.077172
+2026-05-26 10:49:58,208 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-26 10:49:58,575 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $426.01
+2026-05-26 10:49:59,120 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-26 10:49:59,670 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for cardano: $0.5
+2026-05-26 10:50:00,214 - backend.fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-26 10:50:00,221 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-26 10:50:00,221 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-26 07:20:38.077172
+2026-05-26 10:50:00,221 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-26 10:50:00,615 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $426.01
+2026-05-26 10:50:01,188 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-26 10:50:01,815 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for cardano: $0.5
+2026-05-26 10:50:02,389 - backend.fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-26 10:50:17,078 - backend.fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko for: ['bitcoin', 'ethereum', 'solana']...
+2026-05-26 10:50:17,780 - backend.fetch_crypto - INFO - ✅ Successfully fetched from CoinGecko: ['bitcoin', 'ethereum', 'solana']
+2026-05-26 10:50:17,781 - backend.fetch_crypto - INFO - Cached crypto prices saved
+2026-05-26 10:50:17,784 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-26 10:50:17,785 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-26 07:20:38.077172
+2026-05-26 10:50:17,785 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-26 10:50:17,785 - backend.api - INFO - Fetched AAPL: $308.82
+2026-05-26 10:50:17,786 - backend.api - INFO - Fetched GOOG: $379.38
+2026-05-26 10:50:17,786 - backend.api - INFO - Fetched NVDA: $215.33
+2026-05-26 10:50:17,790 - backend.fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko for: ['bitcoin', 'ethereum', 'solana']...
+2026-05-26 10:50:18,335 - backend.fetch_crypto - INFO - ✅ Successfully fetched from CoinGecko: ['bitcoin', 'ethereum', 'solana']
+2026-05-26 10:50:18,335 - backend.fetch_crypto - INFO - Cached crypto prices saved
+2026-05-26 10:50:18,338 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-26 10:50:18,339 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-26 07:20:38.077172
+2026-05-26 10:50:18,339 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-26 10:50:18,339 - backend.api - INFO - Fetched AAPL: $308.82
+2026-05-26 10:50:18,339 - backend.api - INFO - Fetched GOOG: $379.38
+2026-05-26 10:50:18,339 - backend.api - INFO - Fetched NVDA: $215.33
+2026-05-26 10:52:08,483 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-26 10:52:08,484 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-26 07:20:38.077172
+2026-05-26 10:52:08,485 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-26 10:52:08,899 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $426.01
+2026-05-26 10:52:09,577 - backend.fetch_crypto - INFO - ✅ Fetched price for bitcoin: $76665
+2026-05-26 10:52:10,257 - backend.fetch_crypto - INFO - ✅ Fetched price for cardano: $0.241763
+2026-05-26 10:52:10,980 - backend.fetch_crypto - INFO - ✅ Fetched price for chutes: $19.28
+2026-05-26 10:52:10,989 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-26 10:52:10,989 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-26 07:20:38.077172
+2026-05-26 10:52:10,989 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-26 10:52:11,370 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $426.01
+2026-05-26 10:52:11,921 - backend.fetch_crypto - INFO - ✅ Fetched price for bitcoin: $76665
+2026-05-26 10:52:12,491 - backend.fetch_crypto - INFO - ✅ Fetched price for cardano: $0.241763
+2026-05-26 10:52:13,052 - backend.fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-26 10:52:13,061 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-26 10:52:13,061 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-26 07:20:38.077172
+2026-05-26 10:52:13,061 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-26 10:52:13,479 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $426.01
+2026-05-26 10:52:14,038 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-26 10:52:14,597 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for cardano: $0.5
+2026-05-26 10:52:15,137 - backend.fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-26 10:52:15,144 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-26 10:52:15,144 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-26 07:20:38.077172
+2026-05-26 10:52:15,144 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-26 10:52:15,677 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $426.01
+2026-05-26 10:52:16,214 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-26 10:52:16,782 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for cardano: $0.5
+2026-05-26 10:52:17,346 - backend.fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-26 10:52:23,797 - backend.api - INFO - 🔍 Crypto search for 'cardano': found 5 results
+2026-05-26 10:52:27,561 - backend.services - INFO - Attempting to sell 2.0 cardano
+2026-05-26 10:52:28,113 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for cardano: $0.5
+2026-05-26 10:52:28,119 - backend.services - INFO - Successfully sold 2.0 cardano at $0.5
+2026-05-26 10:52:31,243 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-26 10:52:31,246 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-26 07:20:38.077172
+2026-05-26 10:52:31,246 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-26 10:52:31,612 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $426.01
+2026-05-26 10:52:32,153 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-26 10:52:32,710 - backend.fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-26 10:52:32,717 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-26 10:52:32,718 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-26 07:20:38.077172
+2026-05-26 10:52:32,718 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-26 10:52:33,106 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $426.01
+2026-05-26 10:52:33,660 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-26 10:52:34,226 - backend.fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-26 10:52:34,233 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-26 10:52:34,233 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-26 07:20:38.077172
+2026-05-26 10:52:34,233 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-26 10:52:34,673 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $426.01
+2026-05-26 10:52:35,218 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-26 10:52:35,780 - backend.fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-26 10:52:35,787 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-26 10:52:35,788 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-26 07:20:38.077172
+2026-05-26 10:52:35,788 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-26 10:52:36,157 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $426.01
+2026-05-26 10:52:36,688 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-26 10:52:37,225 - backend.fetch_crypto - ERROR - ❌ No price available for chutes

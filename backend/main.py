@@ -1,6 +1,16 @@
 import os
 import logging
+from pathlib import Path
 from dotenv import load_dotenv
+
+# Ensure imports work when backend files live in `backend/` but the project
+# is run from the repository root. We'll load the project's .env and set the
+# working directory to the repo root so relative cache/status files resolve
+# consistently.
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+load_dotenv(PROJECT_ROOT / '.env')
+os.chdir(PROJECT_ROOT)
+
 from fetch_crypto import get_crypto_prices
 from currency_fetcher import get_zar_exchange_rates
 from database import initialise_db, store_prices, store_rates, store_stock_prices
@@ -17,8 +27,12 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-load_dotenv()
-API_KEY_stocks = os.getenv('ALPHA_VANTAGE_API_KEY')
+# Select stock API key according to configured provider
+provider = os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower()
+if provider == 'finnhub':
+    API_KEY_stocks = os.getenv('FINNHUB_API_KEY')
+else:
+    API_KEY_stocks = os.getenv('ALPHA_VANTAGE_API_KEY')
 
 # Initialise database
 initialise_db()

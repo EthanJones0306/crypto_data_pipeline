@@ -11,3 +11,45 @@
 2026-05-19 15:48:38,682 - database - INFO - Stored: EUR - 19.36 ZAR at 2026-05-19 15:48:38
 2026-05-19 15:48:38,683 - database - INFO - Stored: GBP - 22.25 ZAR at 2026-05-19 15:48:38
 2026-05-19 15:48:38,683 - __main__ - INFO - All data fetched and stored successfully!
+2026-05-26 07:12:48,637 - __main__ - INFO - Fetching cryptocurrency prices...
+2026-05-26 07:12:48,638 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko for: ['bitcoin', 'ethereum', 'solana']...
+2026-05-26 07:12:48,942 - fetch_crypto - INFO - ✅ Successfully fetched from CoinGecko: ['bitcoin', 'ethereum', 'solana']
+2026-05-26 07:12:48,943 - fetch_crypto - INFO - Cached crypto prices saved
+2026-05-26 07:12:48,945 - __main__ - INFO - Fetching stock prices...
+2026-05-26 07:12:48,945 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-26 07:12:48,946 - fetch_stocks - INFO - Cache expired, will fetch fresh data
+2026-05-26 07:12:49,346 - fetch_stocks - ERROR - Exception fetching AAPL from Finnhub: 401 Client Error: Unauthorized for url: https://finnhub.io/api/v1/quote?symbol=AAPL&token=79MC5EWVII5262UH
+2026-05-26 07:12:49,707 - fetch_stocks - ERROR - Exception fetching GOOG from Finnhub: 401 Client Error: Unauthorized for url: https://finnhub.io/api/v1/quote?symbol=GOOG&token=79MC5EWVII5262UH
+2026-05-26 07:12:50,104 - fetch_stocks - ERROR - Exception fetching NVDA from Finnhub: 401 Client Error: Unauthorized for url: https://finnhub.io/api/v1/quote?symbol=NVDA&token=79MC5EWVII5262UH
+2026-05-26 07:12:50,106 - fetch_stocks - INFO - Cache expired, will fetch fresh data
+2026-05-26 07:12:50,106 - __main__ - INFO - Fetching ZAR exchange rates...
+2026-05-26 07:12:50,153 - database - INFO - Stored: bitcoin - $76689 at 2026-05-26 07:12:50
+2026-05-26 07:12:50,153 - database - INFO - Stored: ethereum - $2092.17 at 2026-05-26 07:12:50
+2026-05-26 07:12:50,153 - database - INFO - Stored: solana - $84.34 at 2026-05-26 07:12:50
+2026-05-26 07:12:50,153 - __main__ - WARNING - Failed to fetch stock prices
+2026-05-26 07:12:50,154 - database - INFO - Stored: USD - 16.33 ZAR at 2026-05-26 07:12:50
+2026-05-26 07:12:50,154 - database - INFO - Stored: EUR - 19.01 ZAR at 2026-05-26 07:12:50
+2026-05-26 07:12:50,154 - database - INFO - Stored: GBP - 22.04 ZAR at 2026-05-26 07:12:50
+2026-05-26 07:12:50,155 - __main__ - INFO - All data fetched and stored successfully!
+2026-05-26 07:20:36,228 - __main__ - INFO - Fetching cryptocurrency prices...
+2026-05-26 07:20:36,229 - fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko for: ['bitcoin', 'ethereum', 'solana']...
+2026-05-26 07:20:36,544 - fetch_crypto - INFO - ✅ Successfully fetched from CoinGecko: ['bitcoin', 'ethereum', 'solana']
+2026-05-26 07:20:36,544 - fetch_crypto - INFO - Cached crypto prices saved
+2026-05-26 07:20:36,546 - __main__ - INFO - Fetching stock prices...
+2026-05-26 07:20:36,546 - fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-26 07:20:36,547 - fetch_stocks - INFO - Cache expired, will fetch fresh data
+2026-05-26 07:20:36,983 - fetch_stocks - INFO - ✓ Fetched AAPL from Finnhub: $308.82
+2026-05-26 07:20:37,463 - fetch_stocks - INFO - ✓ Fetched GOOG from Finnhub: $379.38
+2026-05-26 07:20:37,969 - fetch_stocks - INFO - ✓ Fetched NVDA from Finnhub: $215.33
+2026-05-26 07:20:38,079 - fetch_stocks - INFO - Cached stock prices saved
+2026-05-26 07:20:38,079 - __main__ - INFO - Fetching ZAR exchange rates...
+2026-05-26 07:20:38,136 - database - INFO - Stored: bitcoin - $76764 at 2026-05-26 07:20:38
+2026-05-26 07:20:38,136 - database - INFO - Stored: ethereum - $2094.69 at 2026-05-26 07:20:38
+2026-05-26 07:20:38,136 - database - INFO - Stored: solana - $84.41 at 2026-05-26 07:20:38
+2026-05-26 07:20:38,137 - database - INFO - Stored: AAPL - $308.82 at 2026-05-26 07:20:38
+2026-05-26 07:20:38,137 - database - INFO - Stored: GOOG - $379.38 at 2026-05-26 07:20:38
+2026-05-26 07:20:38,137 - database - INFO - Stored: NVDA - $215.33 at 2026-05-26 07:20:38
+2026-05-26 07:20:38,138 - database - INFO - Stored: USD - 16.33 ZAR at 2026-05-26 07:20:38
+2026-05-26 07:20:38,139 - database - INFO - Stored: EUR - 19.01 ZAR at 2026-05-26 07:20:38
+2026-05-26 07:20:38,139 - database - INFO - Stored: GBP - 22.04 ZAR at 2026-05-26 07:20:38
+2026-05-26 07:20:38,139 - __main__ - INFO - All data fetched and stored successfully!
