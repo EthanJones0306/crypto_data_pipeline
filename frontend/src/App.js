@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import './App.css';
 import PortfolioValue from './components/PortfolioValue';
 import Prices from './components/Prices';
@@ -7,24 +7,22 @@ import Trading from './components/Trading';
 import Analytics from './components/Analytics';
 import Status from './components/Status';
 import { resetDatabase } from './services/api';
+import { ThemeContext } from './contexts/ThemeContext';
+import SettingsMenu from './components/SettingsMenu';
 
 function App() {
-  const [isDarkMode, setIsDarkMode] = useState(true);
   const [activeTab, setActiveTab] = useState('portfolio');
   const [isResetting, setIsResetting] = useState(false);
+  const { resolvedTheme } = useContext(ThemeContext);
 
-  // Save preference to localStorage
-  useEffect(() => {
-    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
-  }, [isDarkMode]);
-
-  // Load preference on mount
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'light') {
-      setIsDarkMode(false);
-    }
-  }, []);
+  const themeClass =
+    resolvedTheme === 'light'
+      ? 'light-mode'
+      : resolvedTheme === 'solar'
+        ? 'solar-mode'
+        : resolvedTheme === 'high-contrast'
+          ? 'high-contrast-mode'
+          : 'dark-mode';
 
   const handleReset = async () => {
     const confirmed = window.confirm(
@@ -65,7 +63,7 @@ function App() {
   };
 
   return (
-    <div className={`App ${isDarkMode ? 'dark-mode' : 'light-mode'}`}>
+    <div className={`App ${themeClass}`}>
       <header className="App-header">
         <div className="header-content">
           <h1>Portfolio Tracker</h1>
@@ -78,13 +76,7 @@ function App() {
             >
               {isResetting ? '⏳ Resetting...' : '🔄 Reset'}
             </button>
-            <button 
-              className="theme-toggle"
-              onClick={() => setIsDarkMode(!isDarkMode)}
-              title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
-            >
-              {isDarkMode ? '☀️' : '🌙'}
-            </button>
+            <SettingsMenu />
           </div>
         </div>
       </header>

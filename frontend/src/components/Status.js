@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
+import { ThemeContext } from '../contexts/ThemeContext';
 function Status() {
   const [apiStatus, setApiStatus] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [lastUpdated, setLastUpdated] = useState(null);
 
+  const { resolvedTheme } = useContext(ThemeContext);
+  const isLightTheme = resolvedTheme !== 'dark';
   useEffect(() => {
     fetchApiStatus();
     // Refresh every 30 seconds
@@ -71,7 +74,16 @@ function Status() {
           <div className="status-grid">
             {apiStatus && Object.entries(apiStatus).map(([provider, data]) => (
               <div key={provider} className="status-card" style={{ borderLeftColor: getStatusColor(data.status) }}>
-                <div className="status-header">
+              <div
+                key={provider}
+                className="status-card"
+                style={{
+                  borderLeftColor: getStatusColor(data.status),
+                  backgroundColor: isLightTheme ? '#ffffff' : 'var(--ocean-floor)',
+                  color: isLightTheme ? '#0f1923' : 'var(--data-blue)',
+                  boxShadow: isLightTheme ? '0 10px 30px rgba(15, 25, 35, 0.08)' : 'none'
+                }}
+              >
                   <h3>{getProviderName(provider)}</h3>
                   <span className="status-indicator">{data.indicator}</span>
                 </div>

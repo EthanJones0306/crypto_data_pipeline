@@ -1,52 +1,86 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
-import './SettingsMenu.css'; // optional small styles
+import './SettingsMenu.css';
 
 export default function SettingsMenu() {
-  const { theme, setTheme } = useContext(ThemeContext);
+  const { theme, resolvedTheme, setTheme } = useContext(ThemeContext);
   const [open, setOpen] = useState(false);
+  const menuRef = useRef(null);
 
   const options = [
-    { key: 'dark', label: 'Dark' },
-    { key: 'light', label: 'Light' },
-    { key: 'solar', label: 'Solar' },
-    { key: 'high-contrast', label: 'High Contrast' }
+    { key: 'system', label: 'System Default', description: 'Follow your device appearance setting' },
+    { key: 'dark', label: 'Dark', description: 'Deep slate theme for low-light work' },
+    { key: 'light', label: 'Light', description: 'Bright clean theme for daytime use' },
+    { key: 'solar', label: 'Solar', description: 'Warm amber theme with softer contrast' },
+    { key: 'high-contrast', label: 'High Contrast', description: 'Maximum contrast for readability' }
   ];
 
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('keydown', handleEscape);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, []);
+
   return (
-    <div className="settings-menu" style={{ position: 'relative' }}>
-      <button className="theme-toggle" onClick={() => setOpen(v => !v)} aria-haspopup="true" aria-expanded={open}>
+    <div className="settings-menu" ref={menuRef}>
+      <button
+        className="settings-toggle"
+        onClick={() => setOpen(v => !v)}
+        aria-haspopup="true"
+        aria-expanded={open}
+        aria-label="Open settings"
+        title="Settings"
+      >
         ⚙
       </button>
 
       {open && (
-        <div className="settings-dropdown" style={{
-          position: 'absolute',
-          right: 0,
-          top: '110%',
-          background: 'var(--portfolio-container-bg, #fff)',
-          border: '1px solid rgba(0,0,0,0.08)',
-          borderRadius: 8,
-          padding: 12,
-          minWidth: 200,
-          zIndex: 50
-        }}>
-          <h4 style={{ margin: '0 0 8px 0' }}>Appearance</h4>
-          {options.map(opt => (
-            <label key={opt.key} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8, cursor: 'pointer' }}>
-              <input
-                type="radio"
-                name="theme"
-                value={opt.key}
-                checked={theme === opt.key}
-                onChange={() => setTheme(opt.key)}
-              />
-              <span>{opt.label}</span>
-            </label>
-          ))}
-          <div style={{ marginTop: 8, textAlign: 'right' }}>
-            <button onClick={() => setOpen(false)} style={{ padding: '6px 10px' }}>Close</button>
+        <div className="settings-dropdown">
+          <div className="settings-dropdown-header">
+            <div>
+              <p className="settings-eyebrow">Appearance</p>
+              <h4>Theme Settings</h4>
+            </div>
+            <button className="settings-close" onClick={() => setOpen(false)} aria-label="Close settings">
+              ×
+            </button>
           </div>
+          <p className="settings-description">Choose how the app should look across the interface.</p>
+          {options.map(opt => (
+            <button
+              key={opt.key}
+              className={`settings-option ${theme === opt.key ? 'active' : ''} ${theme === 'system' && opt.key === 'system' ? `resolved-${resolvedTheme}` : ''}`}
+              onClick={() => {
+                setTheme(opt.key);
+                setOpen(false);
+              }}
+              type="button"
+            >
+              <span className="settings-option-copy">
+                <span className="settings-option-label">{opt.label}</span>
+                <span className="settings-option-description">{opt.description}</span>
+              </span>
+              <span className="settings-option-status" aria-hidden="true">
+                {theme === opt.key ? '✓' : ''}
+              </span>
+            </button>
+          ))}
         </div>
       )}
     </div>

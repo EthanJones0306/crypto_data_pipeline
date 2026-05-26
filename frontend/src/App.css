@@ -135,13 +135,29 @@ body {
 }
 
 .App.light-mode .stat-card {
-  background: linear-gradient(135deg, #1e3448 0%, #162534 100%);
-  border: 2px solid #0f1923;
+  background: linear-gradient(135deg, #ffffff 0%, #f6f9fc 100%);
+  border: 1px solid rgba(15, 25, 35, 0.12);
+  box-shadow: 0 10px 30px rgba(15, 25, 35, 0.08);
 }
 
 .App.light-mode .stat-card:hover {
   border-color: #17b89a;
   box-shadow: 0 8px 20px rgba(23, 184, 154, 0.12);
+}
+
+.App.light-mode .stat-label,
+.App.light-mode .stat-value,
+.App.light-mode .stat-subtitle,
+.App.light-mode .stat-icon {
+  color: #0f1923;
+}
+
+.App.light-mode .stat-label {
+  opacity: 0.72;
+}
+
+.App.light-mode .stat-subtitle {
+  opacity: 0.65;
 }
 
 /* SHARED STYLES */
@@ -174,6 +190,7 @@ body {
 .theme-toggle {
   font-size: 2em;
   background: none;
+  color: #c8d8e8;
   border: none;
   cursor: pointer;
   padding: 10px;
@@ -183,6 +200,107 @@ body {
 
 .theme-toggle:hover {
   transform: scale(1.2) rotate(20deg);
+}
+
+.settings-toggle {
+  font-size: 1.8em;
+  background: rgba(74, 168, 224, 0.12);
+  color: #c8d8e8;
+  border: 1px solid rgba(74, 168, 224, 0.35);
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  line-height: 1;
+}
+
+.settings-toggle:hover {
+  transform: scale(1.1) rotate(15deg);
+  background: rgba(74, 168, 224, 0.2);
+  border-color: #4aa8e0;
+  color: #ffffff;
+}
+
+.App.light-mode .theme-toggle,
+.App.light-mode .settings-toggle {
+  color: #0f1923;
+}
+
+.App.light-mode .settings-toggle {
+  background: rgba(23, 184, 154, 0.08);
+  border-color: rgba(23, 184, 154, 0.25);
+}
+
+.App.light-mode .settings-toggle:hover {
+  background: rgba(23, 184, 154, 0.16);
+  border-color: #17b89a;
+  color: #0f1923;
+}
+
+.App.dark-mode .settings-toggle {
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+}
+
+.App.solar-mode {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fff8e6 0%, #fff0c9 100%);
+  color: #2b2b2b;
+}
+
+.App.solar-mode .App-header {
+  background: linear-gradient(135deg, #2f2a1f 0%, #1d1a12 100%);
+  border-bottom: 2px solid #e2b34f;
+}
+
+.App.solar-mode .App-header h1 {
+  background: linear-gradient(135deg, #f0c040 0%, #f58f29 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.App.solar-mode .portfolio-container {
+  background: linear-gradient(135deg, #fffdf7 0%, #fff3d6 100%);
+  border: 1px solid #e5c36f;
+  box-shadow: 0 10px 30px rgba(158, 125, 41, 0.12);
+}
+
+.App.solar-mode .settings-toggle {
+  color: #fff7e0;
+  background: rgba(240, 192, 64, 0.12);
+  border-color: rgba(240, 192, 64, 0.35);
+}
+
+.App.high-contrast-mode {
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+}
+
+.App.high-contrast-mode .App-header,
+.App.high-contrast-mode .portfolio-container,
+.App.high-contrast-mode .stat-card,
+.App.high-contrast-mode .chart-container {
+  background: #000;
+  border-color: #fff;
+  box-shadow: none;
+}
+
+.App.high-contrast-mode th,
+.App.high-contrast-mode td,
+.App.high-contrast-mode .tab,
+.App.high-contrast-mode .settings-toggle,
+.App.high-contrast-mode .theme-toggle {
+  color: #fff;
+}
+
+.App.high-contrast-mode .settings-toggle {
+  background: #111;
+  border-color: #fff;
+}
+
+.App.high-contrast-mode .settings-toggle:hover {
+  background: #222;
 }
 
 .header-controls {
@@ -591,3 +709,22 @@ tr:last-child td {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+/* Solar theme (warm) */
+.App.solar-mode {
+  min-height: 100vh;
+  background: linear-gradient(135deg,#fff8e6 0%, #fff3d6 100%);
+  color: #2b2b2b;
+}
+.App.solar-mode .portfolio-container {
+  background: linear-gradient(135deg,#fffdf6 0%, #fff8e6 100%);
+  border: 1px solid #f0c973;
+}
+/* High contrast theme */
+.App.high-contrast {
+  min-height: 100vh;
+  background: #000;
+  color: #fff;
+}
+.App.high-contrast th { background: #000; color: #fff; }
+.App.high-contrast td { color: #fff; border-bottom: 1px solid #444; }
