@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { buyCrypto, sellCrypto, buyStock, sellStock } from '../services/api';
+import { buyCrypto, sellCrypto, buyStock, sellStock, fetchPrices, simulateOrder, getLiquidationPrice } from '../services/api';
 import SearchBar from './SearchBar';
 import { getDisplayName } from '../constants/assetNames';
 
@@ -8,8 +8,10 @@ function Trading() {
   const [assetType, setAssetType] = useState('crypto');
   const [quantity, setQuantity] = useState('');
   const [type, setType] = useState('buy');
+  const [leverage, setLeverage] = useState(2);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
+  const [liquidationPrice, setLiquidationPrice] = useState(null);
 
   const handleTrade = async (e) => {
     e.preventDefault();
@@ -26,17 +28,24 @@ function Trading() {
 
     setLoading(true);
     try {
-      if (assetType === 'crypto') {
-        if (type === 'buy') {
-          await buyCrypto(asset, parseFloat(quantity));
-        } else {
-          await sellCrypto(asset, parseFloat(quantity));
-        }
+      const isPaper = typeof window !== 'undefined' && window.localStorage.getItem('paper_mode') === 'true';
+      if (isPaper) {
+        // use simulation endpoint
+        const side = type === 'buy' ? 'long' : 'short';
+        await simulateOrder({ asset, quantity: parseFloat(quantity), side, leverage, asset_type: assetType === 'crypto' ? 'crypto' : 'stock' });
       } else {
-        if (type === 'buy') {
-          await buyStock(asset, parseFloat(quantity));
+        if (assetType === 'crypto') {
+          if (type === 'buy') {
+            await buyCrypto(asset, parseFloat(quantity));
+          } else {
+            await sellCrypto(asset, parseFloat(quantity));
+          }
         } else {
-          await sellStock(asset, parseFloat(quantity));
+          if (type === 'buy') {
+            await buyStock(asset, parseFloat(quantity));
+          } else {
+            await sellStock(asset, parseFloat(quantity));
+          }
         }
       }
 
@@ -50,6 +59,30 @@ function Trading() {
       setMessage({ type: 'error', text: err.message });
     }
     setLoading(false);
+  };
+
+  const handleSimulate = async () => {
+    if (!asset) return setMessage({ type: 'error', text: 'Select an asset first' });
+    try {
+      const prices = await fetchPrices();
+      let entryPrice = 0;
+      if (assetType === 'crypto') {
+        entryPrice = prices.crypto_prices[asset] || prices.crypto_prices[asset.toLowerCase()];
+      } else {
+        entryPrice = prices.stock_prices[asset] || prices.stock_prices[asset.toUpperCase()];
+      }
+      if (!entryPrice) return setMessage({ type: 'error', text: 'Unable to fetch current price for this asset' });
+      const side = type === 'buy' ? 'long' : 'short';
+      const resp = await getLiquidationPrice({ entry_price: entryPrice, side, leverage });
+      if (resp.status === 'success') {
+        setLiquidationPrice(resp.liquidation_price);
+        setMessage({ type: 'success', text: `Liquidation price: ${resp.liquidation_price.toFixed(4)}` });
+      } else {
+        setMessage({ type: 'error', text: resp.message || 'Failed to compute liquidation price' });
+      }
+    } catch (err) {
+      setMessage({ type: 'error', text: err.message });
+    }
   };
 
   const handleAssetSelect = (selectedAsset) => {
@@ -189,6 +222,33 @@ function Trading() {
               fontSize: '1em'
             }}
           />
+        </div>
+
+        <div style={{ marginBottom: '20px' }}>
+          <label style={{ display: 'block', marginBottom: '8px', fontWeight: '600' }}>
+            Leverage
+          </label>
+          <input
+            type="number"
+            min="1"
+            step="0.1"
+            value={leverage}
+            onChange={(e) => setLeverage(parseFloat(e.target.value))}
+            style={{
+              width: '100%',
+              padding: '10px',
+              borderRadius: '8px',
+              border: '1px solid #475569',
+              fontSize: '1em'
+            }}
+          />
+        </div>
+
+        <div style={{ display: 'flex', gap: '12px', marginBottom: '12px' }}>
+          <button type="button" onClick={handleSimulate} style={{ flex: 1, padding: '10px', borderRadius: '8px', border: '1px solid #475569', background: '#eef2ff', cursor: 'pointer' }}>
+            Simulate Liquidation Price
+          </button>
+          <div style={{ flex: 1 }} />
         </div>
 
         <button

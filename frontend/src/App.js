@@ -4,6 +4,7 @@ import PortfolioValue from './components/PortfolioValue';
 import Prices from './components/Prices';
 import Transactions from './components/Transactions';
 import Trading from './components/Trading';
+import LeverageTrading from './components/LeverageTrading';
 import Analytics from './components/Analytics';
 import Status from './components/Status';
 import { resetDatabase } from './services/api';
@@ -53,6 +54,8 @@ function App() {
         return <Transactions />;
       case 'trading':
         return <Trading />;
+      case 'leverage':
+        return <LeverageTrading />;
       case 'analytics':
         return <Analytics />;
       case 'status':
@@ -111,6 +114,12 @@ function App() {
             onClick={() => setActiveTab('trading')}
           >
             💱 Trading
+          </button>
+          <button 
+            className={`tab ${activeTab === 'leverage' ? 'active' : ''}`}
+            onClick={() => setActiveTab('leverage')}
+          >
+            ⚖️ Leverage
           </button>
           <button 
             className={`tab ${activeTab === 'status' ? 'active' : ''}`}

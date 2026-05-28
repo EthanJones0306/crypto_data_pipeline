@@ -45,6 +45,15 @@ class BuyRequest(BaseModel):
     asset: str
     quantity: float
 
+
+class SimulateRequest(BaseModel):
+    asset: str
+    quantity: float
+    side: str  # 'long' or 'short'
+    leverage: float = 2.0
+    asset_type: str = 'crypto'  # 'crypto' or 'stock'
+    account_id: int = 1
+
 @app.get("/")
 def read_root(): 
     return {"message": "Welcome to the Crypto Data Pipeline API!"}
@@ -321,6 +330,35 @@ def get_portfolio_value():
     except Exception as e:
         logger = logging.getLogger(__name__)
         logger.error(f"Error in get_portfolio_value: {e}")
+        return {"status": "error", "message": str(e)}
+
+
+@app.post('/simulate/order')
+def simulate_order(request: SimulateRequest):
+    """Simulate opening a leveraged position (paper trading only)."""
+    try:
+        result = trading_service.simulate_order(request.asset, request.side, request.quantity, request.leverage, request.asset_type, request.account_id)
+        return {"status": "success", "result": result}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+
+@app.get('/simulate/liquidation')
+def get_liquidation_price(entry_price: float, side: str = 'long', leverage: float = 2.0, maintenance_rate: float = None, asset: str = None):
+    """Return computed liquidation price for given parameters. `asset` is optional.
+    If `maintenance_rate` omitted, use paper account default.
+    """
+    try:
+        acct = None
+        if maintenance_rate is None:
+            # try to read from paper account default
+            from .database import get_or_create_paper_account
+            acct = get_or_create_paper_account(1)
+            maintenance_rate = acct.get('maintenance_rate', 0.25)
+
+        liq = trading_service.compute_liquidation_price(entry_price, side, leverage, maintenance_rate)
+        return {"status": "success", "liquidation_price": liq}
+    except Exception as e:
         return {"status": "error", "message": str(e)}
 
 @app.get("/exchange-rates")

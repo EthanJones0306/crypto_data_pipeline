@@ -48,7 +48,32 @@ def initialise_db():
             transaction_type TEXT,
             quantity REAL,
             price REAL,
-            timestamp DATETIME
+            timestamp DATETIME,
+            is_paper INTEGER DEFAULT 0
+        )
+    ''')
+
+    # Create paper accounts for simulation
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS paper_accounts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT DEFAULT 'paper',
+            cash REAL DEFAULT 100000,
+            available_cash REAL DEFAULT 100000,
+            maintenance_rate REAL DEFAULT 0.25,
+            created_at DATETIME
+        )
+    ''')
+
+    # Create positions table to track holdings (including paper positions)
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS positions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            account_id INTEGER DEFAULT 1,
+            asset TEXT,
+            quantity REAL,
+            avg_price REAL,
+            is_paper INTEGER DEFAULT 0
         )
     ''')
     
@@ -150,10 +175,11 @@ def store_transactions(transactions):
 
     try:
         for transaction in transactions:
+            is_paper = int(transaction.get('is_paper', 0))
             cursor.execute('''
-                INSERT INTO transactions (asset, transaction_type, quantity, price, timestamp)
-                VALUES (?, ?, ?, ?, ?)
-            ''', (transaction['asset'], transaction['type'], transaction['quantity'], transaction['price'], current_time))
+                INSERT INTO transactions (asset, transaction_type, quantity, price, timestamp, is_paper)
+                VALUES (?, ?, ?, ?, ?, ?)
+            ''', (transaction['asset'], transaction['type'], transaction['quantity'], transaction['price'], current_time, is_paper))
             logger.info(f"Stored: {transaction['type']} {transaction['quantity']} {transaction['asset']} @ ${transaction['price']}")
         
         conn.commit()
@@ -170,8 +196,8 @@ def store_buy_transaction(asset, quantity, price):
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
     cursor.execute('''
-        INSERT INTO transactions (asset, transaction_type, quantity, price, timestamp)
-        VALUES (?, ?, ?, ?, ?)
+        INSERT INTO transactions (asset, transaction_type, quantity, price, timestamp, is_paper)
+        VALUES (?, ?, ?, ?, ?, 0)
     ''', (asset, 'BUY', quantity, price, current_time))
     
     conn.commit()
@@ -184,10 +210,70 @@ def store_sell_transaction(asset, quantity, price):
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
     cursor.execute('''
-        INSERT INTO transactions (asset, transaction_type, quantity, price, timestamp)
-        VALUES (?, ?, ?, ?, ?)
+        INSERT INTO transactions (asset, transaction_type, quantity, price, timestamp, is_paper)
+        VALUES (?, ?, ?, ?, ?, 0)
     ''', (asset, 'SELL', quantity, price, current_time))
     
+    conn.commit()
+    conn.close()
+
+
+def get_or_create_paper_account(account_id=1):
+    conn = sqlite3.connect('crypto.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT id, cash, available_cash, maintenance_rate FROM paper_accounts WHERE id = ?', (account_id,))
+    row = cursor.fetchone()
+    if row:
+        conn.close()
+        return {'id': row[0], 'cash': row[1], 'available_cash': row[2], 'maintenance_rate': row[3]}
+
+    now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    cursor.execute('INSERT INTO paper_accounts (id, created_at) VALUES (?, ?)', (account_id, now))
+    conn.commit()
+    cursor.execute('SELECT id, cash, available_cash, maintenance_rate FROM paper_accounts WHERE id = ?', (account_id,))
+    row = cursor.fetchone()
+    conn.close()
+    return {'id': row[0], 'cash': row[1], 'available_cash': row[2], 'maintenance_rate': row[3]}
+
+
+def update_paper_account_cash(account_id, delta):
+    conn = sqlite3.connect('crypto.db')
+    cursor = conn.cursor()
+    cursor.execute('UPDATE paper_accounts SET cash = cash + ?, available_cash = available_cash + ? WHERE id = ?', (delta, delta, account_id))
+    conn.commit()
+    conn.close()
+
+
+def get_position(account_id, asset, is_paper=1):
+    conn = sqlite3.connect('crypto.db')
+    cursor = conn.cursor()
+    cursor.execute('SELECT id, quantity, avg_price FROM positions WHERE account_id = ? AND asset = ? AND is_paper = ?', (account_id, asset, is_paper))
+    row = cursor.fetchone()
+    conn.close()
+    if row:
+        return {'id': row[0], 'quantity': row[1], 'avg_price': row[2]}
+    return None
+
+
+def update_position(account_id, asset, qty_delta, price, is_paper=1):
+    conn = sqlite3.connect('crypto.db')
+    cursor = conn.cursor()
+    pos = get_position(account_id, asset, is_paper)
+    if pos:
+        # compute new avg price for increases only
+        new_qty = pos['quantity'] + qty_delta
+        if new_qty == 0:
+            cursor.execute('DELETE FROM positions WHERE id = ?', (pos['id'],))
+        else:
+            if qty_delta > 0:
+                # weighted avg
+                total_cost = pos['avg_price'] * pos['quantity'] + price * qty_delta
+                new_avg = total_cost / new_qty
+            else:
+                new_avg = pos['avg_price']
+            cursor.execute('UPDATE positions SET quantity = ?, avg_price = ? WHERE id = ?', (new_qty, new_avg, pos['id']))
+    else:
+        cursor.execute('INSERT INTO positions (account_id, asset, quantity, avg_price, is_paper) VALUES (?, ?, ?, ?, ?)', (account_id, asset, qty_delta, price, is_paper))
     conn.commit()
     conn.close()
 
