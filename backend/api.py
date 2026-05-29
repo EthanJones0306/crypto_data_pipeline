@@ -366,6 +366,82 @@ def get_liquidation_price(entry_price: float, side: str = 'long', leverage: floa
     except Exception as e:
         return {"status": "error", "message": str(e)}
 
+@app.get('/positions/leverage')
+def get_leverage_positions():
+    """Get all open leverage/perpetual positions"""
+    try:
+        from .database import get_open_leverage_positions
+        from .fetch_crypto import get_crypto_price
+        from .fetch_stocks import get_stock_price
+        import os
+        
+        positions = get_open_leverage_positions(account_id=1)
+        
+        # Enrich with current prices and P&L
+        api_key = os.getenv('ALPHA_VANTAGE_API_KEY') if os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower() == 'alpha' else os.getenv('FINNHUB_API_KEY')
+        
+        enriched = []
+        for pos in positions:
+            current_price = 0
+            if pos['asset_type'] == 'stock':
+                stock_data = get_stock_price(pos['asset'], api_key)
+                current_price = float(stock_data.get('05. price', 0)) if stock_data else 0
+            else:
+                price_data = get_crypto_price(pos['asset'])
+                current_price = price_data['usd'] if price_data else 0
+            
+            if current_price == 0:
+                continue
+            
+            # Calculate P&L
+            position_value = pos['quantity'] * current_price
+            entry_value = pos['quantity'] * pos['entry_price']
+            
+            if pos['side'].lower() == 'long':
+                pnl = position_value - entry_value
+                pnl_percent = ((current_price - pos['entry_price']) / pos['entry_price'] * 100) if pos['entry_price'] > 0 else 0
+            else:  # short
+                pnl = entry_value - position_value
+                pnl_percent = ((pos['entry_price'] - current_price) / pos['entry_price'] * 100) if pos['entry_price'] > 0 else 0
+            
+            enriched.append({
+                **pos,
+                'current_price': current_price,
+                'position_value': position_value,
+                'pnl': pnl,
+                'pnl_percent': pnl_percent,
+                'distance_to_liquidation': abs(current_price - pos['liquidation_price']),
+                'liquidation_distance_percent': (abs(current_price - pos['liquidation_price']) / current_price * 100) if current_price > 0 else 0
+            })
+        
+        return {"status": "success", "positions": enriched}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+@app.post('/positions/leverage/{position_id}/close')
+def close_leverage_position(position_id: int):
+    """Close a leverage position and return margin"""
+    try:
+        from .database import close_leverage_position, get_open_leverage_positions, get_or_create_paper_account, update_paper_account_cash
+        
+        # Get the position to find required margin
+        positions = get_open_leverage_positions(account_id=1)
+        position = next((p for p in positions if p['id'] == position_id), None)
+        
+        if not position:
+            return {"status": "error", "message": "Position not found"}
+        
+        # Return the margin to available cash
+        update_paper_account_cash(1, position['required_margin'])
+        
+        # Close the position
+        close_leverage_position(position_id)
+        
+        return {"status": "success", "message": f"Position closed. Margin returned: ${position['required_margin']:.2f}"}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+
 @app.get("/exchange-rates")
 def get_exchange_rates():
     """Get exchange rates for USD, EUR, GBP, ZAR"""

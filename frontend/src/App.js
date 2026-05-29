@@ -6,6 +6,7 @@ import Prices from './components/Prices';
 import Transactions from './components/Transactions';
 import Trading from './components/Trading';
 import LeverageTrading from './components/LeverageTrading';
+import Positions from './components/Positions';
 import Analytics from './components/Analytics';
 import Status from './components/Status';
 import { resetDatabase } from './services/api';
@@ -24,6 +25,7 @@ function App() {
     { key: 'analytics', label: 'Analytics', icon: '◌' },
     { key: 'trading', label: 'Trading', icon: '⇄' },
     { key: 'leverage', label: 'Leverage', icon: '⟡' },
+    { key: 'positions', label: 'Perps', icon: '◈' },
     { key: 'status', label: 'API Status', icon: '⟟' },
   ];
 
@@ -67,6 +69,8 @@ function App() {
         return <Trading />;
       case 'leverage':
         return <LeverageTrading />;
+      case 'positions':
+        return <Positions />;
       case 'analytics':
         return <Analytics />;
       case 'status':

@@ -1883,3 +1883,93 @@
 2026-05-29 06:54:57,059 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $442.1
 2026-05-29 06:54:57,125 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
 2026-05-29 06:54:57,170 - backend.fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-29 07:02:18,344 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-29 07:02:18,346 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-28 13:49:08.367018
+2026-05-29 07:02:18,347 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-29 07:02:18,351 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-29 07:02:18,352 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-28 13:49:08.367018
+2026-05-29 07:02:18,352 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-29 07:02:18,760 - backend.api - INFO - 🔍 Crypto search for 'sol': found 10 results
+2026-05-29 07:02:18,869 - backend.api - INFO - 🔍 Crypto search for 'so': found 10 results
+2026-05-29 07:02:19,119 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $442.1
+2026-05-29 07:02:19,148 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $442.1
+2026-05-29 07:02:19,171 - backend.fetch_crypto - INFO - ✅ Fetched price for bitcoin: $73401
+2026-05-29 07:02:19,200 - backend.fetch_crypto - INFO - ✅ Fetched price for bitcoin: $73401
+2026-05-29 07:02:19,486 - backend.api_status - ERROR - Error loading status: Expecting value: line 1 column 1 (char 0)
+2026-05-29 07:02:19,486 - backend.api_status - ERROR - Error loading status: Expecting value: line 1 column 1 (char 0)
+2026-05-29 07:02:19,486 - backend.fetch_crypto - INFO - ✅ Fetched price for chutes: $17.88
+2026-05-29 07:02:19,488 - backend.fetch_crypto - INFO - ✅ Fetched price for chutes: $17.88
+2026-05-29 07:02:19,508 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-29 07:02:19,509 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-28 13:49:08.367018
+2026-05-29 07:02:19,509 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-29 07:02:19,932 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $442.1
+2026-05-29 07:02:19,981 - backend.fetch_crypto - INFO - ✅ Fetched price for bitcoin: $73401
+2026-05-29 07:02:20,030 - backend.fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-29 07:02:20,034 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-29 07:02:20,034 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-28 13:49:08.367018
+2026-05-29 07:02:20,034 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-29 07:02:20,427 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $442.1
+2026-05-29 07:02:20,472 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-29 07:02:20,509 - backend.fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-29 07:03:17,990 - backend.api - INFO - 🔍 Crypto search for 'sola': found 10 results
+2026-05-29 07:03:22,438 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $81.81
+2026-05-29 07:03:22,440 - backend.database - ERROR - Error storing transaction: table transactions has no column named is_paper
+2026-05-29 07:03:27,325 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $81.81
+2026-05-29 07:03:27,371 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $81.81
+2026-05-29 07:03:32,319 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $98
+2026-05-29 07:03:37,320 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $98
+2026-05-29 07:03:42,311 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $98
+2026-05-29 07:03:47,309 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $98
+2026-05-29 07:03:52,318 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $98
+2026-05-29 07:03:57,316 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $98
+2026-05-29 07:04:02,306 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $98
+2026-05-29 07:04:07,307 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $98
+2026-05-29 07:04:12,317 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $98
+2026-05-29 07:04:17,320 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $98
+2026-05-29 07:04:22,315 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $98
+2026-05-29 07:04:27,334 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $98
+2026-05-29 07:04:32,625 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $81.87
+2026-05-29 07:04:37,311 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $81.87
+2026-05-29 07:04:42,323 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $81.87
+2026-05-29 07:04:47,334 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $81.87
+2026-05-29 07:04:52,315 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $81.87
+2026-05-29 07:04:57,325 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $98
+2026-05-29 07:05:02,304 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $98
+2026-05-29 07:05:07,316 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $98
+2026-05-29 07:05:12,309 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $98
+2026-05-29 07:05:17,323 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $98
+2026-05-29 07:05:22,311 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $98
+2026-05-29 07:05:27,324 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $98
+2026-05-29 07:05:32,310 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $98
+2026-05-29 07:05:37,307 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $98
+2026-05-29 07:05:42,317 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $98
+2026-05-29 07:05:47,304 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $98
+2026-05-29 07:05:52,302 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $98
+2026-05-29 07:05:57,296 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $98
+2026-05-29 07:06:02,368 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $81.89
+2026-05-29 07:06:07,343 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $81.89
+2026-05-29 07:06:12,572 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $81.95
+2026-05-29 07:06:15,467 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-29 07:06:15,468 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-28 13:49:08.367018
+2026-05-29 07:06:15,470 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-29 07:06:15,881 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $442.1
+2026-05-29 07:06:15,956 - backend.fetch_crypto - INFO - ✅ Fetched price for bitcoin: $73466
+2026-05-29 07:06:16,277 - backend.fetch_crypto - INFO - ✅ Fetched price for chutes: $17.9
+2026-05-29 07:06:16,280 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-29 07:06:16,280 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-28 13:49:08.367018
+2026-05-29 07:06:16,280 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-29 07:06:16,702 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $442.1
+2026-05-29 07:06:16,758 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-29 07:06:16,819 - backend.fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-29 07:06:16,823 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-29 07:06:16,823 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-28 13:49:08.367018
+2026-05-29 07:06:16,823 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-29 07:06:17,263 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $442.1
+2026-05-29 07:06:17,313 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-29 07:06:17,353 - backend.fetch_crypto - ERROR - ❌ No price available for chutes
+2026-05-29 07:06:17,355 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-05-29 07:06:17,356 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-05-28 13:49:08.367018
+2026-05-29 07:06:17,356 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-05-29 07:06:17,746 - backend.fetch_stocks - INFO - ✅ Fetched TSLA from Finnhub: $442.1
+2026-05-29 07:06:17,786 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-05-29 07:06:17,823 - backend.fetch_crypto - ERROR - ❌ No price available for chutes

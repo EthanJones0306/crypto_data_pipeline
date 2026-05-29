@@ -121,4 +121,11 @@ export const getLiquidationPrice = async ({ entry_price, side = 'long', leverage
   return requestJson(`/simulate/liquidation?${params.toString()}`);
 };
 
+export const getOpenPositions = async () => requestJson('/positions/leverage');
+
+export const closePosition = async (positionId) => requestJson(`/positions/leverage/${positionId}/close`, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' }
+});
+
 export const fetchApiStatus = async () => requestJson('/api/status');

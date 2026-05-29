@@ -150,6 +150,10 @@ class TradingService:
 
         liq_price = self.compute_liquidation_price(current_price, side, leverage, acct.get('maintenance_rate', 0.25))
 
+        # Store the leverage position
+        from .database import store_leverage_position
+        store_leverage_position(account_id, asset, asset_type, side, quantity, current_price, leverage, liq_price, required_margin, acct.get('maintenance_rate', 0.25))
+
         return {
             'filled_price': current_price,
             'required_margin': required_margin,

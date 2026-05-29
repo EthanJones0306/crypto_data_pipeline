@@ -77,6 +77,24 @@ def initialise_db():
         )
     ''')
     
+    # Create leverage_positions table for tracking open perpetual positions
+    cursor.execute('''
+        CREATE TABLE IF NOT EXISTS leverage_positions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            account_id INTEGER DEFAULT 1,
+            asset TEXT,
+            asset_type TEXT DEFAULT 'crypto',
+            side TEXT,
+            quantity REAL,
+            entry_price REAL,
+            leverage REAL DEFAULT 2.0,
+            liquidation_price REAL,
+            required_margin REAL,
+            opened_at DATETIME,
+            maintenance_rate REAL DEFAULT 0.25
+        )
+    ''')
+    
     conn.commit()
     conn.close()
 
@@ -283,20 +301,68 @@ def reset_database():
         conn = sqlite3.connect('crypto.db')
         cursor = conn.cursor()
         
-        # Drop all tables
-        cursor.execute('DROP TABLE IF EXISTS transactions')
-        cursor.execute('DROP TABLE IF EXISTS crypto_prices')
-        cursor.execute('DROP TABLE IF EXISTS stock_prices')
-        cursor.execute('DROP TABLE IF EXISTS exchange_rates')
+        # Delete all from tables (don't drop, just clear)
+        tables = ['crypto_prices', 'stock_prices', 'exchange_rates', 'transactions', 'positions', 'leverage_positions', 'paper_accounts']
+        for table in tables:
+            cursor.execute(f'DELETE FROM {table}')
         
         conn.commit()
         conn.close()
-        
-        # Reinitialize database with empty tables
-        initialise_db()
-        logger.info("Database reset successfully - all tables cleared and reinitialized")
         return True
     except Exception as e:
         logger.error(f"Error resetting database: {e}")
         return False
+
+
+def store_leverage_position(account_id, asset, asset_type, side, quantity, entry_price, leverage, liquidation_price, required_margin, maintenance_rate=0.25):
+    """Store an opened leverage/perpetual position"""
+    conn = sqlite3.connect('crypto.db')
+    cursor = conn.cursor()
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    cursor.execute('''
+        INSERT INTO leverage_positions (account_id, asset, asset_type, side, quantity, entry_price, leverage, liquidation_price, required_margin, opened_at, maintenance_rate)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    ''', (account_id, asset, asset_type, side, quantity, entry_price, leverage, liquidation_price, required_margin, now, maintenance_rate))
+    conn.commit()
+    conn.close()
+
+
+def get_open_leverage_positions(account_id=1):
+    """Retrieve all open leverage positions for an account"""
+    conn = sqlite3.connect('crypto.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        SELECT id, asset, asset_type, side, quantity, entry_price, leverage, liquidation_price, required_margin, opened_at, maintenance_rate
+        FROM leverage_positions
+        WHERE account_id = ?
+        ORDER BY opened_at DESC
+    ''', (account_id,))
+    rows = cursor.fetchall()
+    conn.close()
+    
+    positions = []
+    for row in rows:
+        positions.append({
+            'id': row[0],
+            'asset': row[1],
+            'asset_type': row[2],
+            'side': row[3],
+            'quantity': row[4],
+            'entry_price': row[5],
+            'leverage': row[6],
+            'liquidation_price': row[7],
+            'required_margin': row[8],
+            'opened_at': row[9],
+            'maintenance_rate': row[10]
+        })
+    return positions
+
+
+def close_leverage_position(position_id):
+    """Close/remove a leverage position"""
+    conn = sqlite3.connect('crypto.db')
+    cursor = conn.cursor()
+    cursor.execute('DELETE FROM leverage_positions WHERE id = ?', (position_id,))
+    conn.commit()
+    conn.close()
     
