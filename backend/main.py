@@ -4,7 +4,8 @@ from pathlib import Path
 from dotenv import load_dotenv
 
 # Ensure imports work when backend files live in `backend/` but the project
-# is run from the repository root. We'll load the project's .env and set the
+# is run from the repository root. 
+# Load the project's .env and set the
 # working directory to the repo root so relative cache/status files resolve
 # consistently.
 PROJECT_ROOT = Path(__file__).resolve().parent.parent

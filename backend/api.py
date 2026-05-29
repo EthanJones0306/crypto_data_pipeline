@@ -27,13 +27,8 @@ logging.basicConfig(
 )
 
 app = FastAPI()
-trading_service = TradingService()
 
-# Initialize database on startup
-@app.on_event("startup")
-def startup_event():
-    initialise_db()
-
+# Add CORS middleware BEFORE anything else
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # Allow all origins (fine for local development)
@@ -41,11 +36,21 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+trading_service = TradingService()
+
+# Initialize database on startup
+@app.on_event("startup")
+def startup_event():
+    initialise_db()
+
+
+# Define request models
 class SellRequest(BaseModel):
     asset: str
     quantity: float
 
-# Define the request models
+
 class BuyRequest(BaseModel):
     asset: str
     quantity: float
@@ -469,15 +474,16 @@ def get_exchange_rates():
 @app.get("/analytics/gains-losses")
 def get_gains_losses():
     """Get gains/losses analysis for the portfolio"""
-    from fetch_crypto import get_crypto_price
-    from fetch_stocks import get_stock_price, get_stock_prices
-    import os
+    from .fetch_crypto import get_crypto_price
+    from .fetch_stocks import get_stock_price
     
-    conn = sqlite3.connect('crypto.db')
-    cursor = conn.cursor()
+    logger = logging.getLogger(__name__)
     
     try:
-        # Get all transactions grouped by asset
+        conn = sqlite3.connect('crypto.db')
+        cursor = conn.cursor()
+        
+        # Get all transactions
         cursor.execute('''
             SELECT 
                 asset,
@@ -491,20 +497,12 @@ def get_gains_losses():
         transactions = cursor.fetchall()
         conn.close()
         
-        # Get API key for stock fetching
-        provider = os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower()
-        if provider == 'finnhub':
-            api_key = os.getenv('FINNHUB_API_KEY')
-        else:
-            api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
-        
-        # Calculate per-asset gains/losses (no normalization)
+        # Calculate per-asset gains/losses
         asset_data = {}
         total_invested = 0
         total_realized_gains = 0
         
         for asset, trans_type, quantity, price in transactions:
-            # Keep asset as-is (don't normalize)
             if asset not in asset_data:
                 asset_data[asset] = {
                     'buys': [],
@@ -537,36 +535,37 @@ def get_gains_losses():
             if current_quantity <= 0:
                 continue
             
-            # Get current price - try stock first (if it looks like a ticker), then crypto
+            # Get current price with error handling
             current_price = 0
             
-            if len(asset) <= 5 and asset.isupper():
-                # Try to fetch as stock
-                stock_data = get_stock_price(asset, api_key)
-                if stock_data:
-                    try:
+            try:
+                if len(asset) <= 5 and asset.isupper():
+                    # Try to fetch as stock
+                    stock_data = get_stock_price(asset)
+                    if stock_data:
                         current_price = float(stock_data.get('05. price', 0))
-                    except:
-                        pass
-            
-            # If not a stock or stock fetch failed, try as crypto
-            if current_price == 0:
-                price_data = get_crypto_price(asset)
-                if price_data:
-                    current_price = price_data['usd']
+                
+                # If not a stock or stock fetch failed, try as crypto
+                if current_price == 0:
+                    price_data = get_crypto_price(asset.lower())
+                    if price_data:
+                        current_price = float(price_data.get('usd', 0))
+            except Exception as price_err:
+                logger.warning(f"Could not fetch price for {asset}: {price_err}")
+                current_price = 0
             
             avg_entry_price = data['cost_basis'] / data['total_bought'] if data['total_bought'] > 0 else 0
-            current_value = current_quantity * current_price
-            unrealized_gain = current_value - (current_quantity * avg_entry_price)
+            current_value = current_quantity * current_price if current_price > 0 else 0
+            unrealized_gain = current_value - (current_quantity * avg_entry_price) if current_price > 0 else -(current_quantity * avg_entry_price)
             
             total_current_value += current_value
             total_unrealized_gains += unrealized_gain
             
             holdings_analysis.append({
                 "asset": asset,
-                "quantity": current_quantity,
+                "quantity": round(current_quantity, 4),
                 "avg_entry_price": round(avg_entry_price, 2),
-                "current_price": current_price,
+                "current_price": round(current_price, 2) if current_price > 0 else 0,
                 "current_value": round(current_value, 2),
                 "unrealized_gain": round(unrealized_gain, 2),
                 "unrealized_gain_percent": round((unrealized_gain / (current_quantity * avg_entry_price) * 100) if avg_entry_price > 0 else 0, 2)
@@ -590,8 +589,8 @@ def get_gains_losses():
         }
     except Exception as e:
         logger = logging.getLogger(__name__)
-        logger.error(f"Error in get_gains_losses: {e}")
-        return {"status": "error", "message": str(e)}
+        logger.error(f"Error in get_gains_losses: {e}", exc_info=True)
+        return {"status": "error", "message": "Failed to fetch analytics data"}
 
 @app.post("/admin/reset-database")
 def reset_db():
