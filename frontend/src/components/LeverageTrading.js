@@ -59,42 +59,58 @@ export default function LeverageTrading() {
     <div className="portfolio-container">
       <h2>Leverage Simulator</h2>
 
-      <div style={{ maxWidth: 600 }}>
-        <label style={{ display: 'block', margin: '10px 0', fontWeight: 600 }}>Type</label>
-        <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
-          <button onClick={() => setAssetType('crypto')} style={{ flex: 1 }}>Crypto</button>
-          <button onClick={() => setAssetType('stock')} style={{ flex: 1 }}>Stock</button>
+      <div className="trade-form">
+        <div className="trade-field">
+          <label className="trade-label">Type</label>
+          <div className="trade-segmented">
+            <button onClick={() => setAssetType('crypto')} className={`trade-option ${assetType === 'crypto' ? 'active' : ''}`}>Crypto</button>
+            <button onClick={() => setAssetType('stock')} className={`trade-option ${assetType === 'stock' ? 'active' : ''}`}>Stock</button>
+          </div>
         </div>
 
-        <label style={{ display: 'block', margin: '10px 0', fontWeight: 600 }}>Search</label>
-        <SearchBar assetType={assetType === 'crypto' ? 'crypto' : 'stocks'} onSelect={handleSelect} />
-        {asset && <div style={{ marginTop: 8 }}>Selected: {getDisplayName(asset)}</div>}
-
-        <label style={{ display: 'block', margin: '10px 0', fontWeight: 600 }}>Quantity</label>
-        <input type="number" value={quantity} onChange={e => setQuantity(e.target.value)} style={{ width: '100%', padding: 8, borderRadius: 6 }} />
-
-        <label style={{ display: 'block', margin: '10px 0', fontWeight: 600 }}>Side</label>
-        <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
-          <button onClick={() => setSide('long')} style={{ flex: 1, background: side === 'long' ? '#10b981' : undefined }}>Long</button>
-          <button onClick={() => setSide('short')} style={{ flex: 1, background: side === 'short' ? '#ef4444' : undefined }}>Short</button>
+        <div className="trade-field">
+          <label className="trade-label">Search</label>
+          <SearchBar assetType={assetType === 'crypto' ? 'crypto' : 'stocks'} onSelect={handleSelect} />
+          {asset && <div className="selected-asset">Selected: {getDisplayName(asset)}</div>}
         </div>
 
-        <label style={{ display: 'block', margin: '10px 0', fontWeight: 600 }}>Leverage</label>
-        <input type="number" min="1" step="0.1" value={leverage} onChange={e => setLeverage(parseFloat(e.target.value))} style={{ width: '100%', padding: 8, borderRadius: 6 }} />
+        <div className="trade-field">
+          <label className="trade-label">Quantity</label>
+          <input type="number" value={quantity} onChange={e => setQuantity(e.target.value)} className="trade-input" />
+        </div>
 
-        <div style={{ display: 'flex', gap: 8, marginTop: 12 }}>
-          <button onClick={handleSimulate} style={{ flex: 1, padding: 10 }}>Simulate Liquidation</button>
-          <button onClick={handleOpen} style={{ flex: 1, padding: 10 }}>Open Simulated Position</button>
+        <div className="trade-field">
+          <label className="trade-label">Side</label>
+          <div className="trade-segmented">
+            <button onClick={() => setSide('long')} className={`trade-option ${side === 'long' ? 'active' : ''}`}>Long</button>
+            <button onClick={() => setSide('short')} className={`trade-option ${side === 'short' ? 'active' : ''}`}>Short</button>
+          </div>
+        </div>
+
+        <div className="trade-field">
+          <label className="trade-label">Leverage</label>
+          <input type="number" min="1" step="0.1" value={leverage} onChange={e => setLeverage(parseFloat(e.target.value))} className="trade-input" />
+        </div>
+
+        <div className="trade-actions">
+          <button onClick={handleSimulate} className="secondary-action">Simulate Liquidation</button>
+          <button onClick={handleOpen} className="primary-action buy">Open Simulated Position</button>
         </div>
 
         {message && (
-          <div style={{ marginTop: 12, padding: 10, borderRadius: 8, background: message.type === 'success' ? 'rgba(16,185,129,0.08)' : 'rgba(239,68,68,0.06)' }}>
+          <div className={`message-banner ${message.type}`}>
             {message.text}
           </div>
         )}
 
         {simResult && (
-          <pre style={{ marginTop: 12, background: '#0f172a', color: '#fff', padding: 12, borderRadius: 8 }}>{JSON.stringify(simResult, null, 2)}</pre>
+          <pre className="result-panel">{JSON.stringify(simResult, null, 2)}</pre>
+        )}
+
+        {liqPrice && (
+          <div className="message-banner">
+            Liquidation price: {liqPrice.toFixed(4)}
+          </div>
         )}
 
       </div>

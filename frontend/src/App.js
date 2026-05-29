@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import './App.css';
 import PortfolioValue from './components/PortfolioValue';
 import Prices from './components/Prices';
@@ -15,6 +16,16 @@ function App() {
   const [activeTab, setActiveTab] = useState('portfolio');
   const [isResetting, setIsResetting] = useState(false);
   const { resolvedTheme } = useContext(ThemeContext);
+
+  const tabs = [
+    { key: 'portfolio', label: 'Portfolio', icon: '◉' },
+    { key: 'prices', label: 'Prices', icon: '↟' },
+    { key: 'transactions', label: 'Transactions', icon: '▣' },
+    { key: 'analytics', label: 'Analytics', icon: '◌' },
+    { key: 'trading', label: 'Trading', icon: '⇄' },
+    { key: 'leverage', label: 'Leverage', icon: '⟡' },
+    { key: 'status', label: 'API Status', icon: '⟟' },
+  ];
 
   const themeClass =
     resolvedTheme === 'light'
@@ -67,68 +78,77 @@ function App() {
 
   return (
     <div className={`App ${themeClass}`}>
-      <header className="App-header">
-        <div className="header-content">
-          <h1>Portfolio Tracker</h1>
+      <div className="app-background" aria-hidden="true">
+        <span className="aurora aurora-a" />
+        <span className="aurora aurora-b" />
+        <span className="aurora aurora-c" />
+        <span className="grid-overlay" />
+      </div>
+
+      <motion.header
+        className="App-header"
+        initial={{ opacity: 0, y: -18 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, ease: 'easeOut' }}
+      >
+        <div className="header-content shell-card">
+          <div className="hero-copy">
+            <p className="eyebrow">Private market cockpit</p>
+            <h1>Portfolio Tracker</h1>
+            <p className="hero-subtitle">
+              A glass-style dashboard for prices, trading, leverage simulation, and API health.
+            </p>
+          </div>
           <div className="header-controls">
-            <button 
+            <button
               className="reset-btn"
               onClick={handleReset}
               disabled={isResetting}
               title="Reset database and clear all data"
             >
-              {isResetting ? '⏳ Resetting...' : '🔄 Reset'}
+              {isResetting ? '⏳ Resetting...' : '↺ Reset'}
             </button>
             <SettingsMenu />
           </div>
         </div>
-      </header>
-      <main>
-        <div className="tabs">
-          <button 
-            className={`tab ${activeTab === 'portfolio' ? 'active' : ''}`}
-            onClick={() => setActiveTab('portfolio')}
+      </motion.header>
+
+      <main className="app-main">
+        <motion.div
+          className="tabs shell-card"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, delay: 0.05 }}
+        >
+          {tabs.map((tab) => (
+            <motion.button
+              key={tab.key}
+              type="button"
+              className={`tab ${activeTab === tab.key ? 'active' : ''}`}
+              onClick={() => setActiveTab(tab.key)}
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              <span className="tab-icon" aria-hidden="true">
+                {tab.icon}
+              </span>
+              <span>{tab.label}</span>
+            </motion.button>
+          ))}
+        </motion.div>
+
+        <AnimatePresence mode="wait">
+          <motion.section
+            key={activeTab}
+            className="content-stage"
+            initial={{ opacity: 0, y: 16, filter: 'blur(8px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, y: 10, filter: 'blur(8px)' }}
+            transition={{ duration: 0.35, ease: 'easeOut' }}
           >
-            📊 Portfolio
-          </button>
-          <button 
-            className={`tab ${activeTab === 'prices' ? 'active' : ''}`}
-            onClick={() => setActiveTab('prices')}
-          >
-            💹 Prices
-          </button>
-          <button 
-            className={`tab ${activeTab === 'transactions' ? 'active' : ''}`}
-            onClick={() => setActiveTab('transactions')}
-          >
-            📝 Transactions
-          </button>
-          <button 
-            className={`tab ${activeTab === 'analytics' ? 'active' : ''}`}
-            onClick={() => setActiveTab('analytics')}
-          >
-            📊 Analytics
-          </button>
-          <button 
-            className={`tab ${activeTab === 'trading' ? 'active' : ''}`}
-            onClick={() => setActiveTab('trading')}
-          >
-            💱 Trading
-          </button>
-          <button 
-            className={`tab ${activeTab === 'leverage' ? 'active' : ''}`}
-            onClick={() => setActiveTab('leverage')}
-          >
-            ⚖️ Leverage
-          </button>
-          <button 
-            className={`tab ${activeTab === 'status' ? 'active' : ''}`}
-            onClick={() => setActiveTab('status')}
-          >
-            🔌 API Status
-          </button>
-        </div>
-        {renderContent()}
+            {renderContent()}
+          </motion.section>
+        </AnimatePresence>
       </main>
     </div>
   );

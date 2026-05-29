@@ -57,73 +57,25 @@ function SearchBar({ assetType = 'crypto', onSelect, placeholder = 'Search asset
   };
 
   return (
-    <div style={{ position: 'relative', width: '100%' }}>
+    <div className="search-shell">
       <input
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onFocus={() => query.length > 0 && setShowDropdown(true)}
         placeholder={placeholder}
-        style={{
-          width: '100%',
-          padding: '10px',
-          borderRadius: '8px',
-          border: '1px solid #475569',
-          fontSize: '1em',
-          boxSizing: 'border-box',
-          backgroundColor: 'rgba(15, 25, 35, 0.5)'
-        }}
+        className="search-input"
       />
 
-      {loading && (
-        <div style={{
-          position: 'absolute',
-          right: '10px',
-          top: '50%',
-          transform: 'translateY(-50%)',
-          color: '#94a3b8',
-          fontSize: '0.8em'
-        }}>
-          🔄 Searching...
-        </div>
-      )}
+      {loading && <div className="search-loading">🔄 Searching...</div>}
 
       {showDropdown && results.length > 0 && (
-        <div
-          style={{
-            position: 'absolute',
-            top: '100%',
-            left: 0,
-            right: 0,
-            backgroundColor: '#162534',
-            border: '1px solid #1e3448',
-            borderRadius: '8px',
-            marginTop: '5px',
-            maxHeight: '300px',
-            overflowY: 'auto',
-            zIndex: 1000,
-            boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
-          }}
-        >
+        <div className="search-results">
           {results.map((item, idx) => (
             <div
               key={idx}
               onClick={() => handleSelect(item)}
-              style={{
-                padding: '10px 12px',
-                borderBottom: idx < results.length - 1 ? '1px solid #1e3448' : 'none',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '10px',
-                transition: 'background-color 0.2s'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.backgroundColor = 'rgba(14, 124, 107, 0.2)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.backgroundColor = 'transparent';
-              }}
+              className="search-result"
             >
               {assetType === 'crypto' ? (
                 <>
@@ -131,28 +83,28 @@ function SearchBar({ assetType = 'crypto', onSelect, placeholder = 'Search asset
                     <img
                       src={item.image}
                       alt={item.name}
-                      style={{ width: '24px', height: '24px', borderRadius: '50%' }}
+                      className="search-avatar"
                       onError={(e) => {
                         e.target.style.display = 'none';
                       }}
                     />
                   )}
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: '600', color: '#e2e8f0' }}>
+                  <div className="search-copy">
+                    <div className="search-title">
                       {item.name}
                     </div>
-                    <div style={{ fontSize: '0.85em', color: '#94a3b8' }}>
+                    <div className="search-meta">
                       {item.symbol}
                     </div>
                   </div>
                 </>
               ) : (
                 <>
-                  <div style={{ flex: 1 }}>
-                    <div style={{ fontWeight: '600', color: '#e2e8f0' }}>
+                  <div className="search-copy">
+                    <div className="search-title">
                       {item.symbol}
                     </div>
-                    <div style={{ fontSize: '0.85em', color: '#94a3b8' }}>
+                    <div className="search-meta">
                       {item.name}
                     </div>
                   </div>
@@ -164,22 +116,7 @@ function SearchBar({ assetType = 'crypto', onSelect, placeholder = 'Search asset
       )}
 
       {showDropdown && query.length > 0 && results.length === 0 && !loading && (
-        <div
-          style={{
-            position: 'absolute',
-            top: '100%',
-            left: 0,
-            right: 0,
-            backgroundColor: '#162534',
-            border: '1px solid #1e3448',
-            borderRadius: '8px',
-            marginTop: '5px',
-            padding: '12px',
-            color: '#94a3b8',
-            textAlign: 'center',
-            fontSize: '0.9em'
-          }}
-        >
+        <div className="search-empty">
           No results found for "{query}"
         </div>
       )}

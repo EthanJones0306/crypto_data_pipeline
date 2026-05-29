@@ -38,8 +38,8 @@ function PortfolioValue() {
     loadData();
   }, []);
 
-  if (loading) return <div style={{ padding: '40px', textAlign: 'center' }}>Loading...</div>;
-  if (error) return <div style={{ padding: '40px', color: '#ef4444' }}>Error: {error}</div>;
+  if (loading) return <div className="portfolio-container loading-panel">Loading portfolio...</div>;
+  if (error) return <div className="portfolio-container error-banner">Error: {error}</div>;
 
   // Get exchange rate for selected currency
   const rate = exchangeRates?.rates?.[currency] || 1;
@@ -59,23 +59,14 @@ function PortfolioValue() {
 
   return (
     <div className="portfolio-container">
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '16px', flexWrap: 'wrap', marginBottom: '20px' }}>
         <h2>Total Portfolio Value</h2>
-        <div style={{ display: 'flex', gap: '10px' }}>
+        <div className="currency-switcher">
           {['USD', 'EUR', 'GBP', 'ZAR'].map(c => (
             <button
               key={c}
               onClick={() => setCurrency(c)}
-              style={{
-                padding: '8px 16px',
-                borderRadius: '8px',
-                border: currency === c ? '2px solid #60a5fa' : '1px solid #475569',
-                backgroundColor: currency === c ? 'rgba(96, 165, 250, 0.1)' : 'transparent',
-                color: currency === c ? '#60a5fa' : '#94a3b8',
-                fontWeight: '600',
-                cursor: 'pointer',
-                transition: 'all 0.3s'
-              }}
+              className={`currency-button ${currency === c ? 'active' : ''}`}
             >
               {c}
             </button>
