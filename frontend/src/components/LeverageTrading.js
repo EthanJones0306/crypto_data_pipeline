@@ -40,13 +40,15 @@ export default function LeverageTrading() {
 
   const handleOpen = async () => {
     setMessage(null);
+    setSimResult(null);
     try {
       const qty = parseFloat(quantity);
       if (!asset || !qty || qty <= 0) return setMessage({ type: 'error', text: 'Select asset and valid quantity' });
       const resp = await simulateOrder({ asset, quantity: qty, side, leverage, asset_type: assetType });
       if (resp.status === 'success') {
         setSimResult(resp.result);
-        setMessage({ type: 'success', text: 'Simulated position opened' });
+        setLiqPrice(resp.result.liquidation_price);
+        setMessage({ type: 'success', text: `Position opened at ${resp.result.filled_price.toFixed(4)}` });
       } else {
         setMessage({ type: 'error', text: resp.message || 'Simulation failed' });
       }
@@ -104,7 +106,23 @@ export default function LeverageTrading() {
         )}
 
         {simResult && (
-          <pre className="result-panel">{JSON.stringify(simResult, null, 2)}</pre>
+          <div className="result-panel">
+            <div style={{ marginBottom: '12px', fontWeight: '600' }}>Position Details:</div>
+            <div style={{ display: 'grid', gap: '8px', fontSize: '14px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--stroke)', paddingBottom: '8px' }}>
+                <span>Entry Price (Current):</span>
+                <span style={{ color: 'var(--accent-2)', fontFamily: 'IBM Plex Mono' }}>${simResult.filled_price?.toFixed(4)}</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--stroke)', paddingBottom: '8px' }}>
+                <span>Liquidation Price:</span>
+                <span style={{ color: 'var(--danger)', fontFamily: 'IBM Plex Mono' }}>${simResult.liquidation_price?.toFixed(4)}</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '8px' }}>
+                <span>Required Margin:</span>
+                <span style={{ color: 'var(--muted)', fontFamily: 'IBM Plex Mono' }}>${simResult.required_margin?.toFixed(2)}</span>
+              </div>
+            </div>
+          </div>
         )}
 
         {liqPrice && (

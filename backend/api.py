@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
+from typing import Optional
 import sqlite3
 from datetime import datetime
 import logging
@@ -28,6 +29,10 @@ logging.basicConfig(
 app = FastAPI()
 trading_service = TradingService()
 
+# Initialize database on startup
+@app.on_event("startup")
+def startup_event():
+    initialise_db()
 
 app.add_middleware(
     CORSMiddleware,
@@ -344,7 +349,7 @@ def simulate_order(request: SimulateRequest):
 
 
 @app.get('/simulate/liquidation')
-def get_liquidation_price(entry_price: float, side: str = 'long', leverage: float = 2.0, maintenance_rate: float = None, asset: str = None):
+def get_liquidation_price(entry_price: float, side: str = 'long', leverage: float = 2.0, maintenance_rate: Optional[float] = None, asset: Optional[str] = None):
     """Return computed liquidation price for given parameters. `asset` is optional.
     If `maintenance_rate` omitted, use paper account default.
     """
