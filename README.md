@@ -1,184 +1,354 @@
-# 📈 Portfolio Tracker
+# � Crypto Portfolio Tracker
 
-A full-stack investment portfolio tracker that lets you simulate buying and selling stocks and cryptocurrencies, track your P&L in real time, and monitor your portfolio across multiple currencies.
+> A production-ready full-stack investment portfolio application showcasing modern React and Python development practices, real-time data integration, and professional UI/UX design.
 
-Built with a **React** frontend and a **FastAPI** Python backend, pulling live market data from CoinGecko, Finnhub, and Alpha Vantage.
-
----
-
-## ✨ Features
-
-- **Live price feeds** — Real-time crypto and stock prices via CoinGecko, Finnhub, and Alpha Vantage with automatic fallback and 24-hour caching
-- **Trading simulation** — Buy and sell stocks and crypto at live market prices, stored in a local SQLite database
-- **Portfolio analytics** — Unrealized gains/losses, ROI, average entry price, and per-asset performance breakdown
-- **Multi-currency support** — Switch between USD, EUR, GBP, and ZAR instantly (preference persisted in localStorage)
-- **Portfolio allocation chart** — Interactive donut chart showing holdings breakdown (Recharts)
-- **Debounced asset search** — Search across 1000+ cryptocurrencies via CoinGecko's search API, or find stocks by ticker/name
-- **API rate limit monitoring** — Live dashboard showing usage and remaining calls for each data provider
-- **Dark / Light mode** — Toggle between themes, persisted across sessions
-- **Automated data pipeline** — APScheduler runs the pipeline daily at midnight to keep prices updated
+[![React](https://img.shields.io/badge/React-19.2.6-61dafb?logo=react)](https://react.dev)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.109-009485?logo=fastapi)](https://fastapi.tiangolo.com)
+[![Python](https://img.shields.io/badge/Python-3.11-3776ab?logo=python)](https://www.python.org)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 ---
 
-## 🛠️ Tech Stack
+## 🎯 Overview
 
-**Frontend**
-- React 19
-- Recharts (donut chart)
-- CSS custom properties (design tokens)
+A sophisticated full-stack application for managing and analyzing multi-asset investment portfolios. Track real-time positions in stocks and cryptocurrencies, simulate leverage trading with liquidation calculations, analyze gains/losses with interactive visualizations, and monitor market data from multiple providers with intelligent caching and fallback strategies.
 
-**Backend**
-- Python / FastAPI
-- SQLite (via Python's built-in `sqlite3`)
-- APScheduler (daily pipeline)
-
-**Data Sources**
-- [CoinGecko](https://www.coingecko.com/en/api) — Crypto prices & search (no key required)
-- [Finnhub](https://finnhub.io/) — Stock prices (free API key required)
-- [Alpha Vantage](https://www.alphavantage.co/) — Stock prices alternative (free API key required)
-- [Frankfurter](https://www.frankfurter.app/) — Exchange rates (no key required)
+**Perfect for:** Investment simulation, portfolio analysis, learning full-stack development patterns, API integration, and building sophisticated data-driven interfaces.
 
 ---
 
-## 📁 Project Structure
-portfolio-tracker/
-├── backend/                    # FastAPI backend and Python scripts
-│   ├── api.py                  # FastAPI app & all REST endpoints
-│   ├── services.py             # Trading service layer (buy/sell logic)
-│   ├── database.py             # SQLite schema & all DB operations
-│   ├── fetch_crypto.py         # CoinGecko integration with caching & fallback
-│   ├── fetch_stocks.py         # Finnhub / Alpha Vantage integration with caching
-│   ├── currency_fetcher.py     # Frankfurter exchange rate fetcher
-│   ├── api_status.py           # API rate limit tracker
-│   ├── scheduler.py            # APScheduler daily pipeline runner
-│   ├── main.py                 # Manual pipeline entry point
-│   ├── visualise_data.py       # Terminal price table viewer
-│   ├── check_data.py           # Raw database inspection helper
-│   └── requirements.txt        # Python dependencies
-├── frontend/                   # React frontend
-│   └── src/
-│       ├── components/         # PortfolioValue, Trading, Analytics, Prices, etc.
-│       ├── services/api.js     # All API calls to the backend
-│       └── constants/          # Asset name mappings
-└── backend/.env                # API keys (not committed — see below)
+## ✨ Core Features
 
-> 💡 Tip: View this README on GitHub for best formatting.
+### 📊 Portfolio Management
+- **Real-time portfolio value** — Aggregated across crypto and stock holdings
+- **Live price feeds** — CoinGecko (crypto), Finnhub (stocks), with automatic fallback and 24-hour caching
+- **Transaction history** — Complete buy/sell audit log with timestamps and execution prices
+- **Multi-currency support** — USD, EUR, GBP, ZAR with live exchange rates
+
+### 📈 Advanced Analytics  
+- **Gains/losses analysis** — Per-asset P&L with percentage returns (color-coded gains in green, losses in red)
+- **Interactive charts** — Pie chart for allocation breakdown, bar chart for performance comparison
+- **Holdings breakdown** — Detailed table with entry prices, current prices, and unrealized gains
+- **Portfolio health metrics** — Total invested, current value, ROI percentage, cost basis tracking
+
+### 🎮 Trading Features
+- **Paper trading simulation** — Risk-free trading at live market prices
+- **Leverage trading** — Simulate leveraged positions with liquidation price calculations
+- **Smart asset search** — Debounced search across 1000+ cryptocurrencies and stock database
+- **Real-time price quotes** — Current prices displayed during trading workflow
+
+### 💎 Professional UI/UX
+- **Glassmorphism design** — Modern frosted glass aesthetic with backdrop blur effects
+- **Aurora animations** — Smooth, elegant entry animations and transitions
+- **Dark/Light modes** — Theme persistence with CSS variables and semantic colors
+- **Responsive layout** — Optimized for desktop, tablet, and mobile views
+- **Interactive components** — Hover effects, loading states, success/error messaging
+
+### 🔌 System Features
+- **CORS-enabled REST API** — All endpoints properly configured for cross-origin requests
+- **Error resilience** — Sequential API fallback (Finnhub → Alpha Vantage), graceful price fetching
+- **Data persistence** — SQLite database with 8 optimized tables
+- **Live API monitoring** — Dashboard showing API health status and rate limit usage
+
+---
+
+## 🛠️ Technology Stack
+
+### Frontend Architecture
+```
+React 19.2.6 + React DOM
+├── Framer Motion — Premium animations & transitions
+├── Recharts 3.8.1 — Interactive data visualizations (pie, bar, line charts)
+├── CSS Variables — Design tokens, semantic theming
+└── Local Storage — Session persistence
+```
+
+### Backend Architecture
+```
+FastAPI + Uvicorn
+├── SQLite3 — 8-table relational schema
+├── APScheduler — Daily automated data pipeline
+├── Pydantic — Request/response validation
+└── CORS Middleware — Secure cross-origin requests
+```
+
+### Data Sources
+| Source | Data | Cache | Key Required |
+|--------|------|-------|--------------|
+| [CoinGecko](https://www.coingecko.com/en/api) | Crypto prices, search | 24h | ❌ No |
+| [Finnhub](https://finnhub.io/) | Stock prices, quotes | 24h | ✅ Yes |
+| [Alpha Vantage](https://www.alphavantage.co/) | Stock data (backup) | 24h | ✅ Yes |
+| [Frankfurter](https://www.frankfurter.app/) | Exchange rates | 24h | ❌ No |
+
+---
+
+## 📁 Project Architecture
+
+```
+crypto_data_pipeline/
+├── 📂 frontend/                          # React Single Page Application
+│   ├── public/                           # Static assets
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── PortfolioValue.js        # Portfolio summary cards
+│   │   │   ├── PortfolioDonutChart.js   # Animated allocation visualization
+│   │   │   ├── Analytics.js             # Gains/losses analysis dashboard
+│   │   │   ├── Trading.js               # Buy/sell interface
+│   │   │   ├── Positions.js             # Leverage positions tracker
+│   │   │   ├── Prices.js                # Live price quotes
+│   │   │   ├── Transactions.js          # Transaction history table
+│   │   │   └── Status.js                # API health monitoring
+│   │   ├── services/
+│   │   │   └── api.js                   # REST client with resilience layer
+│   │   ├── App.js                       # Main app routing & tabs
+│   │   └── App.css                      # 2250+ lines of glassmorphism design
+│   └── package.json
+│
+├── 📂 backend/                           # FastAPI Python Application
+│   ├── api.py                            # REST endpoints (15+ routes)
+│   ├── services.py                       # Trading service layer
+│   ├── database.py                       # SQLite operations & schema
+│   ├── fetch_crypto.py                   # CoinGecko integration with caching
+│   ├── fetch_stocks.py                   # Finnhub/Alpha Vantage integration
+│   ├── api_status.py                     # Rate limit tracking
+│   ├── scheduler.py                      # Automated pipeline tasks
+│   ├── crypto.db                         # SQLite database (auto-initialized)
+│   ├── requirements.txt                  # Python dependencies
+│   └── .env.example                      # Configuration template
+│
+├── README.md                             # This file
+└── .gitignore
+```
 
 ---
 
 ## 🚀 Getting Started
 
 ### Prerequisites
+- **Python** 3.11+
+- **Node.js** 18+
+- **npm** 9+
+- A free [Finnhub API key](https://finnhub.io/) (takes 30 seconds to get)
 
-- Python 3.8+
-- Node.js 16+
-- A free [Finnhub](https://finnhub.io/) API key
+### Setup Steps
 
----
-
-### 1. Clone the repo
-
+#### 1️⃣ Clone & Navigate
 ```bash
 git clone https://github.com/EthanJones0306/crypto_data_pipeline.git
 cd crypto_data_pipeline
 ```
 
----
-
-### 2. Set up the backend
-
+#### 2️⃣ Backend Setup
 ```bash
 cd backend
 pip install -r requirements.txt
 ```
 
 Create a `.env` file in the backend directory:
-
 ```env
 FINNHUB_API_KEY=your_finnhub_key_here
 ALPHA_VANTAGE_API_KEY=your_alpha_vantage_key_here   # optional
 STOCK_PRICE_PROVIDER=finnhub                         # or alphavantage
 ```
 
-Get a free Finnhub key at [finnhub.io](https://finnhub.io/) — no credit card required.
+**Get a Finnhub key:** Visit [finnhub.io](https://finnhub.io/register), sign up, and copy your API key. It's free and instant—no credit card required.
 
 Start the API server:
-
 ```bash
-python api.py
+python -m uvicorn backend.api:app --host 127.0.0.1 --port 8000 --reload
 ```
 
-The backend runs on `http://localhost:8000`. You can explore all endpoints at `http://localhost:8000/docs` (FastAPI's built-in Swagger UI).
+✅ Backend running at `http://localhost:8000`  
+📖 API Docs at `http://localhost:8000/docs` (Swagger UI)
 
----
-
-### 3. Set up the frontend
-
+#### 3️⃣ Frontend Setup
 ```bash
 cd frontend
 npm install
 npm start
 ```
 
-The app opens at `http://localhost:3000`.
+✅ Frontend running at `http://localhost:3000`
 
 ---
 
-### 4. (Optional) Run the data pipeline manually
+## 📖 Usage Guide
 
-```bash
-cd backend
-python main.py
+### 🎯 Portfolio Dashboard
+View your total portfolio value broken down by asset, with real-time prices. The interactive donut chart shows allocation percentages.
+
+### 📊 Analytics
+- **Portfolio Allocation** — Pie chart showing which assets represent what % of total value
+- **Gains/Losses Breakdown** — Bar chart comparing unrealized P&L per asset
+- **Holdings Table** — Detailed view with entry prices, current prices, quantity, and ROI %
+
+### 🛒 Trading
+1. Select asset type (Crypto or Stocks)
+2. Search for an asset (e.g., "Bitcoin" or "AAPL")
+3. Choose Buy or Sell
+4. Enter quantity
+5. Execute trade
+
+Transactions are recorded instantly and reflected in portfolio value.
+
+### ⚡ Leverage Trading (Advanced)
+Switch to the **Leverage** or **Perps** tabs to:
+- Simulate long/short positions with custom leverage (1–10x)
+- Calculate liquidation prices automatically
+- Track active positions with P&L percentages
+- Close positions at current market prices
+
+### 🔍 Live Prices
+View real-time quotes for crypto and stocks in the **Prices** tab.
+
+### 📋 Transaction History
+Complete audit log of all trades with timestamps, execution prices, and total value.
+
+---
+
+## 🏗️ Architecture & Design Decisions
+
+### Frontend (React)
+- **Component-based:** Each feature (Portfolio, Analytics, Trading) is a reusable, isolated React component
+- **Framer Motion:** Smooth entry/exit animations and interactive transitions for professional feel
+- **Recharts:** Declarative, composable charting library for complex data visualizations
+- **CSS Variables:** Design tokens (colors, spacing, fonts) defined once and reused across the app
+- **Local Storage:** User preferences (theme, currency) persist across sessions
+- **API Resilience:** `requestJson()` tries multiple endpoints sequentially to handle server downtime
+
+### Backend (FastAPI)
+- **Service Layer:** `TradingService` class encapsulates all buy/sell business logic (DRY principle)
+- **Type Hints:** Pydantic models validate all requests and responses
+- **Structured Logging:** All operations logged with timestamps and context for debugging
+- **Database Abstraction:** `database.py` handles all SQLite operations, cleanly separating data layer
+- **Error Handling:** Try/catch blocks prevent crashes from missing prices or API failures
+
+### Data Caching Strategy
+- **Problem:** External APIs have rate limits; CoinGecko/Finnhub allow ~10–50 calls/minute
+- **Solution:** Cache all prices for 24 hours in JSON files, check cache before calling APIs
+- **Fallback:** If API fails during trading, use cached price from last successful fetch
+- **Last Resort:** If no cache, use hardcoded fallback prices (ensures app never crashes)
+
+### Database Schema (SQLite)
+8 tables for clean data organization:
+- `transactions` — Buy/sell audit log
+- `crypto_prices` — Historical crypto prices
+- `stock_prices` — Historical stock prices
+- `exchange_rates` — Currency conversion rates
+- `positions` — Current holdings (qty, avg price)
+- `paper_accounts` — Paper trading account state
+- `leverage_positions` — Active leveraged positions
+- `api_status` — Rate limit tracking
+
+---
+
+## 📡 API Reference
+
+### Authentication
+No authentication required for local development. All endpoints are public within `127.0.0.1:8000`.
+
+### Core Endpoints
+
+**Portfolio**
+```http
+GET /portfolio/value
+```
+Returns current holdings and total portfolio value with live prices.
+
+**Analytics**
+```http
+GET /analytics/gains-losses
+```
+Returns unrealized P&L, ROI %, and per-asset performance breakdown.
+
+**Trading**
+```http
+POST /buy/crypto
+POST /sell/crypto
+POST /buy/stock
+POST /sell/stock
+```
+Execute trades. Request body: `{ "asset": "bitcoin", "quantity": 0.1 }`
+
+**Search**
+```http
+GET /search/crypto?q=bit
+GET /search/stocks?q=aapl
+```
+Search for assets across 1000+ cryptocurrencies and stock database.
+
+**Data**
+```http
+GET /prices/latest          # Crypto and stock prices
+GET /transactions           # Transaction history
+GET /exchange-rates         # Currency rates
+GET /health                 # API health check
 ```
 
-Or start the automated daily scheduler:
+---
 
-```bash
-cd backend
-python scheduler.py
-```
+## 🎓 Key Learning Outcomes
+
+This project demonstrates:
+
+✅ **Frontend Development**
+- React hooks (useState, useEffect, useContext)
+- Component composition and reusability
+- CSS-in-JS patterns and design systems
+- Animation libraries for UX enhancement
+- HTTP client design with error handling
+
+✅ **Backend Development**
+- FastAPI framework and Pydantic validation
+- SQLite database design and operations
+- RESTful API design principles
+- Third-party API integration
+- Error handling and logging
+
+✅ **Full-Stack Integration**
+- Client-server communication
+- CORS configuration and security
+- Asynchronous request handling
+- Caching strategies for performance
+- Deployment-ready code structure
+
+✅ **Software Engineering**
+- Clean code principles (DRY, SOLID)
+- Type safety with Python type hints
+- Separation of concerns (models, services, data layers)
+- Documentation and code comments
+- Git workflow and version control
 
 ---
 
-## 📡 API Endpoints
+## 🤝 Contributing
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/health` | Database and API health check |
-| GET | `/portfolio/value` | Current holdings with live prices |
-| GET | `/analytics/gains-losses` | Unrealized P&L per asset |
-| GET | `/prices/latest` | Latest crypto and stock prices |
-| GET | `/transactions` | Transaction history |
-| GET | `/exchange-rates` | USD → EUR, GBP, ZAR rates |
-| POST | `/buy/crypto` | Simulate buying a cryptocurrency |
-| POST | `/sell/crypto` | Simulate selling a cryptocurrency |
-| POST | `/buy/stock` | Simulate buying a stock |
-| POST | `/sell/stock` | Simulate selling a stock |
-| GET | `/search/crypto?q=` | Search cryptocurrencies |
-| GET | `/search/stocks?q=` | Search stocks |
-| GET | `/api/status` | API provider rate limit usage |
-| POST | `/admin/reset-database` | Clear all data and reset portfolio |
+Contributions are welcome! Here are some ideas:
+- Add more visualization types (line charts, heatmaps)
+- Implement user authentication
+- Add more data providers (Kraken, Coinbase APIs)
+- Deploy to cloud (Vercel, Heroku, AWS)
+- Add unit tests and integration tests
+- Implement real trading via exchange APIs
 
 ---
 
-## ⚙️ How It Works
+## 📝 License
 
-1. **Prices** are fetched from CoinGecko (crypto) and Finnhub/Alpha Vantage (stocks). Responses are cached locally for 24 hours to avoid hitting rate limits, with hardcoded fallback prices as a last resort.
-
-2. **Trades** are recorded as transactions in SQLite. Portfolio value is computed by aggregating BUY/SELL quantities per asset and multiplying by the current live price.
-
-3. **Gains/Losses** are calculated using the average cost basis method — total amount spent on buys divided by total quantity bought.
-
-4. **Exchange rates** are fetched from the Frankfurter API (ZAR as base), then inverted to produce USD → other currency conversion rates.
-
-5. **Rate limit monitoring** tracks API calls across providers in a local `api_status.json` file, resetting counts daily.
+This project is licensed under the MIT License — see the LICENSE file for details.
 
 ---
 
-## 🔑 Environment Variables
+## 💬 Questions?
 
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `FINNHUB_API_KEY` | Yes (if using Finnhub) | Stock price data |
-| `ALPHA_VANTAGE_API_KEY` | Yes (if using Alpha Vantage) | Stock price data alternative |
-| `STOCK_PRICE_PROVIDER` | No (default: `finnhub`) | Which stock provider to use |
+Feel free to open an issue or reach out. I'm always happy to discuss the architecture, answer questions, or help with setup!
+
+---
+
+<div align="center">
+
+**Built with ❤️ as a learning project**
+
+⭐ If you found this useful, consider giving it a star!
+
+</div>
