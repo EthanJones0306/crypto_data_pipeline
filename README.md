@@ -11,7 +11,7 @@
 
 ## 🎯 Overview
 
-A sophisticated full-stack application for managing and analyzing multi-asset investment portfolios. Track real-time positions in stocks and cryptocurrencies, simulate leverage trading with liquidation calculations, analyze gains/losses with interactive visualizations, and monitor market data from multiple providers with intelligent caching and fallback strategies.
+A sophisticated full-stack application for managing and analysing multi-asset investment portfolios. Track real-time positions in stocks and cryptocurrencies, simulate leverage trading with liquidation calculations, analyse gains/losses with interactive visualisations, and monitor market data from multiple providers with intelligent caching and fallback strategies.
 
 **Perfect for:** Investment simulation, portfolio analysis, learning full-stack development patterns, API integration, and building sophisticated data-driven interfaces.
 
@@ -28,7 +28,7 @@ A sophisticated full-stack application for managing and analyzing multi-asset in
 ### 📈 Advanced Analytics  
 - **Gains/losses analysis** — Per-asset P&L with percentage returns (color-coded gains in green, losses in red)
 - **Interactive charts** — Pie chart for allocation breakdown, bar chart for performance comparison
-- **Holdings breakdown** — Detailed table with entry prices, current prices, and unrealized gains
+- **Holdings breakdown** — Detailed table with entry prices, current prices, and unrealised gains
 - **Portfolio health metrics** — Total invested, current value, ROI percentage, cost basis tracking
 
 ### 🎮 Trading Features
@@ -41,13 +41,13 @@ A sophisticated full-stack application for managing and analyzing multi-asset in
 - **Glassmorphism design** — Modern frosted glass aesthetic with backdrop blur effects
 - **Aurora animations** — Smooth, elegant entry animations and transitions
 - **Dark/Light modes** — Theme persistence with CSS variables and semantic colors
-- **Responsive layout** — Optimized for desktop, tablet, and mobile views
+- **Responsive layout** — Optimised for desktop, tablet, and mobile views
 - **Interactive components** — Hover effects, loading states, success/error messaging
 
 ### 🔌 System Features
 - **CORS-enabled REST API** — All endpoints properly configured for cross-origin requests
 - **Error resilience** — Sequential API fallback (Finnhub → Alpha Vantage), graceful price fetching
-- **Data persistence** — SQLite database with 8 optimized tables
+- **Data persistence** — SQLite database with 8 optimised tables
 - **Live API monitoring** — Dashboard showing API health status and rate limit usage
 
 ---
@@ -58,7 +58,7 @@ A sophisticated full-stack application for managing and analyzing multi-asset in
 ```
 React 19.2.6 + React DOM
 ├── Framer Motion — Premium animations & transitions
-├── Recharts 3.8.1 — Interactive data visualizations (pie, bar, line charts)
+├── Recharts 3.8.1 — Interactive data visualisations (pie, bar, line charts)
 ├── CSS Variables — Design tokens, semantic theming
 └── Local Storage — Session persistence
 ```
@@ -91,7 +91,7 @@ crypto_data_pipeline/
 │   ├── src/
 │   │   ├── components/
 │   │   │   ├── PortfolioValue.js        # Portfolio summary cards
-│   │   │   ├── PortfolioDonutChart.js   # Animated allocation visualization
+│   │   │   ├── PortfolioDonutChart.js   # Animated allocation visualisation
 │   │   │   ├── Analytics.js             # Gains/losses analysis dashboard
 │   │   │   ├── Trading.js               # Buy/sell interface
 │   │   │   ├── Positions.js             # Leverage positions tracker
@@ -112,7 +112,7 @@ crypto_data_pipeline/
 │   ├── fetch_stocks.py                   # Finnhub/Alpha Vantage integration
 │   ├── api_status.py                     # Rate limit tracking
 │   ├── scheduler.py                      # Automated pipeline tasks
-│   ├── crypto.db                         # SQLite database (auto-initialized)
+│   ├── crypto.db                         # SQLite database (auto-initialised)
 │   ├── requirements.txt                  # Python dependencies
 │   └── .env.example                      # Configuration template
 │
@@ -179,7 +179,7 @@ View your total portfolio value broken down by asset, with real-time prices. The
 
 ### 📊 Analytics
 - **Portfolio Allocation** — Pie chart showing which assets represent what % of total value
-- **Gains/Losses Breakdown** — Bar chart comparing unrealized P&L per asset
+- **Gains/Losses Breakdown** — Bar chart comparing unrealised P&L per asset
 - **Holdings Table** — Detailed view with entry prices, current prices, quantity, and ROI %
 
 ### 🛒 Trading
@@ -211,7 +211,7 @@ Complete audit log of all trades with timestamps, execution prices, and total va
 ### Frontend (React)
 - **Component-based:** Each feature (Portfolio, Analytics, Trading) is a reusable, isolated React component
 - **Framer Motion:** Smooth entry/exit animations and interactive transitions for professional feel
-- **Recharts:** Declarative, composable charting library for complex data visualizations
+- **Recharts:** Declarative, composable charting library for complex data visualisations
 - **CSS Variables:** Design tokens (colors, spacing, fonts) defined once and reused across the app
 - **Local Storage:** User preferences (theme, currency) persist across sessions
 - **API Resilience:** `requestJson()` tries multiple endpoints sequentially to handle server downtime
@@ -230,7 +230,7 @@ Complete audit log of all trades with timestamps, execution prices, and total va
 - **Last Resort:** If no cache, use hardcoded fallback prices (ensures app never crashes)
 
 ### Database Schema (SQLite)
-8 tables for clean data organization:
+8 tables for clean data organisation:
 - `transactions` — Buy/sell audit log
 - `crypto_prices` — Historical crypto prices
 - `stock_prices` — Historical stock prices
@@ -259,7 +259,7 @@ Returns current holdings and total portfolio value with live prices.
 ```http
 GET /analytics/gains-losses
 ```
-Returns unrealized P&L, ROI %, and per-asset performance breakdown.
+Returns unrealised P&L, ROI %, and per-asset performance breakdown.
 
 **Trading**
 ```http
@@ -320,35 +320,3 @@ This project demonstrates:
 - Git workflow and version control
 
 ---
-
-## 🤝 Contributing
-
-Contributions are welcome! Here are some ideas:
-- Add more visualization types (line charts, heatmaps)
-- Implement user authentication
-- Add more data providers (Kraken, Coinbase APIs)
-- Deploy to cloud (Vercel, Heroku, AWS)
-- Add unit tests and integration tests
-- Implement real trading via exchange APIs
-
----
-
-## 📝 License
-
-This project is licensed under the MIT License — see the LICENSE file for details.
-
----
-
-## 💬 Questions?
-
-Feel free to open an issue or reach out. I'm always happy to discuss the architecture, answer questions, or help with setup!
-
----
-
-<div align="center">
-
-**Built with ❤️ as a learning project**
-
-⭐ If you found this useful, consider giving it a star!
-
-</div>
