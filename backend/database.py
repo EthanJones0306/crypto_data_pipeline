@@ -178,17 +178,6 @@ def store_transactions(transactions):
     conn = sqlite3.connect('crypto.db')
     cursor = conn.cursor()
 
-    cursor.execute('''
-        CREATE TABLE IF NOT EXISTS transactions (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            asset TEXT,
-            transaction_type TEXT,
-            quantity REAL,
-            price REAL,
-            timestamp DATETIME
-        )
-    ''')
-
     current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     try:
