@@ -87,14 +87,14 @@ class TradingService:
     def compute_liquidation_price(self, entry_price: float, side: str, leverage: float, maintenance_rate: float = 0.25) -> float:
         """Compute a simple liquidation price for an isolated position.
 
-        Long: L = E * (1 + m - 1/lev)
+        Long: L = E * (1 - m - 1/lev)
         Short: L = E * (1 - m + 1/lev)
         Where E is entry_price, m maintenance_rate
         """
         if leverage <= 0:
             raise ValueError('Leverage must be > 0')
         if side.lower() == 'long':
-            return entry_price * (1 + maintenance_rate - 1.0 / leverage)
+            return entry_price * (1 - maintenance_rate - 1.0 / leverage)
         else:
             return entry_price * (1 - maintenance_rate + 1.0 / leverage)
 
