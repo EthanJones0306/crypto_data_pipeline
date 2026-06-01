@@ -1,0 +1,41 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: crypto-tracker-backend
+    ports:
+      - "8000:8000"
+    environment:
+      FINNHUB_API_KEY: ${FINNHUB_API_KEY}
+      ALPHA_VANTAGE_API_KEY: ${ALPHA_VANTAGE_API_KEY}
+      STOCK_PRICE_PROVIDER: ${STOCK_PRICE_PROVIDER:-finnhub}
+    volumes:
+      - ./backend/crypto.db:/app/crypto.db
+      - ./backend/crypto_prices_cache.json:/app/crypto_prices_cache.json
+      - ./backend/stock_prices_cache.json:/app/stock_prices_cache.json
+      - ./backend/api_status.json:/app/api_status.json
+    networks:
+      - crypto-network
+    healthcheck:
+      test: ["CMD-SHELL", "python -c \"import urllib.request; urllib.request.urlopen('http://localhost:8000/health')\" || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  frontend:
+    build:
+      context: .
+      dockerfile: frontend/Dockerfile
+    container_name: crypto-tracker-frontend
+    ports:
+      - "80:80"
+    environment:
+      REACT_APP_API_BASE_URL: http://backend:8000
+    networks:
+      - crypto-network
+
+networks:
+  crypto-network:
+    driver: bridge

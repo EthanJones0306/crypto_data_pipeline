@@ -172,7 +172,58 @@ npm start
 
 ---
 
-## 📖 Usage Guide
+## � Docker Setup (Recommended for Production)
+
+### Prerequisites
+- [Docker](https://www.docker.com/products/docker-desktop) installed
+- [Docker Compose](https://docs.docker.com/compose/install/) installed
+
+### Run with Docker Compose
+
+1. **Create a `.env` file** in the project root:
+```env
+FINNHUB_API_KEY=your_finnhub_key_here
+ALPHA_VANTAGE_API_KEY=your_alpha_vantage_key_here
+STOCK_PRICE_PROVIDER=finnhub
+```
+
+2. **Build and run**:
+```bash
+docker-compose up --build
+```
+
+✅ Backend running at `http://localhost:8000`  
+✅ Frontend running at `http://localhost:80` (or `http://localhost`)  
+📖 API Docs at `http://localhost:8000/docs`
+
+3. **Stop services**:
+```bash
+docker-compose down
+```
+
+### What's Containerized?
+- **Backend** — FastAPI app in Python 3.11-slim image
+- **Frontend** — React app built and served via Nginx Alpine
+- **Network** — Internal Docker network for service communication
+- **Volumes** — SQLite database and cache files persisted
+
+### Single Service (if needed)
+
+**Backend only:**
+```bash
+docker build -t crypto-tracker-backend ./backend
+docker run -p 8000:8000 \
+  -e FINNHUB_API_KEY=your_key \
+  crypto-tracker-backend
+```
+
+**Frontend only:**
+```bash
+docker build -t crypto-tracker-frontend ./frontend
+docker run -p 80:80 crypto-tracker-frontend
+```
+
+---
 
 ### 🎯 Portfolio Dashboard
 View your total portfolio value broken down by asset, with real-time prices. The interactive donut chart shows allocation percentages.
