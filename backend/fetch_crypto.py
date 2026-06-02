@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 FALLBACK_PRICES = {
     'bitcoin': {'usd': 42500},
     'ethereum': {'usd': 2250},
-    'solana': {'usd': 98},
+    'solana': {'usd': 80},
     'dogecoin': {'usd': 0.18},
     'cardano': {'usd': 0.50},
     'polkadot': {'usd': 6.50},
