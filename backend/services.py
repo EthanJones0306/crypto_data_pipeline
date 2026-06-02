@@ -84,17 +84,17 @@ class TradingService:
         return {"price": current_price, "total_proceeds": quantity * current_price}
 
     # --- Paper trading helpers ---
-    def compute_liquidation_price(self, entry_price: float, side: str, leverage: float, maintenance_rate: float = 0.25) -> float:
+    def compute_liquidation_price(self, entry_price: float, side: str, leverage: float, maintenance_rate: float = 0.004) -> float:
         """Compute a simple liquidation price for an isolated position.
 
-        Long: L = E * (1 - m - 1/lev)
+        Long: L = E * (1 + m - 1/lev)
         Short: L = E * (1 - m + 1/lev)
         Where E is entry_price, m maintenance_rate
         """
         if leverage <= 0:
             raise ValueError('Leverage must be > 0')
         if side.lower() == 'long':
-            return entry_price * (1 - maintenance_rate - 1.0 / leverage)
+            return entry_price * (1 + maintenance_rate - 1.0 / leverage)
         else:
             return entry_price * (1 - maintenance_rate + 1.0 / leverage)
 
@@ -121,9 +121,10 @@ class TradingService:
         if not current_price:
             raise ValueError('Unable to fetch current price for simulation')
 
-        # calculate required margin per unit and total
-        position_value = quantity * current_price
-        required_margin = abs(position_value) / leverage
+        # calculate required margin and position value
+        required_margin = quantity * current_price # Required margin is the amount of the asset bought x the price of the asset
+        position_value = required_margin * leverage # Position value is the margin + the leverage (e.g. 2x means the position is double the margin)
+        actual_quantity = position_value / current_price # The actual amount of the asset in the position (i.e. if margin is 1 SOl and leverage is 2x, the position is worth 2 SOL, so quantity is 2)
 
         # ensure paper account exists and has funds
         acct = get_or_create_paper_account(account_id)
@@ -135,7 +136,7 @@ class TradingService:
         tx = {
             'asset': asset,
             'type': 'BUY' if side.lower() == 'long' else 'SELL',
-            'quantity': quantity,
+            'quantity': actual_quantity,
             'price': current_price,
             'is_paper': 1
         }
@@ -145,18 +146,20 @@ class TradingService:
         update_paper_account_cash(account_id, -required_margin)
 
         # update paper positions (long = positive qty, short = negative)
-        signed_qty = quantity if side.lower() == 'long' else -quantity
+        signed_qty = actual_quantity if side.lower() == 'long' else -actual_quantity
         update_position(account_id, asset, signed_qty, current_price, is_paper=1)
 
-        liq_price = self.compute_liquidation_price(current_price, side, leverage, acct.get('maintenance_rate', 0.25))
+        liq_price = self.compute_liquidation_price(current_price, side, leverage, 0.004)
 
         # Store the leverage position
         from .database import store_leverage_position
-        store_leverage_position(account_id, asset, asset_type, side, quantity, current_price, leverage, liq_price, required_margin, acct.get('maintenance_rate', 0.25))
+        store_leverage_position(account_id, asset, asset_type, side, actual_quantity, current_price, leverage, liq_price, required_margin, 0.004)
 
         return {
             'filled_price': current_price,
             'required_margin': required_margin,
+            'position_value': position_value,
+            'actual_quantity': actual_quantity,
             'liquidation_price': liq_price,
             'account': acct
         }

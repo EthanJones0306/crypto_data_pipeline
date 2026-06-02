@@ -117,9 +117,17 @@ export default function LeverageTrading() {
                 <span>Liquidation Price:</span>
                 <span style={{ color: 'var(--danger)', fontFamily: 'IBM Plex Mono' }}>${simResult.liquidation_price?.toFixed(4)}</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '8px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--stroke)', paddingBottom: '8px' }}>
                 <span>Required Margin:</span>
                 <span style={{ color: 'var(--muted)', fontFamily: 'IBM Plex Mono' }}>${simResult.required_margin?.toFixed(2)}</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid var(--stroke)', paddingBottom: '8px' }}>
+                <span>Position Value:</span>
+                <span style={{ color: 'var(--accent)', fontFamily: 'IBM Plex Mono' }}>${simResult.position_value?.toFixed(2)}</span>
+              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: '8px' }}>
+                <span>Qty Controlled:</span>
+                <span style={{ color: 'var(--accent)', fontFamily: 'IBM Plex Mono' }}>{simResult.actual_quantity?.toFixed(4)}</span>
               </div>
             </div>
           </div>
