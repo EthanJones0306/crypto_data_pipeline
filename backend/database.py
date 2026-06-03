@@ -354,4 +354,36 @@ def close_leverage_position(position_id):
     cursor.execute('DELETE FROM leverage_positions WHERE id = ?', (position_id,))
     conn.commit()
     conn.close()
+
+
+def get_latest_exchange_rate(currency):
+    """Get the latest exchange rate for a currency (relative to ZAR)"""
+    conn = sqlite3.connect('crypto.db')
+    cursor = conn.cursor()
     
+    # Map currency to table column
+    currency_upper = currency.upper()
+    if currency_upper == 'ZAR':
+        return 1.0  # ZAR is the base currency
+    elif currency_upper == 'USD':
+        # Get USD to ZAR rate and return as ZAR/USD
+        cursor.execute('''
+            SELECT zar_rate FROM exchange_rates 
+            WHERE currency = 'USD' 
+            ORDER BY timestamp DESC LIMIT 1
+        ''')
+    elif currency_upper == 'GBP':
+        cursor.execute('''
+            SELECT zar_rate FROM exchange_rates 
+            WHERE currency = 'GBP' 
+            ORDER BY timestamp DESC LIMIT 1
+        ''')
+    else:
+        return None
+    
+    row = cursor.fetchone()
+    conn.close()
+    
+    if row:
+        return row[0]  # Return the ZAR rate for this currency
+    return None

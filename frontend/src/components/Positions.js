@@ -155,14 +155,39 @@ export default function Positions() {
               </div>
             </div>
 
+            {/* Liquidation Status */}
+            {pos.is_liquidated && (
+              <div style={{ 
+                marginBottom: '12px', 
+                padding: '12px', 
+                background: 'rgba(255, 107, 107, 0.15)', 
+                border: '1px solid #ff6b6b', 
+                borderRadius: '8px',
+                textAlign: 'center'
+              }}>
+                <div style={{ color: '#ff6b6b', fontWeight: '600', fontSize: '14px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  ⚠ Position Liquidated
+                </div>
+                <div style={{ color: 'var(--muted)', fontSize: '12px', marginTop: '4px' }}>
+                  Current price reached liquidation threshold
+                </div>
+              </div>
+            )}
+
             {/* Close Button */}
             <button
               onClick={() => handleClose(pos.id)}
               disabled={closingId === pos.id}
               className="secondary-action"
-              style={{ width: '100%', marginTop: '8px' }}
+              style={{ 
+                width: '100%', 
+                marginTop: '8px',
+                background: pos.is_liquidated ? 'rgba(255, 107, 107, 0.2)' : undefined,
+                borderColor: pos.is_liquidated ? '#ff6b6b' : undefined,
+                color: pos.is_liquidated ? '#ff6b6b' : undefined
+              }}
             >
-              {closingId === pos.id ? '⏳ Closing...' : '✕ Close Position'}
+              {closingId === pos.id ? '⏳ Closing...' : pos.is_liquidated ? '✕ Close Liquidated Position' : '✕ Close Position'}
             </button>
           </div>
         ))}

@@ -10,6 +10,8 @@ function Trading() {
   const [type, setType] = useState('buy');
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState(null);
+  const [inputMode, setInputMode] = useState('quantity'); // 'quantity' or 'amount'
+  const [currency, setCurrency] = useState('USD');
 
   const handleTrade = async (e) => {
     e.preventDefault();
@@ -20,7 +22,7 @@ function Trading() {
     }
     
     if (!quantity || quantity <= 0 || isNaN(quantity)) {
-      setMessage({ type: 'error', text: 'Enter a valid quantity' });
+      setMessage({ type: 'error', text: 'Enter a valid ' + (inputMode === 'quantity' ? 'quantity' : 'amount') });
       return;
     }
 
@@ -28,7 +30,11 @@ function Trading() {
     try {
       if (assetType === 'crypto') {
         if (type === 'buy') {
-          await buyCrypto(asset, parseFloat(quantity));
+          if (inputMode === 'quantity') {
+            await buyCrypto(asset, parseFloat(quantity));
+          } else {
+            await buyCrypto(asset, parseFloat(quantity), currency);
+          }
         } else {
           await sellCrypto(asset, parseFloat(quantity));
         }
@@ -42,7 +48,7 @@ function Trading() {
 
       setMessage({ 
         type: 'success', 
-        text: `Successfully ${type === 'buy' ? 'bought' : 'sold'} ${quantity} ${getDisplayName(asset)}!` 
+        text: `Successfully ${type === 'buy' ? 'bought' : 'sold'} ${inputMode === 'quantity' ? quantity + ' ' + getDisplayName(asset) : currency + ' ' + quantity + ' worth of ' + getDisplayName(asset)}!` 
       });
       setQuantity('');
       setAsset('');
@@ -122,13 +128,51 @@ function Trading() {
         </div>
 
         <div className="trade-field">
-          <label className="trade-label">Quantity</label>
+          <label className="trade-label">Input Mode</label>
+          <div className="trade-segmented">
+            <button
+              type="button"
+              onClick={() => setInputMode('quantity')}
+              className={`trade-option ${inputMode === 'quantity' ? 'active' : ''}`}
+            >
+              📊 By Quantity
+            </button>
+            <button
+              type="button"
+              onClick={() => setInputMode('amount')}
+              className={`trade-option ${inputMode === 'amount' ? 'active' : ''}`}
+            >
+              💵 By Amount
+            </button>
+          </div>
+        </div>
+
+        {inputMode === 'amount' && (
+          <div className="trade-field">
+            <label className="trade-label">Currency</label>
+            <select
+              value={currency}
+              onChange={(e) => setCurrency(e.target.value)}
+              className="trade-input"
+              style={{ cursor: 'pointer' }}
+            >
+              <option value="USD">USD</option>
+              <option value="GBP">GBP</option>
+              <option value="ZAR">ZAR</option>
+            </select>
+          </div>
+        )}
+
+        <div className="trade-field">
+          <label className="trade-label">
+            {inputMode === 'quantity' ? 'Quantity' : `Amount (${currency})`}
+          </label>
           <input
             type="number"
-            step="0.0001"
+            step={inputMode === 'quantity' ? "0.0001" : "0.01"}
             value={quantity}
             onChange={(e) => setQuantity(e.target.value)}
-            placeholder="Enter amount"
+            placeholder={inputMode === 'quantity' ? "Enter quantity" : `Enter amount in ${currency}`}
             className="trade-input"
           />
         </div>

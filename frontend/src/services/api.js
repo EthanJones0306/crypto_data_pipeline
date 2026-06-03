@@ -57,11 +57,15 @@ export const fetchGainsLosses = async () => {
   return requestJson('/analytics/gains-losses');
 };
 
-export const buyCrypto = async (asset, quantity) => {
+export const buyCrypto = async (asset, quantity, currency = null) => {
+  const body = currency 
+    ? { asset, amount: quantity, currency }
+    : { asset, quantity };
+  
   return requestJson('/buy/crypto', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...paperHeaders() },
-    body: JSON.stringify({ asset, quantity })
+    body: JSON.stringify(body)
   });
 };
 

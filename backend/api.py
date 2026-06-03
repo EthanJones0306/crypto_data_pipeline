@@ -53,7 +53,9 @@ class SellRequest(BaseModel):
 
 class BuyRequest(BaseModel):
     asset: str
-    quantity: float
+    quantity: Optional[float] = None
+    amount: Optional[float] = None
+    currency: Optional[str] = None  # 'USD', 'GBP', 'ZAR'
 
 
 class SimulateRequest(BaseModel):
@@ -92,10 +94,43 @@ def health_check():
 
 @app.post("/buy/crypto")
 def buy_crypto(request: BuyRequest):
-    """Buy cryptocurrency at current market price"""
+    """Buy cryptocurrency at current market price (supports both quantity and amount-based purchases)"""
     try:
-        result = trading_service.buy_crypto(request.asset, request.quantity)
-        return {"status": "success", "message": f"Bought {request.quantity} {request.asset} at ${result['price']} (Total: ${result['total_cost']:.2f})"}
+        quantity = request.quantity
+        
+        # If amount and currency are provided, convert to quantity
+        if request.amount is not None and request.currency is not None:
+            from .fetch_crypto import get_crypto_price
+            from .database import get_latest_exchange_rate
+            
+            # Get current crypto price
+            price_data = get_crypto_price(request.asset)
+            if not price_data:
+                return {"status": "error", "message": f"Unable to fetch price for {request.asset}"}
+            
+            crypto_price_usd = price_data['usd']
+            
+            # Convert currency amount to USD if needed
+            amount_usd = request.amount
+            if request.currency.upper() != 'USD':
+                # Get exchange rates (stored as ZAR per unit of currency)
+                usd_rate = get_latest_exchange_rate('USD')
+                currency_rate = get_latest_exchange_rate(request.currency.upper())
+                
+                if not usd_rate or not currency_rate:
+                    return {"status": "error", "message": f"Exchange rates not available"}
+                
+                # Convert currency to USD: amount_currency * (currency_rate / usd_rate)
+                amount_usd = request.amount * (currency_rate / usd_rate)
+            
+            # Calculate quantity from amount
+            quantity = amount_usd / crypto_price_usd
+        
+        if not quantity or quantity <= 0:
+            return {"status": "error", "message": "Invalid quantity or amount"}
+        
+        result = trading_service.buy_crypto(request.asset, quantity)
+        return {"status": "success", "message": f"Bought {quantity:.4f} {request.asset} at ${result['price']} (Total: ${result['total_cost']:.2f})"}
     except ValueError as e:
         return {"status": "error", "message": str(e)}
     except KeyError:
@@ -409,6 +444,9 @@ def get_leverage_positions():
                 pnl = entry_value - position_value
                 pnl_percent = ((pos['entry_price'] - current_price) / pos['entry_price'] * 100) if pos['entry_price'] > 0 else 0
             
+            # Check if position has been liquidated
+            is_liquidated = trading_service.check_liquidation_status(current_price, pos['liquidation_price'], pos['side'])
+            
             enriched.append({
                 **pos,
                 'current_price': current_price,
@@ -416,7 +454,9 @@ def get_leverage_positions():
                 'pnl': pnl,
                 'pnl_percent': pnl_percent,
                 'distance_to_liquidation': abs(current_price - pos['liquidation_price']),
-                'liquidation_distance_percent': (abs(current_price - pos['liquidation_price']) / current_price * 100) if current_price > 0 else 0
+                'liquidation_distance_percent': (abs(current_price - pos['liquidation_price']) / current_price * 100) if current_price > 0 else 0,
+                'is_liquidated': is_liquidated,
+                'liquidation_status': 'LIQUIDATED' if is_liquidated else 'ACTIVE'
             })
         
         return {"status": "success", "positions": enriched}

@@ -98,6 +98,17 @@ class TradingService:
         else:
             return entry_price * (1 - maintenance_rate + 1.0 / leverage)
 
+    def check_liquidation_status(self, current_price: float, liquidation_price: float, side: str) -> bool:
+        """Check if a position has been liquidated.
+        
+        For a LONG position: liquidated if current_price <= liquidation_price
+        For a SHORT position: liquidated if current_price >= liquidation_price
+        """
+        if side.lower() == 'long':
+            return current_price <= liquidation_price
+        else:  # short
+            return current_price >= liquidation_price
+
     def simulate_order(self, asset: str, side: str, quantity: float, leverage: float = 2.0, asset_type: str = 'crypto', account_id: int = 1) -> dict:
         """Simulate opening a long/short position with leverage for paper trading.
 
