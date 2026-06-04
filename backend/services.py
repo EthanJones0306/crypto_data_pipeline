@@ -14,6 +14,8 @@ class TradingService:
     
     def buy_crypto(self, asset: str, quantity: float) -> dict:
         """Buy cryptocurrency at current market price"""
+        if quantity <= 0:
+            raise ValueError("Quantity must be greater than zero")
         logger.info(f"Attempting to buy {quantity} {asset}")
         
         # Try to fetch price for the specific asset (handles any CoinGecko ID)
@@ -28,6 +30,8 @@ class TradingService:
     
     def buy_stock(self, symbol: str, quantity: float) -> dict:
         """Buy stock at current market price"""
+        if quantity <= 0:
+            raise ValueError("Quantity must be greater than zero")
         logger.info(f"Attempting to buy {quantity} {symbol}")
         
         # Get API key
@@ -49,6 +53,8 @@ class TradingService:
     
     def sell_crypto(self, asset: str, quantity: float) -> dict:
         """Sell cryptocurrency at current market price"""
+        if quantity <= 0:
+            raise ValueError("Quantity must be greater than zero")
         logger.info(f"Attempting to sell {quantity} {asset}")
         
         # Try to fetch price for the specific asset (handles any CoinGecko ID)
@@ -63,6 +69,8 @@ class TradingService:
     
     def sell_stock(self, symbol: str, quantity: float) -> dict:
         """Sell stock at current market price"""
+        if quantity <= 0:
+            raise ValueError("Quantity must be greater than zero")
         logger.info(f"Attempting to sell {quantity} {symbol}")
         
         # Get API key
