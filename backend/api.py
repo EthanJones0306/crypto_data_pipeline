@@ -439,7 +439,7 @@ def get_leverage_positions():
             
             if pos['side'].lower() == 'long':
                 pnl = position_value - entry_value
-                pnl_percent = ((current_price - pos['entry_price']) / pos['entry_price'] * 100) if pos['entry_price'] > 0 else 0
+                ((current_price - pos['entry_price']) / pos['entry_price'] * 100 * pos['leverage'])
             else:  # short
                 pnl = entry_value - position_value
                 pnl_percent = ((pos['entry_price'] - current_price) / pos['entry_price'] * 100) if pos['entry_price'] > 0 else 0
