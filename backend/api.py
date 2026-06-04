@@ -436,13 +436,15 @@ def get_leverage_positions():
             # Calculate P&L
             position_value = pos['quantity'] * current_price
             entry_value = pos['quantity'] * pos['entry_price']
+            entry_price = pos['entry_price']
+            leverage = pos['leverage']
             
             if pos['side'].lower() == 'long':
                 pnl = position_value - entry_value
-                ((current_price - pos['entry_price']) / pos['entry_price'] * 100 * pos['leverage'])
+                pnl_percent = (current_price - entry_price) / entry_price * 100 * leverage if entry_price > 0 else 0
             else:  # short
                 pnl = entry_value - position_value
-                pnl_percent = ((pos['entry_price'] - current_price) / pos['entry_price'] * 100) if pos['entry_price'] > 0 else 0
+                pnl_percent = ((entry_price - current_price) / entry_price * 100 * leverage if entry_price > 0 else 0)
             
             # Check if position has been liquidated
             is_liquidated = trading_service.check_liquidation_status(current_price, pos['liquidation_price'], pos['side'])
