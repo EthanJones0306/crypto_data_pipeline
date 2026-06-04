@@ -26,58 +26,64 @@ except ImportError:
     def load_dotenv() -> bool:
         return False
 import os
+import logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
 load_dotenv()
 
 
 def run_pipeline():
     """Run the full data fetching pipeline"""
-    
-    # Select stock API key according to configured provider
+    logger.info("Running pipeline...")
+
+    # Resolve API key at runtime so env changes are picked up
     provider = os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower()
-    if provider == 'finnhub':
-        API_KEY_stocks = os.getenv('FINNHUB_API_KEY')
-    else:
-        API_KEY_stocks = os.getenv('ALPHA_VANTAGE_API_KEY')
+    api_key = (
+        os.getenv('FINNHUB_API_KEY')
+        if provider == 'finnhub'
+        else os.getenv('ALPHA_VANTAGE_API_KEY')
+    )
 
-
-    if not API_KEY_stocks:
+    if not api_key:
         key_name = 'FINNHUB_API_KEY' if provider == 'finnhub' else 'ALPHA_VANTAGE_API_KEY'
-        if not API_KEY_stocks:
-            raise ValueError(f"{key_name} not found in .env file")
+        logger.error(f"{key_name} not found — aborting pipeline run")
+        return
 
-    print(f"\n[{datetime.now()}] Running pipeline...")
-    
     try:
         initialise_db()
-        
-        print("Fetching cryptocurrency prices...")
+
+        logger.info("Fetching cryptocurrency prices...")
         crypto_prices = get_crypto_prices()
-        
-        print("Fetching stock prices...")
-        stock_prices = get_stock_prices(API_KEY_stocks)
-        
-        print("Fetching ZAR exchange rates...")
+
+        logger.info("Fetching stock prices...")
+        stock_prices = get_stock_prices(api_key)
+
+        logger.info("Fetching ZAR exchange rates...")
         exchange_rates = get_zar_exchange_rates()
-        
+
         if crypto_prices:
             store_prices(crypto_prices)
         else:
-            print("Failed to fetch crypto prices")
-            
+            logger.warning("Failed to fetch crypto prices")
+
         if stock_prices:
             store_stock_prices(stock_prices)
         else:
-            print("Failed to fetch stock prices")
-            
+            logger.warning("Failed to fetch stock prices")
+
         if exchange_rates:
             store_rates(exchange_rates)
         else:
-            print("Failed to fetch exchange rates")
-        
-        print(f"[{datetime.now()}] Pipeline complete!\n") # Log completion time
+            logger.warning("Failed to fetch exchange rates")
+
+        logger.info("Pipeline complete")
+
     except Exception as e:
-        print(f"Pipeline error: {e}\n")
+        logger.error(f"Pipeline error: {e}", exc_info=True)
 
 if __name__ == "__main__":
     if BackgroundScheduler is None:
@@ -87,12 +93,11 @@ if __name__ == "__main__":
     scheduler.add_job(run_pipeline, 'cron', hour=0, minute=0)  # Run daily at midnight
     scheduler.start()
     
-    print("Scheduler started. Pipeline runs daily at 00:00.")
-    print("Press Ctrl+C to stop.")
-    
+    logger.info("Scheduler started — pipeline runs daily at 00:00. Ctrl+C to stop.")
+
     try:
-        while True: # Keep the main thread alive to let the scheduler run
-            time.sleep(3600) # Sleep to reduce CPU usage, but can be interrupted with Ctrl+C
-    except KeyboardInterrupt: # Gracefully shut down on Ctrl+C
-        print("\nScheduler stopped.")
+        while True:
+            time.sleep(3600)
+    except KeyboardInterrupt:
+        logger.info("Scheduler stopped.")
         scheduler.shutdown()
