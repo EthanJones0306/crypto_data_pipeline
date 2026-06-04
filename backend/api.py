@@ -241,11 +241,7 @@ def get_latest_prices():
         crypto_data = {coin: price['usd'] for coin, price in crypto_prices.items()} if crypto_prices else {}
         
         # Get stock prices with correct API key based on provider
-        provider = os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower()
-        if provider == 'finnhub':
-            api_key = os.getenv('FINNHUB_API_KEY')
-        else:
-            api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
+        api_key = get_stock_api_key()
         
         stock_data_raw = get_stock_prices(api_key)
         
@@ -325,11 +321,7 @@ def get_portfolio_value():
         conn.close()
         
         # Get API keys
-        provider = os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower()
-        if provider == 'finnhub':
-            api_key = os.getenv('FINNHUB_API_KEY')
-        else:
-            api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
+        api_key = get_stock_api_key()
         
         # Get cached stock prices for reference
         stock_prices_raw = get_stock_prices(api_key) or {}
@@ -428,7 +420,7 @@ def get_leverage_positions():
         positions = get_open_leverage_positions(account_id=1)
         
         # Enrich with current prices and P&L
-        api_key = os.getenv('ALPHA_VANTAGE_API_KEY') if os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower() == 'alpha' else os.getenv('FINNHUB_API_KEY')
+        api_key = get_stock_api_key()
         
         enriched = []
         for pos in positions:
@@ -444,6 +436,7 @@ def get_leverage_positions():
                 continue
             
             # Calculate P&L
+            # Calculate P&L
             position_value = pos['quantity'] * current_price
             entry_value = pos['quantity'] * pos['entry_price']
             entry_price = pos['entry_price']
@@ -451,11 +444,13 @@ def get_leverage_positions():
             
             if pos['side'].lower() == 'long':
                 pnl = position_value - entry_value
-                pnl_percent = (current_price - entry_price) / entry_price * 100 * leverage if entry_price > 0 else 0
+                # Levered PnL % for longs
+                pnl_percent = ((current_price - entry_price) / entry_price * 100 * leverage) if entry_price > 0 else 0
             else:  # short
                 pnl = entry_value - position_value
-                pnl_percent = ((entry_price - current_price) / entry_price * 100 * leverage if entry_price > 0 else 0)
-            
+                # Levered PnL % for shorts
+                pnl_percent = ((entry_price - current_price) / entry_price * 100 * leverage) if entry_price > 0 else 0
+                
             # Check if position has been liquidated
             is_liquidated = trading_service.check_liquidation_status(current_price, pos['liquidation_price'], pos['side'])
             
