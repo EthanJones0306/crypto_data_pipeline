@@ -10,6 +10,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from .api_status import get_status_summary, initialize_status
 
+import os
+
 # Load environment variables
 load_dotenv()
 
@@ -44,6 +46,14 @@ trading_service = TradingService()
 def startup_event():
     initialise_db()
 
+def get_stock_api_key() -> str:
+    """Get the configured stock price API key"""
+    provider = os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower()
+    return (
+        os.getenv('FINNHUB_API_KEY')
+        if provider == 'finnhub'
+        else os.getenv('ALPHA_VANTAGE_API_KEY')
+    )
 
 # Define request models
 class SellRequest(BaseModel):
