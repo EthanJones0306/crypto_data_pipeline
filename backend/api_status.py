@@ -10,7 +10,7 @@ STATUS_FILE = 'api_status.json'
 RATE_LIMITS = {
     'finnhub': {'limit': 60, 'period': 'minute'},
     'alphavantage': {'limit': 25, 'period': 'day'},
-    'coingecko': {'limit': 10, 'period': 'second'}  # 10 per second, but we're more conservative
+    'coingecko': {'limit': 10, 'period': 'second'}  # 10 per second
 }
 
 def initialize_status():

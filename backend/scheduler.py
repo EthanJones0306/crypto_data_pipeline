@@ -28,10 +28,19 @@ except ImportError:
 import os
 
 load_dotenv()
-API_KEY_stocks = os.getenv('ALPHA_VANTAGE_API_KEY')
+
+# Select stock API key according to configured provider
+provider = os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower()
+if provider == 'finnhub':
+    API_KEY_stocks = os.getenv('FINNHUB_API_KEY')
+else:
+    API_KEY_stocks = os.getenv('ALPHA_VANTAGE_API_KEY')
+
 
 if not API_KEY_stocks:
-    raise ValueError("ALPHA_VANTAGE_API_KEY not found in .env file")
+    key_name = 'FINNHUB_API_KEY' if provider == 'finnhub' else 'ALPHA_VANTAGE_API_KEY'
+    if not API_KEY_stocks:
+        raise ValueError(f"{key_name} not found in .env file")
 
 def run_pipeline():
     """Run the full data fetching pipeline"""
