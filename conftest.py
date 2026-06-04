@@ -6,7 +6,7 @@ import os
 os.environ["STOCK_PRICE_PROVIDER"] = "finnhub"
 os.environ["FINNHUB_API_KEY"] = "test_finnhub_key"
 
-from backend.main import app, get_stock_api_key  
+from backend.api import app, get_stock_api_key
 
 @pytest.fixture
 def client():

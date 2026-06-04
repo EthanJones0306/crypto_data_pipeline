@@ -53,3 +53,23 @@
 2026-05-26 07:20:38,139 - database - INFO - Stored: EUR - 19.01 ZAR at 2026-05-26 07:20:38
 2026-05-26 07:20:38,139 - database - INFO - Stored: GBP - 22.04 ZAR at 2026-05-26 07:20:38
 2026-05-26 07:20:38,139 - __main__ - INFO - All data fetched and stored successfully!
+2026-06-04 15:28:58,646 - backend.main - INFO - Fetching cryptocurrency prices...
+2026-06-04 15:28:58,646 - backend.fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko for: ['bitcoin', 'ethereum', 'solana']...
+2026-06-04 15:28:58,949 - backend.fetch_crypto - INFO - ✅ Successfully fetched from CoinGecko: ['bitcoin', 'ethereum', 'solana']
+2026-06-04 15:28:58,950 - backend.fetch_crypto - INFO - Cached crypto prices saved
+2026-06-04 15:28:58,953 - backend.main - INFO - Fetching stock prices...
+2026-06-04 15:28:58,954 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-06-04 15:28:58,954 - backend.fetch_stocks - INFO - Cache expired, will fetch fresh data
+2026-06-04 15:28:59,458 - backend.fetch_stocks - ERROR - Exception fetching AAPL from Finnhub: 401 Client Error: Unauthorized for url: https://finnhub.io/api/v1/quote?symbol=AAPL&token=test_finnhub_key
+2026-06-04 15:28:59,839 - backend.fetch_stocks - ERROR - Exception fetching GOOG from Finnhub: 401 Client Error: Unauthorized for url: https://finnhub.io/api/v1/quote?symbol=GOOG&token=test_finnhub_key
+2026-06-04 15:29:00,244 - backend.fetch_stocks - ERROR - Exception fetching NVDA from Finnhub: 401 Client Error: Unauthorized for url: https://finnhub.io/api/v1/quote?symbol=NVDA&token=test_finnhub_key
+2026-06-04 15:29:00,247 - backend.fetch_stocks - INFO - Cache expired, will fetch fresh data
+2026-06-04 15:29:00,248 - backend.main - INFO - Fetching ZAR exchange rates...
+2026-06-04 15:29:00,703 - backend.database - INFO - Stored: bitcoin - $63177 at 2026-06-04 15:29:00
+2026-06-04 15:29:00,703 - backend.database - INFO - Stored: ethereum - $1758.91 at 2026-06-04 15:29:00
+2026-06-04 15:29:00,703 - backend.database - INFO - Stored: solana - $69.19 at 2026-06-04 15:29:00
+2026-06-04 15:29:00,704 - backend.main - WARNING - Failed to fetch stock prices
+2026-06-04 15:29:00,705 - backend.database - INFO - Stored: USD - 16.27 ZAR at 2026-06-04 15:29:00
+2026-06-04 15:29:00,705 - backend.database - INFO - Stored: EUR - 18.9 ZAR at 2026-06-04 15:29:00
+2026-06-04 15:29:00,705 - backend.database - INFO - Stored: GBP - 21.88 ZAR at 2026-06-04 15:29:00
+2026-06-04 15:29:00,706 - backend.main - INFO - All data fetched and stored successfully!

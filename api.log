@@ -2332,3 +2332,44 @@
 2026-06-02 07:02:08,912 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $80.32
 2026-06-02 07:02:08,965 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $80.32
 2026-06-02 07:02:09,017 - backend.fetch_crypto - INFO - ✅ Fetched price for bitcoin: $70704
+2026-06-04 15:32:08,999 - backend.main - INFO - Fetching cryptocurrency prices...
+2026-06-04 15:32:09,000 - backend.fetch_crypto - INFO - Attempting to fetch crypto prices from CoinGecko for: ['bitcoin', 'ethereum', 'solana']...
+2026-06-04 15:32:09,673 - backend.fetch_crypto - INFO - ✅ Successfully fetched from CoinGecko: ['bitcoin', 'ethereum', 'solana']
+2026-06-04 15:32:09,674 - backend.fetch_crypto - INFO - Cached crypto prices saved
+2026-06-04 15:32:09,675 - backend.main - INFO - Fetching stock prices...
+2026-06-04 15:32:09,675 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-06-04 15:32:09,676 - backend.fetch_stocks - INFO - Cache expired, will fetch fresh data
+2026-06-04 15:32:10,182 - backend.fetch_stocks - ERROR - Exception fetching AAPL from Finnhub: 401 Client Error: Unauthorized for url: https://finnhub.io/api/v1/quote?symbol=AAPL&token=test_finnhub_key
+2026-06-04 15:32:10,600 - backend.fetch_stocks - ERROR - Exception fetching GOOG from Finnhub: 401 Client Error: Unauthorized for url: https://finnhub.io/api/v1/quote?symbol=GOOG&token=test_finnhub_key
+2026-06-04 15:32:10,996 - backend.fetch_stocks - ERROR - Exception fetching NVDA from Finnhub: 401 Client Error: Unauthorized for url: https://finnhub.io/api/v1/quote?symbol=NVDA&token=test_finnhub_key
+2026-06-04 15:32:11,000 - backend.fetch_stocks - INFO - Cache expired, will fetch fresh data
+2026-06-04 15:32:11,000 - backend.main - INFO - Fetching ZAR exchange rates...
+2026-06-04 15:32:11,582 - backend.database - INFO - Stored: bitcoin - $63225 at 2026-06-04 15:32:11
+2026-06-04 15:32:11,582 - backend.database - INFO - Stored: ethereum - $1762.54 at 2026-06-04 15:32:11
+2026-06-04 15:32:11,582 - backend.database - INFO - Stored: solana - $69.23 at 2026-06-04 15:32:11
+2026-06-04 15:32:11,583 - backend.main - WARNING - Failed to fetch stock prices
+2026-06-04 15:32:11,585 - backend.database - INFO - Stored: USD - 16.27 ZAR at 2026-06-04 15:32:11
+2026-06-04 15:32:11,585 - backend.database - INFO - Stored: EUR - 18.9 ZAR at 2026-06-04 15:32:11
+2026-06-04 15:32:11,585 - backend.database - INFO - Stored: GBP - 21.88 ZAR at 2026-06-04 15:32:11
+2026-06-04 15:32:11,586 - backend.main - INFO - All data fetched and stored successfully!
+2026-06-04 15:41:39,851 - httpx - INFO - HTTP Request: GET http://testserver/ "HTTP/1.1 200 OK"
+2026-06-04 15:41:39,857 - httpx - INFO - HTTP Request: GET http://testserver/health "HTTP/1.1 200 OK"
+2026-06-04 15:41:39,952 - httpx - INFO - HTTP Request: POST http://testserver/buy/crypto "HTTP/1.1 200 OK"
+2026-06-04 15:41:39,992 - backend.api - INFO - 🔍 Stock search for 'aapl': found 1 results
+2026-06-04 15:41:39,993 - httpx - INFO - HTTP Request: GET http://testserver/search/stocks?q=aapl "HTTP/1.1 200 OK"
+2026-06-04 15:41:39,995 - httpx - INFO - HTTP Request: GET http://testserver/search/stocks?q= "HTTP/1.1 200 OK"
+2026-06-04 15:43:33,625 - httpx - INFO - HTTP Request: GET http://testserver/ "HTTP/1.1 200 OK"
+2026-06-04 15:43:33,632 - httpx - INFO - HTTP Request: GET http://testserver/health "HTTP/1.1 200 OK"
+2026-06-04 15:43:33,637 - httpx - INFO - HTTP Request: POST http://testserver/buy/crypto "HTTP/1.1 200 OK"
+2026-06-04 15:43:33,640 - httpx - INFO - HTTP Request: POST http://testserver/buy/crypto "HTTP/1.1 200 OK"
+2026-06-04 15:43:33,708 - backend.api - INFO - 🔍 Stock search for 'aapl': found 1 results
+2026-06-04 15:43:33,709 - httpx - INFO - HTTP Request: GET http://testserver/search/stocks?q=aapl "HTTP/1.1 200 OK"
+2026-06-04 15:43:33,711 - httpx - INFO - HTTP Request: GET http://testserver/search/stocks?q= "HTTP/1.1 200 OK"
+2026-06-04 15:45:58,696 - httpx - INFO - HTTP Request: GET http://testserver/ "HTTP/1.1 200 OK"
+2026-06-04 15:45:58,700 - httpx - INFO - HTTP Request: GET http://testserver/health "HTTP/1.1 200 OK"
+2026-06-04 15:45:58,703 - httpx - INFO - HTTP Request: POST http://testserver/buy/crypto "HTTP/1.1 200 OK"
+2026-06-04 15:45:58,706 - httpx - INFO - HTTP Request: POST http://testserver/buy/crypto "HTTP/1.1 200 OK"
+2026-06-04 15:45:58,710 - httpx - INFO - HTTP Request: GET http://testserver/simulate/liquidation?entry_price=50000&side=long&leverage=2 "HTTP/1.1 200 OK"
+2026-06-04 15:45:58,713 - backend.api - INFO - 🔍 Stock search for 'aapl': found 1 results
+2026-06-04 15:45:58,714 - httpx - INFO - HTTP Request: GET http://testserver/search/stocks?q=aapl "HTTP/1.1 200 OK"
+2026-06-04 15:45:58,716 - httpx - INFO - HTTP Request: GET http://testserver/search/stocks?q= "HTTP/1.1 200 OK"

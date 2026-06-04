@@ -12,11 +12,11 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 load_dotenv(PROJECT_ROOT / '.env')
 os.chdir(PROJECT_ROOT)
 
-from fetch_crypto import get_crypto_prices
-from currency_fetcher import get_zar_exchange_rates
-from database import initialise_db, store_prices, store_rates, store_stock_prices
-from fetch_stocks import get_stock_prices
-
+from .fetch_crypto import get_crypto_prices
+from .currency_fetcher import get_zar_exchange_rates
+from .database import initialise_db, store_prices, store_rates, store_stock_prices
+from .fetch_stocks import get_stock_prices
+from .api import get_stock_api_key
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
@@ -28,41 +28,42 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# Select stock API key according to configured provider
-provider = os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower()
-if provider == 'finnhub':
-    API_KEY_stocks = os.getenv('FINNHUB_API_KEY')
-else:
-    API_KEY_stocks = os.getenv('ALPHA_VANTAGE_API_KEY')
 
-# Initialise database
-initialise_db()
+def run_pipeline():
+    """Fetches all financial data and stores it in the database."""
+    
+    # Initialise database
+    initialise_db()
+    # Select stock API key according to configured provider
+    API_KEY_stocks = get_stock_api_key()
 
-# Fetch all data
-logger.info("Fetching cryptocurrency prices...")
-crypto_prices = get_crypto_prices()
+    # Fetch all data
+    logger.info("Fetching cryptocurrency prices...")
+    crypto_prices = get_crypto_prices()
 
-logger.info("Fetching stock prices...")
-stock_prices = get_stock_prices(API_KEY_stocks)
+    logger.info("Fetching stock prices...")
+    stock_prices = get_stock_prices(API_KEY_stocks)
 
-logger.info("Fetching ZAR exchange rates...")
-exchange_rates = get_zar_exchange_rates()
+    logger.info("Fetching ZAR exchange rates...")
+    exchange_rates = get_zar_exchange_rates()
 
+    # Store data
+    if crypto_prices:
+        store_prices(crypto_prices)
+    else:
+        logger.warning("Failed to fetch crypto prices")
 
-# Store data
-if crypto_prices:
-    store_prices(crypto_prices)
-else:
-    logger.warning("Failed to fetch crypto prices")
+    if stock_prices:
+        store_stock_prices(stock_prices)  
+    else:
+        logger.warning("Failed to fetch stock prices")
 
-if stock_prices:
-    store_stock_prices(stock_prices)  # Use new function
-else:
-    logger.warning("Failed to fetch stock prices")
+    if exchange_rates:
+        store_rates(exchange_rates)
+    else:
+        logger.warning("Failed to fetch exchange rates")
 
-if exchange_rates:
-    store_rates(exchange_rates)
-else:
-    logger.warning("Failed to fetch exchange rates")
+    logger.info("All data fetched and stored successfully!")
 
-logger.info("All data fetched and stored successfully!")
+if __name__ == "__main__":
+    run_pipeline()

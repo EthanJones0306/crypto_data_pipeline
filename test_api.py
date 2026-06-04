@@ -1,6 +1,6 @@
 import pytest
 import os
-from backend.main import get_stock_api_key
+from backend.api import get_stock_api_key
 
 # ==========================================
 # UNIT TESTS
@@ -49,7 +49,7 @@ def test_buy_crypto_success(client, mocker):
     """Test the /buy/crypto endpoint with mocked trading service."""
     # Mock the trading service to prevent actual database/API calls
     mocker.patch(
-        "backend.main.trading_service.buy_crypto", 
+        "backend.api.trading_service.buy_crypto", 
         return_value={"price": 50000.0, "total_cost": 50000.0}
     )
     
@@ -83,11 +83,10 @@ def test_simulate_liquidation(client, mocker):
     """Test the liquidation math endpoint with mocked DB."""
     # Mock the paper account fetch and liquidation price computation to isolate the test
     mocker.patch(
-        "backend.main.trading_service.compute_liquidation_price", 
+        "backend.api.trading_service.compute_liquidation_price", 
         return_value=45000.0
     )
-    mocker.patch("backend.main.get_or_create_paper_account", return_value={"maintenance_rate": 0.25})
-
+    mocker.patch("backend.database.get_or_create_paper_account", return_value={"maintenance_rate": 0.25})
     response = client.get("/simulate/liquidation?entry_price=50000&side=long&leverage=2")
     
     assert response.status_code == 200

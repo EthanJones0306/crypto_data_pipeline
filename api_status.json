@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-06-02T07:02:08.911549",
+  "timestamp": "2026-06-04T15:28:58.947364",
   "providers": {
     "finnhub": {
       "calls_today": 168,
@@ -16,10 +16,10 @@
       "status": "unknown"
     },
     "coingecko": {
-      "calls_today": 3,
+      "calls_today": 2,
       "rate_limit": 1000,
-      "calls_remaining": 997,
-      "last_call": "2026-06-02T07:02:09.016862",
+      "calls_remaining": 998,
+      "last_call": "2026-06-04T15:32:09.673527",
       "status": "ok"
     }
   }
