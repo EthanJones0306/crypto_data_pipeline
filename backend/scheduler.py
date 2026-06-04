@@ -10,23 +10,26 @@ Requires:
 - python-dotenv: pip install python-dotenv
 - .env file with ALPHA_VANTAGE_API_KEY
 """
+import os
+import time
+import logging
+from datetime import datetime
+
 try:
-    from apscheduler.schedulers.background import BackgroundScheduler  # type: ignore[import]
+    from apscheduler.schedulers.background import BackgroundScheduler
 except ImportError:
     BackgroundScheduler = None
+
+try:
+    from dotenv import load_dotenv
+except ImportError:
+    def load_dotenv(): return False
+
 from fetch_crypto import get_crypto_prices
 from currency_fetcher import get_zar_exchange_rates
 from database import initialise_db, store_prices, store_rates, store_stock_prices
 from fetch_stocks import get_stock_prices
-import time
-from datetime import datetime
-try:
-    from dotenv import load_dotenv  # type: ignore[import]
-except ImportError:
-    def load_dotenv() -> bool:
-        return False
-import os
-import logging
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
