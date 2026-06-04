@@ -29,21 +29,23 @@ import os
 
 load_dotenv()
 
-# Select stock API key according to configured provider
-provider = os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower()
-if provider == 'finnhub':
-    API_KEY_stocks = os.getenv('FINNHUB_API_KEY')
-else:
-    API_KEY_stocks = os.getenv('ALPHA_VANTAGE_API_KEY')
-
-
-if not API_KEY_stocks:
-    key_name = 'FINNHUB_API_KEY' if provider == 'finnhub' else 'ALPHA_VANTAGE_API_KEY'
-    if not API_KEY_stocks:
-        raise ValueError(f"{key_name} not found in .env file")
 
 def run_pipeline():
     """Run the full data fetching pipeline"""
+    
+    # Select stock API key according to configured provider
+    provider = os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower()
+    if provider == 'finnhub':
+        API_KEY_stocks = os.getenv('FINNHUB_API_KEY')
+    else:
+        API_KEY_stocks = os.getenv('ALPHA_VANTAGE_API_KEY')
+
+
+    if not API_KEY_stocks:
+        key_name = 'FINNHUB_API_KEY' if provider == 'finnhub' else 'ALPHA_VANTAGE_API_KEY'
+        if not API_KEY_stocks:
+            raise ValueError(f"{key_name} not found in .env file")
+
     print(f"\n[{datetime.now()}] Running pipeline...")
     
     try:
@@ -90,7 +92,7 @@ if __name__ == "__main__":
     
     try:
         while True: # Keep the main thread alive to let the scheduler run
-            time.sleep(1) # Sleep to reduce CPU usage, but can be interrupted with Ctrl+C
+            time.sleep(3600) # Sleep to reduce CPU usage, but can be interrupted with Ctrl+C
     except KeyboardInterrupt: # Gracefully shut down on Ctrl+C
         print("\nScheduler stopped.")
         scheduler.shutdown()
