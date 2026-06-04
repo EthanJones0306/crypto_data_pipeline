@@ -3,3 +3,5 @@ apscheduler
 python-dotenv
 fastapi
 uvicorn
+pydantic
+python-dotenv
