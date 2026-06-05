@@ -13,7 +13,7 @@ def test_get_stock_api_key_finnhub(mocker):
 
 def test_get_stock_api_key_alpha_vantage(mocker):
     """Test API key selection for Alpha Vantage."""
-    mocker.patch.dict(os.environ, {"STOCK_PRICE_PROVIDER": "alpha", "ALPHA_VANTAGE_API_KEY": "fake_alpha_key"})
+    mocker.patch.dict(os.environ, {"STOCK_PRICE_PROVIDER": "alphvantage", "ALPHA_VANTAGE_API_KEY": "fake_alpha_key"})
     assert get_stock_api_key() == "fake_alpha_key"
 
 
