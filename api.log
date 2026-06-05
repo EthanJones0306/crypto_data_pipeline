@@ -2648,3 +2648,19 @@
 2026-06-05 06:25:39,139 - backend.fetch_stocks - INFO - ✅ Fetched META from Finnhub: $627.57
 2026-06-05 06:25:39,189 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
 2026-06-05 06:25:39,232 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 09:11:58,388 - httpx - INFO - HTTP Request: GET http://testserver/ "HTTP/1.1 200 OK"
+2026-06-05 09:11:58,391 - httpx - INFO - HTTP Request: GET http://testserver/health "HTTP/1.1 200 OK"
+2026-06-05 09:11:59,016 - backend.fetch_crypto - INFO - ✅ Fetched price for bitcoin: $61501
+2026-06-05 09:11:59,022 - httpx - INFO - HTTP Request: POST http://testserver/buy/crypto "HTTP/1.1 200 OK"
+2026-06-05 09:11:59,028 - httpx - INFO - HTTP Request: POST http://testserver/buy/stock "HTTP/1.1 200 OK"
+2026-06-05 09:11:59,033 - httpx - INFO - HTTP Request: POST http://testserver/sell/crypto "HTTP/1.1 200 OK"
+2026-06-05 09:11:59,039 - httpx - INFO - HTTP Request: POST http://testserver/sell/stock "HTTP/1.1 200 OK"
+2026-06-05 09:11:59,612 - backend.fetch_crypto - INFO - ✅ Fetched price for bitcoin: $61501
+2026-06-05 09:11:59,617 - httpx - INFO - HTTP Request: POST http://testserver/buy/crypto "HTTP/1.1 200 OK"
+2026-06-05 09:11:59,623 - httpx - INFO - HTTP Request: GET http://testserver/simulate/liquidation?entry_price=50000&side=long&leverage=2 "HTTP/1.1 200 OK"
+2026-06-05 09:11:59,627 - backend.api - INFO - 🔍 Stock search for 'aapl': found 1 results
+2026-06-05 09:11:59,628 - httpx - INFO - HTTP Request: GET http://testserver/search/stocks?q=aapl "HTTP/1.1 200 OK"
+2026-06-05 09:11:59,631 - httpx - INFO - HTTP Request: GET http://testserver/search/stocks?q= "HTTP/1.1 200 OK"
+2026-06-05 09:11:59,635 - httpx - INFO - HTTP Request: POST http://testserver/positions/leverage/1/close "HTTP/1.1 200 OK"
+2026-06-05 09:11:59,639 - httpx - INFO - HTTP Request: POST http://testserver/positions/leverage/1/close "HTTP/1.1 200 OK"
+2026-06-05 09:11:59,644 - httpx - INFO - HTTP Request: GET http://testserver/positions/leverage "HTTP/1.1 200 OK"

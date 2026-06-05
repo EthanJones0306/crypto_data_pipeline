@@ -16,10 +16,10 @@
       "status": "unknown"
     },
     "coingecko": {
-      "calls_today": 4,
+      "calls_today": 6,
       "rate_limit": 1000,
-      "calls_remaining": 996,
-      "last_call": "2026-06-05T08:16:11.597530",
+      "calls_remaining": 994,
+      "last_call": "2026-06-05T09:11:59.611203",
       "status": "ok"
     }
   }

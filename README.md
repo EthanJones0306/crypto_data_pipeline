@@ -103,7 +103,12 @@ crypto_data_pipeline/
 │   │   ├── services/
 │   │   │   └── api.js                   # REST client with resilience layer
 │   │   ├── App.js                       # Main app routing & tabs
-│   │   └── App.css                      # 2250+ lines of glassmorphism design
+│   │   ├── App.css                      # 2250+ lines of glassmorphism design
+│   │   ├── App.test.js                  # Frontend unit tests
+│   │   └── setupTests.js                # Test setup configurations
+│   ├── Dockerfile                        # Nginx Alpine container image definition
+│   ├── .dockerignore                     # Files excluded from Docker context
+│   ├── nginx.conf                        # Nginx config for serving React routing
 │   └── package.json
 │
 ├── 📂 backend/                           # FastAPI Python Application
@@ -112,12 +117,22 @@ crypto_data_pipeline/
 │   ├── database.py                       # SQLite operations & schema
 │   ├── fetch_crypto.py                   # CoinGecko integration with caching
 │   ├── fetch_stocks.py                   # Finnhub/Alpha Vantage integration
+│   ├── currency_fetcher.py               # ZAR exchange rate fetcher service
 │   ├── api_status.py                     # Rate limit tracking
-│   ├── scheduler.py                      # Automated pipeline tasks
+│   ├── scheduler.py                      # Automated background scheduler daemon
+│   ├── main.py                           # Standalone data fetching pipeline runner
+│   ├── check_data.py                     # CLI database verification script
+│   ├── visualise_data.py                 # CLI formatted tables visualizer
 │   ├── crypto.db                         # SQLite database (auto-initialised)
 │   ├── requirements.txt                  # Python dependencies
-│   └── .env.example                      # Configuration template
+│   ├── .env.example                      # Configuration template
+│   ├── Dockerfile                        # Python 3.11-slim container image definition
+│   └── .dockerignore                     # Files excluded from Docker context
 │
+├── conftest.py                           # Pytest global fixtures and configurations
+├── pytest.ini                            # Pytest runtime configuration
+├── test_api.py                           # Backend unit & integration tests suite
+├── docker-compose.yml                    # Multi-container orchestration configurations
 ├── README.md                             # This file
 └── .gitignore
 ```
@@ -338,6 +353,69 @@ GET /transactions           # Transaction history
 GET /exchange-rates         # Currency rates
 GET /health                 # API health check
 POST /admin/reset-database  # Reset SQLite database (clear transactions & accounts)
+```
+
+---
+
+## 🧪 Running Tests
+
+This project comes with comprehensive test suites for both the backend and frontend to ensure correctness of math, API caching layers, and component rendering.
+
+### Backend Tests (Pytest)
+The backend tests check endpoint functionality, leverage calculations, automated liquidation triggers, database storage, and mock external service layers.
+
+1. Ensure backend test dependencies are installed:
+   ```bash
+   cd backend
+   pip install pytest pytest-mock
+   ```
+2. Run pytest from the root of the project:
+   ```bash
+   pytest
+   ```
+
+### Frontend Tests (Jest)
+The frontend contains test definitions to verify core page rendering.
+
+1. Navigate to the frontend directory:
+   ```bash
+   cd frontend
+   ```
+2. Run the test suite:
+   ```bash
+   npm test
+   # Or run once in CI mode:
+   CI=true npm test
+   ```
+
+---
+
+## ⚙️ Data Pipeline & CLI Utilities
+
+Beyond the REST API, several command-line tools and utilities are available to manage and inspect the data ingestion pipeline:
+
+### 1. Manual Ingest Pipeline
+Run the data pipeline directly to query external APIs and populate the local SQLite database (`crypto.db`) with current market prices, exchange rates, and assets:
+```bash
+python -m backend.main
+```
+
+### 2. Daily Scheduler Daemon
+Run the persistent background scheduler to fetch data on a recurring daily cron job at `00:00` midnight:
+```bash
+python backend/scheduler.py
+```
+
+### 3. Database Check Utility
+Directly query and dump SQLite table values for cryptocurrency prices, stock prices, exchange rates, and transaction logs:
+```bash
+python backend/check_data.py
+```
+
+### 4. CLI Visualisation Dashboard
+Display a formatted terminal table representation of the latest cached/stored market data:
+```bash
+python backend/visualise_data.py
 ```
 
 ---
