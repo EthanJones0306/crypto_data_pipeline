@@ -316,35 +316,50 @@ def store_leverage_position(account_id, asset, asset_type, side, quantity, entry
     conn.close()
 
 
+def _leverage_position_row(row):
+    return {
+        'id': row[0],
+        'account_id': row[1],
+        'asset': row[2],
+        'asset_type': row[3],
+        'side': row[4],
+        'quantity': row[5],
+        'entry_price': row[6],
+        'leverage': row[7],
+        'liquidation_price': row[8],
+        'required_margin': row[9],
+        'opened_at': row[10],
+        'maintenance_rate': row[11],
+    }
+
+
 def get_open_leverage_positions(account_id=1):
     """Retrieve all open leverage positions for an account"""
     conn = sqlite3.connect('crypto.db')
     cursor = conn.cursor()
     cursor.execute('''
-        SELECT id, asset, asset_type, side, quantity, entry_price, leverage, liquidation_price, required_margin, opened_at, maintenance_rate
+        SELECT id, account_id, asset, asset_type, side, quantity, entry_price, leverage, liquidation_price, required_margin, opened_at, maintenance_rate
         FROM leverage_positions
         WHERE account_id = ?
         ORDER BY opened_at DESC
     ''', (account_id,))
     rows = cursor.fetchall()
     conn.close()
-    
-    positions = []
-    for row in rows:
-        positions.append({
-            'id': row[0],
-            'asset': row[1],
-            'asset_type': row[2],
-            'side': row[3],
-            'quantity': row[4],
-            'entry_price': row[5],
-            'leverage': row[6],
-            'liquidation_price': row[7],
-            'required_margin': row[8],
-            'opened_at': row[9],
-            'maintenance_rate': row[10]
-        })
-    return positions
+    return [_leverage_position_row(row) for row in rows]
+
+
+def get_leverage_position_by_id(position_id):
+    """Retrieve a single leverage position by id"""
+    conn = sqlite3.connect('crypto.db')
+    cursor = conn.cursor()
+    cursor.execute('''
+        SELECT id, account_id, asset, asset_type, side, quantity, entry_price, leverage, liquidation_price, required_margin, opened_at, maintenance_rate
+        FROM leverage_positions
+        WHERE id = ?
+    ''', (position_id,))
+    row = cursor.fetchone()
+    conn.close()
+    return _leverage_position_row(row) if row else None
 
 
 def close_leverage_position(position_id):

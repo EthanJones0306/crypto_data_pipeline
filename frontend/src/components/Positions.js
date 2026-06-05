@@ -7,6 +7,8 @@ export default function Positions() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [closingId, setClosingId] = useState(null);
+  const [closeNotice, setCloseNotice] = useState(null);
+  const [liquidationNotices, setLiquidationNotices] = useState([]);
 
   useEffect(() => {
     fetchPositions();
@@ -19,6 +21,13 @@ export default function Positions() {
       const resp = await getOpenPositions();
       if (resp.status === 'success') {
         setPositions(resp.positions || []);
+        if (resp.recently_liquidated?.length) {
+          setLiquidationNotices((prev) => {
+            const existing = new Set(prev.map((n) => n.position_id));
+            const incoming = resp.recently_liquidated.filter((n) => !existing.has(n.position_id));
+            return [...prev, ...incoming];
+          });
+        }
         setError(null);
       } else {
         setError(resp.message || 'Failed to fetch positions');
@@ -32,10 +41,16 @@ export default function Positions() {
 
   const handleClose = async (positionId) => {
     setClosingId(positionId);
+    setCloseNotice(null);
     try {
       const resp = await closePosition(positionId);
       if (resp.status === 'success') {
         setPositions(positions.filter(p => p.id !== positionId));
+        setCloseNotice({
+          pnl: resp.pnl,
+          cashReturned: resp.cash_returned,
+          closePrice: resp.close_price,
+        });
       } else {
         setError(resp.message || 'Failed to close position');
       }
@@ -44,6 +59,10 @@ export default function Positions() {
     } finally {
       setClosingId(null);
     }
+  };
+
+  const dismissLiquidationNotice = (positionId) => {
+    setLiquidationNotices((prev) => prev.filter((n) => n.position_id !== positionId));
   };
 
   if (loading) {
@@ -55,10 +74,53 @@ export default function Positions() {
     );
   }
 
+  const noticeBanners = (
+    <>
+      {closeNotice && (
+        <div className="message-banner success" style={{ marginBottom: '16px' }}>
+          Position closed at ${closeNotice.closePrice?.toFixed(4)} — P&L:{' '}
+          {closeNotice.pnl >= 0 ? '+' : ''}${closeNotice.pnl?.toFixed(2)}, cash returned: $
+          {closeNotice.cashReturned?.toFixed(2)}
+        </div>
+      )}
+
+      {liquidationNotices.map((notice) => (
+        <div
+          key={notice.position_id}
+          className="message-banner error"
+          style={{ marginBottom: '16px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}
+        >
+          <span>
+            {getDisplayName(notice.asset)} {notice.side} position liquidated — margin lost: $
+            {notice.margin_lost?.toFixed(2)}
+          </span>
+          <button
+            onClick={() => dismissLiquidationNotice(notice.position_id)}
+            className="secondary-action"
+            style={{ fontSize: '12px', padding: '4px 8px', flexShrink: 0 }}
+          >
+            Dismiss
+          </button>
+        </div>
+      ))}
+    </>
+  );
+
   if (positions.length === 0) {
     return (
       <div className="portfolio-container">
-        <h2>Open Perpetual Positions</h2>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+          <h2>Open Perpetual Positions</h2>
+          <button onClick={fetchPositions} className="secondary-action" style={{ fontSize: '14px', padding: '8px 12px' }}>
+            ↻ Refresh
+          </button>
+        </div>
+        {error && (
+          <div className="message-banner error" style={{ marginBottom: '16px' }}>
+            {error}
+          </div>
+        )}
+        {noticeBanners}
         <div style={{ textAlign: 'center', color: 'var(--muted)', padding: '40px' }}>
           No open positions. Open one in the Leverage tab to get started.
         </div>
@@ -80,6 +142,8 @@ export default function Positions() {
           {error}
         </div>
       )}
+
+      {noticeBanners}
 
       <div style={{ display: 'grid', gap: '16px' }}>
         {positions.map((pos) => (
@@ -155,39 +219,14 @@ export default function Positions() {
               </div>
             </div>
 
-            {/* Liquidation Status */}
-            {pos.is_liquidated && (
-              <div style={{ 
-                marginBottom: '12px', 
-                padding: '12px', 
-                background: 'rgba(255, 107, 107, 0.15)', 
-                border: '1px solid #ff6b6b', 
-                borderRadius: '8px',
-                textAlign: 'center'
-              }}>
-                <div style={{ color: '#ff6b6b', fontWeight: '600', fontSize: '14px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                  ⚠ Position Liquidated
-                </div>
-                <div style={{ color: 'var(--muted)', fontSize: '12px', marginTop: '4px' }}>
-                  Current price reached liquidation threshold
-                </div>
-              </div>
-            )}
-
             {/* Close Button */}
             <button
               onClick={() => handleClose(pos.id)}
               disabled={closingId === pos.id}
               className="secondary-action"
-              style={{ 
-                width: '100%', 
-                marginTop: '8px',
-                background: pos.is_liquidated ? 'rgba(255, 107, 107, 0.2)' : undefined,
-                borderColor: pos.is_liquidated ? '#ff6b6b' : undefined,
-                color: pos.is_liquidated ? '#ff6b6b' : undefined
-              }}
+              style={{ width: '100%', marginTop: '8px' }}
             >
-              {closingId === pos.id ? '⏳ Closing...' : pos.is_liquidated ? '✕ Close Liquidated Position' : '✕ Close Position'}
+              {closingId === pos.id ? '⏳ Closing...' : '✕ Close Position'}
             </button>
           </div>
         ))}

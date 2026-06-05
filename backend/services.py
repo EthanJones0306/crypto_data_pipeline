@@ -4,7 +4,14 @@ from datetime import datetime
 from .fetch_crypto import get_crypto_price, get_crypto_prices
 from .fetch_stocks import get_stock_price, get_stock_prices
 from .database import store_prices, store_stock_prices, store_buy_transaction, store_sell_transaction
-from .database import get_or_create_paper_account, update_paper_account_cash, update_position, store_transactions
+from .database import (
+    get_or_create_paper_account,
+    update_paper_account_cash,
+    update_position,
+    store_transactions,
+    get_leverage_position_by_id,
+    close_leverage_position as db_close_leverage_position,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -115,6 +122,103 @@ class TradingService:
             return current_price <= liquidation_price
         else:  # short
             return current_price >= liquidation_price
+
+    def _get_market_price(self, asset: str, asset_type: str) -> float | None:
+        if asset_type == 'stock':
+            provider = os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower()
+            api_key = os.getenv('FINNHUB_API_KEY') if provider == 'finnhub' else os.getenv('ALPHA_VANTAGE_API_KEY')
+            price_data = get_stock_price(asset, api_key)
+            return float(price_data['05. price']) if price_data else None
+        price_data = get_crypto_price(asset)
+        return price_data['usd'] if price_data else None
+
+    def compute_position_pnl(self, position: dict, current_price: float) -> float:
+        entry_value = position['quantity'] * position['entry_price']
+        position_value = position['quantity'] * current_price
+        if position['side'].lower() == 'long':
+            return position_value - entry_value
+        return entry_value - position_value
+
+    def _finalize_leverage_close(
+        self,
+        position: dict,
+        current_price: float,
+        account_id: int,
+        cash_returned: float,
+        close_reason: str,
+    ) -> None:
+        signed_qty = position['quantity'] if position['side'].lower() == 'long' else -position['quantity']
+        update_position(account_id, position['asset'], -signed_qty, current_price, is_paper=1)
+
+        if close_reason == 'liquidation':
+            tx_type = 'LIQUIDATED'
+        elif position['side'].lower() == 'long':
+            tx_type = 'CLOSE_LONG'
+        else:
+            tx_type = 'CLOSE_SHORT'
+
+        store_transactions([{
+            'asset': position['asset'],
+            'type': tx_type,
+            'quantity': position['quantity'],
+            'price': current_price,
+            'is_paper': 1,
+        }])
+
+        update_paper_account_cash(account_id, cash_returned)
+        db_close_leverage_position(position['id'])
+
+    def close_leverage_position(self, position_id: int, account_id: int = 1) -> dict:
+        """Close an active leverage position and return margin plus P&L."""
+        position = get_leverage_position_by_id(position_id)
+        if not position or position['account_id'] != account_id:
+            raise ValueError('Position not found')
+
+        current_price = self._get_market_price(position['asset'], position['asset_type'])
+        if not current_price:
+            raise ValueError('Unable to fetch current price')
+
+        if self.check_liquidation_status(current_price, position['liquidation_price'], position['side']):
+            raise ValueError('Position has been liquidated')
+
+        pnl = self.compute_position_pnl(position, current_price)
+        cash_returned = max(0.0, position['required_margin'] + pnl)
+        self._finalize_leverage_close(position, current_price, account_id, cash_returned, 'close')
+
+        logger.info(
+            f"Closed leverage position {position_id}: P&L ${pnl:.2f}, cash returned ${cash_returned:.2f}"
+        )
+        return {
+            'pnl': pnl,
+            'cash_returned': cash_returned,
+            'close_price': current_price,
+            'close_reason': 'close',
+        }
+
+    def liquidate_leverage_position(self, position_id: int, current_price: float, account_id: int = 1) -> dict | None:
+        """Liquidate a position that hit its liquidation price. Margin is lost."""
+        position = get_leverage_position_by_id(position_id)
+        if not position or position['account_id'] != account_id:
+            return None
+
+        if not self.check_liquidation_status(current_price, position['liquidation_price'], position['side']):
+            raise ValueError('Position is not liquidated')
+
+        pnl = self.compute_position_pnl(position, current_price)
+        self._finalize_leverage_close(position, current_price, account_id, 0.0, 'liquidation')
+
+        logger.info(
+            f"Liquidated position {position_id}: margin lost ${position['required_margin']:.2f}"
+        )
+        return {
+            'position_id': position_id,
+            'asset': position['asset'],
+            'side': position['side'],
+            'pnl': pnl,
+            'margin_lost': position['required_margin'],
+            'close_price': current_price,
+            'close_reason': 'liquidation',
+        }
 
     def simulate_order(self, asset: str, side: str, quantity: float, leverage: float = 2.0, asset_type: str = 'crypto', account_id: int = 1) -> dict:
         """Simulate opening a long/short position with leverage for paper trading.

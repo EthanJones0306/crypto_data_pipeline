@@ -459,47 +459,39 @@ def get_leverage_positions():
     """Get all open leverage/perpetual positions"""
     try:
         from .database import get_open_leverage_positions
-        from .fetch_crypto import get_crypto_price
-        from .fetch_stocks import get_stock_price
-        import os
-        
+
         positions = get_open_leverage_positions(account_id=1)
-        
-        # Enrich with current prices and P&L
-        api_key = get_stock_api_key()
-        
+
         enriched = []
+        recently_liquidated = []
         for pos in positions:
-            current_price = 0
-            if pos['asset_type'] == 'stock':
-                stock_data = get_stock_price(pos['asset'], api_key)
-                current_price = float(stock_data.get('05. price', 0)) if stock_data else 0
-            else:
-                price_data = get_crypto_price(pos['asset'])
-                current_price = price_data['usd'] if price_data else 0
-            
-            if current_price == 0:
+            current_price = trading_service._get_market_price(pos['asset'], pos['asset_type'])
+            if not current_price:
                 continue
-            
-            # Calculate P&L
-            # Calculate P&L
+
             position_value = pos['quantity'] * current_price
             entry_value = pos['quantity'] * pos['entry_price']
             entry_price = pos['entry_price']
             leverage = pos['leverage']
-            
+
+            pnl = trading_service.compute_position_pnl(pos, current_price)
             if pos['side'].lower() == 'long':
-                pnl = position_value - entry_value
-                # Levered PnL % for longs
                 pnl_percent = ((current_price - entry_price) / entry_price * 100 * leverage) if entry_price > 0 else 0
-            else:  # short
-                pnl = entry_value - position_value
-                # Levered PnL % for shorts
+            else:
                 pnl_percent = ((entry_price - current_price) / entry_price * 100 * leverage) if entry_price > 0 else 0
 
-            # Check if position has been liquidated
-            is_liquidated = trading_service.check_liquidation_status(current_price, pos['liquidation_price'], pos['side'])
-            
+            is_liquidated = trading_service.check_liquidation_status(
+                current_price, pos['liquidation_price'], pos['side']
+            )
+
+            if is_liquidated:
+                liquidation_result = trading_service.liquidate_leverage_position(
+                    pos['id'], current_price, account_id=1
+                )
+                if liquidation_result:
+                    recently_liquidated.append(liquidation_result)
+                continue
+
             enriched.append({
                 **pos,
                 'current_price': current_price,
@@ -508,34 +500,33 @@ def get_leverage_positions():
                 'pnl_percent': pnl_percent,
                 'distance_to_liquidation': abs(current_price - pos['liquidation_price']),
                 'liquidation_distance_percent': (abs(current_price - pos['liquidation_price']) / current_price * 100) if current_price > 0 else 0,
-                'is_liquidated': is_liquidated,
-                'liquidation_status': 'LIQUIDATED' if is_liquidated else 'ACTIVE'
+                'is_liquidated': False,
+                'liquidation_status': 'ACTIVE',
             })
-        
-        return {"status": "success", "positions": enriched}
+
+        return {
+            "status": "success",
+            "positions": enriched,
+            "recently_liquidated": recently_liquidated,
+        }
     except Exception as e:
         return {"status": "error", "message": str(e)}
 
 @app.post('/positions/leverage/{position_id}/close')
-def close_leverage_position(position_id: int):
-    """Close a leverage position and return margin"""
+def close_leverage_position_endpoint(position_id: int):
+    """Close a leverage position and return margin plus P&L"""
     try:
-        from .database import close_leverage_position, get_open_leverage_positions, get_or_create_paper_account, update_paper_account_cash
-        
-        # Get the position to find required margin
-        positions = get_open_leverage_positions(account_id=1)
-        position = next((p for p in positions if p['id'] == position_id), None)
-        
-        if not position:
-            return {"status": "error", "message": "Position not found"}
-        
-        # Return the margin to available cash
-        update_paper_account_cash(1, position['required_margin'])
-        
-        # Close the position
-        close_leverage_position(position_id)
-        
-        return {"status": "success", "message": f"Position closed. Margin returned: ${position['required_margin']:.2f}"}
+        result = trading_service.close_leverage_position(position_id, account_id=1)
+        return {
+            "status": "success",
+            "message": (
+                f"Position closed. P&L: ${result['pnl']:.2f}, "
+                f"Cash returned: ${result['cash_returned']:.2f}"
+            ),
+            **result,
+        }
+    except ValueError as e:
+        return {"status": "error", "message": str(e)}
     except Exception as e:
         return {"status": "error", "message": str(e)}
 

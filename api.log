@@ -2470,3 +2470,92 @@
 2026-06-05 05:48:14,247 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.72
 2026-06-05 05:48:15,176 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.72
 2026-06-05 05:48:15,234 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.72
+2026-06-05 06:04:02,069 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-06-05 06:04:02,077 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-06-04 12:48:30.085165
+2026-06-05 06:04:02,077 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-06-05 06:04:02,520 - backend.fetch_stocks - INFO - ✅ Fetched AAPL from Finnhub: $311.23
+2026-06-05 06:04:02,930 - backend.fetch_stocks - INFO - ✅ Fetched META from Finnhub: $627.57
+2026-06-05 06:04:02,991 - backend.fetch_crypto - INFO - ✅ Fetched price for bitcoin: $62276
+2026-06-05 06:04:03,523 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.14
+2026-06-05 06:04:03,537 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-06-05 06:04:03,538 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-06-04 12:48:30.085165
+2026-06-05 06:04:03,538 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-06-05 06:04:04,102 - backend.fetch_stocks - INFO - ✅ Fetched AAPL from Finnhub: $311.23
+2026-06-05 06:04:04,516 - backend.fetch_stocks - INFO - ✅ Fetched META from Finnhub: $627.57
+2026-06-05 06:04:04,699 - backend.fetch_crypto - INFO - ✅ Fetched price for bitcoin: $62276
+2026-06-05 06:04:04,821 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.14
+2026-06-05 06:04:35,126 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.05
+2026-06-05 06:04:35,174 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:05:35,192 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $65.95
+2026-06-05 06:05:35,248 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $65.95
+2026-06-05 08:06:23,215 - httpx - INFO - HTTP Request: GET http://testserver/ "HTTP/1.1 200 OK"
+2026-06-05 08:06:23,219 - httpx - INFO - HTTP Request: GET http://testserver/health "HTTP/1.1 200 OK"
+2026-06-05 08:06:23,223 - httpx - INFO - HTTP Request: POST http://testserver/buy/crypto "HTTP/1.1 200 OK"
+2026-06-05 08:06:23,226 - httpx - INFO - HTTP Request: POST http://testserver/buy/stock "HTTP/1.1 200 OK"
+2026-06-05 08:06:23,228 - httpx - INFO - HTTP Request: POST http://testserver/buy/crypto "HTTP/1.1 200 OK"
+2026-06-05 08:06:23,231 - httpx - INFO - HTTP Request: GET http://testserver/simulate/liquidation?entry_price=50000&side=long&leverage=2 "HTTP/1.1 200 OK"
+2026-06-05 08:06:23,233 - backend.api - INFO - 🔍 Stock search for 'aapl': found 1 results
+2026-06-05 08:06:23,234 - httpx - INFO - HTTP Request: GET http://testserver/search/stocks?q=aapl "HTTP/1.1 200 OK"
+2026-06-05 08:06:23,236 - httpx - INFO - HTTP Request: GET http://testserver/search/stocks?q= "HTTP/1.1 200 OK"
+2026-06-05 08:06:23,239 - httpx - INFO - HTTP Request: POST http://testserver/positions/leverage/1/close "HTTP/1.1 200 OK"
+2026-06-05 08:06:23,243 - httpx - INFO - HTTP Request: POST http://testserver/positions/leverage/1/close "HTTP/1.1 200 OK"
+2026-06-05 08:06:23,250 - httpx - INFO - HTTP Request: GET http://testserver/positions/leverage "HTTP/1.1 200 OK"
+2026-06-05 06:06:35,190 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $65.95
+2026-06-05 06:06:35,248 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $65.95
+2026-06-05 06:07:35,151 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.0
+2026-06-05 06:07:35,211 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.0
+2026-06-05 06:08:35,342 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.07
+2026-06-05 06:08:35,396 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.07
+2026-06-05 06:09:07,055 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-06-05 06:09:07,062 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-06-04 12:48:30.085165
+2026-06-05 06:09:07,062 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-06-05 06:09:07,459 - backend.fetch_stocks - INFO - ✅ Fetched AAPL from Finnhub: $311.23
+2026-06-05 06:09:08,054 - backend.fetch_stocks - INFO - ✅ Fetched META from Finnhub: $627.57
+2026-06-05 06:09:08,108 - backend.fetch_crypto - INFO - ✅ Fetched price for bitcoin: $62462
+2026-06-05 06:09:08,156 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.07
+2026-06-05 06:09:08,164 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-06-05 06:09:08,165 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-06-04 12:48:30.085165
+2026-06-05 06:09:08,165 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-06-05 06:09:08,668 - backend.fetch_stocks - INFO - ✅ Fetched AAPL from Finnhub: $311.23
+2026-06-05 06:09:09,040 - backend.fetch_stocks - INFO - ✅ Fetched META from Finnhub: $627.57
+2026-06-05 06:09:09,084 - backend.fetch_crypto - INFO - ✅ Fetched price for bitcoin: $62462
+2026-06-05 06:09:09,130 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.07
+2026-06-05 06:09:35,157 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.12
+2026-06-05 06:09:35,202 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:09:48,019 - backend.api - INFO - 🔍 Crypto search for 'sol': found 10 results
+2026-06-05 06:09:49,580 - backend.api - INFO - 🔍 Crypto search for 's': found 10 results
+2026-06-05 06:09:52,926 - backend.api - INFO - 🔍 Crypto search for 's': found 10 results
+2026-06-05 06:09:53,726 - backend.api - INFO - 🔍 Crypto search for 'so': found 10 results
+2026-06-05 06:10:06,250 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:06,256 - backend.database - INFO - Stored: BUY 198.0 solana @ $80
+2026-06-05 06:10:10,793 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:10,847 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:10,890 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:15,800 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:15,847 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:15,894 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:20,783 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:20,825 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:20,871 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:21,386 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:21,427 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:21,473 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:24,288 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:24,333 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:24,377 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:25,796 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:25,839 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:25,878 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:30,798 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:30,852 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:30,899 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:35,449 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:35,613 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.18
+2026-06-05 06:10:35,659 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.18
+2026-06-05 06:10:35,664 - backend.database - INFO - Stored: LIQUIDATED 10.0 solana @ $66.18
+2026-06-05 06:10:35,668 - backend.services - INFO - Liquidated position 6: margin lost $196.00
+2026-06-05 06:10:35,787 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.18
+2026-06-05 06:10:35,792 - backend.database - INFO - Stored: LIQUIDATED 198.0 solana @ $66.18
+2026-06-05 06:10:35,796 - backend.services - INFO - Liquidated position 8: margin lost $160.00
+2026-06-05 06:10:35,842 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:40,839 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80

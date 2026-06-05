@@ -139,3 +139,91 @@ def test_search_stocks_too_short(client):
     data = response.json()
     assert data["status"] == "error"
     assert data["message"] == "Search query too short"
+
+
+def test_close_leverage_position_returns_pnl(client, mocker):
+    """Closing a position should return margin plus P&L."""
+    mocker.patch(
+        "backend.api.trading_service.close_leverage_position",
+        return_value={"pnl": 25.0, "cash_returned": 125.0, "close_price": 52000.0, "close_reason": "close"},
+    )
+
+    response = client.post("/positions/leverage/1/close")
+
+    assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "success"
+    assert data["pnl"] == 25.0
+    assert data["cash_returned"] == 125.0
+    assert data["close_price"] == 52000.0
+
+
+def test_close_liquidated_position_rejected(client, mocker):
+    """Manual close should fail once a position is liquidated."""
+    mocker.patch(
+        "backend.api.trading_service.close_leverage_position",
+        side_effect=ValueError("Position has been liquidated"),
+    )
+
+    response = client.post("/positions/leverage/1/close")
+
+    assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "error"
+    assert data["message"] == "Position has been liquidated"
+
+
+def test_get_leverage_positions_auto_liquidates(client, mocker):
+    """Positions past liquidation should be removed and reported."""
+    sample_position = {
+        "id": 7,
+        "account_id": 1,
+        "asset": "bitcoin",
+        "asset_type": "crypto",
+        "side": "long",
+        "quantity": 2.0,
+        "entry_price": 50000.0,
+        "leverage": 2.0,
+        "liquidation_price": 25200.0,
+        "required_margin": 50000.0,
+        "opened_at": "2026-01-01 00:00:00",
+        "maintenance_rate": 0.004,
+    }
+    mocker.patch("backend.database.get_open_leverage_positions", return_value=[sample_position])
+    mocker.patch("backend.api.trading_service._get_market_price", return_value=25000.0)
+    mocker.patch(
+        "backend.api.trading_service.check_liquidation_status",
+        return_value=True,
+    )
+    mocker.patch(
+        "backend.api.trading_service.liquidate_leverage_position",
+        return_value={
+            "position_id": 7,
+            "asset": "bitcoin",
+            "side": "long",
+            "pnl": -50000.0,
+            "margin_lost": 50000.0,
+            "close_price": 25000.0,
+            "close_reason": "liquidation",
+        },
+    )
+
+    response = client.get("/positions/leverage")
+
+    assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "success"
+    assert data["positions"] == []
+    assert len(data["recently_liquidated"]) == 1
+    assert data["recently_liquidated"][0]["margin_lost"] == 50000.0
+
+
+def test_compute_position_pnl_long_and_short():
+    """P&L math should reflect side and price movement."""
+    from backend.services import TradingService
+
+    service = TradingService()
+    position = {"side": "long", "quantity": 2.0, "entry_price": 100.0}
+
+    assert service.compute_position_pnl(position, 110.0) == 20.0
+    assert service.compute_position_pnl({**position, "side": "short"}, 90.0) == 20.0
