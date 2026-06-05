@@ -36,7 +36,11 @@ function Trading() {
             await buyCrypto(asset, parseFloat(quantity), currency);
           }
         } else {
-          await sellCrypto(asset, parseFloat(quantity));
+          if (inputMode === 'quantity') {
+            await sellCrypto(asset, parseFloat(quantity));
+          } else {
+            await sellCrypto(asset, parseFloat(quantity), currency);
+          }
         }
       } else {
           if (type === 'buy') {
@@ -46,7 +50,11 @@ function Trading() {
               await buyStock(asset, parseFloat(quantity), currency);  // pass currency
           }
           } else {
-            await sellStock(asset, parseFloat(quantity));
+            if (inputMode === 'quantity') {
+              await sellStock(asset, parseFloat(quantity));
+            } else {
+              await sellStock(asset, parseFloat(quantity), currency);
+            }
           }
       }
 

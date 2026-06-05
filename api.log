@@ -2559,3 +2559,41 @@
 2026-06-05 06:10:35,796 - backend.services - INFO - Liquidated position 8: margin lost $160.00
 2026-06-05 06:10:35,842 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
 2026-06-05 06:10:40,839 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:45,805 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:50,840 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:10:55,845 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:11:00,829 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:11:05,959 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:11:10,823 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:11:15,842 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:11:20,826 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:11:25,808 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:11:30,797 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:11:34,963 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:11:35,835 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:11:41,110 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.18
+2026-06-05 06:11:45,830 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.18
+2026-06-05 06:11:50,807 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.18
+2026-06-05 06:11:55,836 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.18
+2026-06-05 06:12:00,848 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.18
+2026-06-05 06:12:05,801 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.18
+2026-06-05 06:12:35,145 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.17
+2026-06-05 06:12:35,146 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.17
+2026-06-05 06:13:35,647 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.12
+2026-06-05 06:13:35,648 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.12
+2026-06-05 08:16:11,533 - httpx - INFO - HTTP Request: GET http://testserver/ "HTTP/1.1 200 OK"
+2026-06-05 08:16:11,537 - httpx - INFO - HTTP Request: GET http://testserver/health "HTTP/1.1 200 OK"
+2026-06-05 08:16:11,579 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-06-05 08:16:11,581 - httpx - INFO - HTTP Request: POST http://testserver/buy/crypto "HTTP/1.1 200 OK"
+2026-06-05 08:16:11,585 - httpx - INFO - HTTP Request: POST http://testserver/buy/stock "HTTP/1.1 200 OK"
+2026-06-05 08:16:11,588 - httpx - INFO - HTTP Request: POST http://testserver/sell/crypto "HTTP/1.1 200 OK"
+2026-06-05 08:16:11,591 - httpx - INFO - HTTP Request: POST http://testserver/sell/stock "HTTP/1.1 200 OK"
+2026-06-05 08:16:11,597 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-06-05 08:16:11,598 - httpx - INFO - HTTP Request: POST http://testserver/buy/crypto "HTTP/1.1 200 OK"
+2026-06-05 08:16:11,602 - httpx - INFO - HTTP Request: GET http://testserver/simulate/liquidation?entry_price=50000&side=long&leverage=2 "HTTP/1.1 200 OK"
+2026-06-05 08:16:11,605 - backend.api - INFO - 🔍 Stock search for 'aapl': found 1 results
+2026-06-05 08:16:11,605 - httpx - INFO - HTTP Request: GET http://testserver/search/stocks?q=aapl "HTTP/1.1 200 OK"
+2026-06-05 08:16:11,608 - httpx - INFO - HTTP Request: GET http://testserver/search/stocks?q= "HTTP/1.1 200 OK"
+2026-06-05 08:16:11,611 - httpx - INFO - HTTP Request: POST http://testserver/positions/leverage/1/close "HTTP/1.1 200 OK"
+2026-06-05 08:16:11,615 - httpx - INFO - HTTP Request: POST http://testserver/positions/leverage/1/close "HTTP/1.1 200 OK"
+2026-06-05 08:16:11,619 - httpx - INFO - HTTP Request: GET http://testserver/positions/leverage "HTTP/1.1 200 OK"

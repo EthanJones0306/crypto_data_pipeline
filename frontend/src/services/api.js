@@ -69,11 +69,15 @@ export const buyCrypto = async (asset, quantity, currency = null) => {
   });
 };
 
-export const sellCrypto = async (asset, quantity) => {
+export const sellCrypto = async (asset, quantity, currency = null) => {
+  const body = currency
+    ? { asset, amount: quantity, currency }
+    : { asset, quantity };
+
   return requestJson('/sell/crypto', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...paperHeaders() },
-    body: JSON.stringify({ asset, quantity })
+    body: JSON.stringify(body)
   });
 };
 
@@ -90,11 +94,15 @@ export const buyStock = async (symbol, quantity, currency = null) => {
   });
 };
 
-export const sellStock = async (symbol, quantity) => {
+export const sellStock = async (symbol, quantity, currency = null) => {
+  const body = currency
+    ? { asset: symbol, amount: quantity, currency }
+    : { asset: symbol, quantity };
+
   return requestJson('/sell/stock', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...paperHeaders() },
-    body: JSON.stringify({ asset: symbol, quantity })
+    body: JSON.stringify(body)
   });
 };
 

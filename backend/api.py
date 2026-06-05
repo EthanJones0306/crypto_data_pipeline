@@ -56,16 +56,46 @@ def get_stock_api_key() -> str:
     )
 
 # Define request models
-class SellRequest(BaseModel):
-    asset: str
-    quantity: float
-
-
-class BuyRequest(BaseModel):
+class TradeRequest(BaseModel):
     asset: str
     quantity: Optional[float] = None
     amount: Optional[float] = None
     currency: Optional[str] = None  # 'USD', 'GBP', 'ZAR'
+
+
+BuyRequest = TradeRequest
+SellRequest = TradeRequest
+
+
+def resolve_trade_quantity(
+    quantity: Optional[float],
+    amount: Optional[float],
+    currency: Optional[str],
+    price_usd: float,
+) -> tuple[Optional[float], Optional[str]]:
+    """Resolve asset quantity from either units or a fiat amount."""
+    if amount is not None and currency is not None:
+        if amount <= 0:
+            return None, "Invalid quantity or amount"
+
+        from .database import get_latest_exchange_rate
+
+        amount_usd = amount
+        if currency.upper() != 'USD':
+            usd_rate = get_latest_exchange_rate('USD')
+            currency_rate = get_latest_exchange_rate(currency.upper())
+            if not usd_rate or not currency_rate:
+                return None, "Exchange rates not available"
+            amount_usd = amount * (currency_rate / usd_rate)
+
+        quantity = amount_usd / price_usd
+    elif quantity is None or quantity <= 0:
+        return None, "Invalid quantity or amount"
+
+    if not quantity or quantity <= 0:
+        return None, "Invalid quantity or amount"
+
+    return quantity, None
 
 
 class SimulateRequest(BaseModel):
@@ -105,41 +135,17 @@ def health_check():
 def buy_crypto(request: BuyRequest):
     """Buy cryptocurrency at current market price (supports both quantity and amount-based purchases)"""
     try:
-        quantity = request.quantity
+        from .fetch_crypto import get_crypto_price
 
-        # Validate quantity-based purchase upfront
-        if request.amount is None and request.currency is None:
-            if not quantity or quantity <= 0:
-                return {"status": "error", "message": "Invalid quantity or amount"}
+        price_data = get_crypto_price(request.asset)
+        if not price_data:
+            return {"status": "error", "message": f"Unable to fetch price for {request.asset}"}
 
-        # If amount and currency are provided, convert to quantity
-        if request.amount is not None and request.currency is not None:
-            if request.amount <= 0:
-                return {"status": "error", "message": "Invalid quantity or amount"}
-
-            from .fetch_crypto import get_crypto_price
-            from .database import get_latest_exchange_rate
-
-            price_data = get_crypto_price(request.asset)
-            if not price_data:
-                return {"status": "error", "message": f"Unable to fetch price for {request.asset}"}
-
-            crypto_price_usd = price_data['usd']
-            amount_usd = request.amount
-
-            if request.currency.upper() != 'USD':
-                usd_rate = get_latest_exchange_rate('USD')
-                currency_rate = get_latest_exchange_rate(request.currency.upper())
-
-                if not usd_rate or not currency_rate:
-                    return {"status": "error", "message": "Exchange rates not available"}
-
-                amount_usd = request.amount * (currency_rate / usd_rate)
-
-            quantity = amount_usd / crypto_price_usd
-
-        if not quantity or quantity <= 0:
-            return {"status": "error", "message": "Invalid quantity or amount"}
+        quantity, error = resolve_trade_quantity(
+            request.quantity, request.amount, request.currency, price_data['usd']
+        )
+        if error:
+            return {"status": "error", "message": error}
 
         result = trading_service.buy_crypto(request.asset, quantity)
         return {
@@ -155,43 +161,17 @@ def buy_crypto(request: BuyRequest):
 def buy_stock(request: BuyRequest):
     """Buy stock at current market price (supports both quantity and amount-based purchases)"""
     try:
-        quantity = request.quantity
+        from .fetch_stocks import get_stock_price
 
-        # Validate quantity-based purchase upfront
-        if request.amount is None and request.currency is None:
-            if not quantity or quantity <= 0:
-                return {"status": "error", "message": "Invalid quantity or amount"}
+        stock_data = get_stock_price(request.asset, get_stock_api_key())
+        if not stock_data:
+            return {"status": "error", "message": f"Unable to fetch price for {request.asset}"}
 
-        # If amount and currency are provided, convert to quantity
-        if request.amount is not None and request.currency is not None:
-            if request.amount <= 0:
-                return {"status": "error", "message": "Invalid amount"}
-
-            from .fetch_stocks import get_stock_price
-            from .database import get_latest_exchange_rate
-
-            # Get current stock price
-            stock_data = get_stock_price(request.asset, get_stock_api_key())
-            if not stock_data:
-                return {"status": "error", "message": f"Unable to fetch price for {request.asset}"}
-
-            stock_price_usd = float(stock_data['05. price'])
-            amount_usd = request.amount
-
-            # Convert to USD if needed
-            if request.currency.upper() != 'USD':
-                usd_rate = get_latest_exchange_rate('USD')
-                currency_rate = get_latest_exchange_rate(request.currency.upper())
-
-                if not usd_rate or not currency_rate:
-                    return {"status": "error", "message": "Exchange rates not available"}
-
-                amount_usd = request.amount * (currency_rate / usd_rate)
-
-            quantity = amount_usd / stock_price_usd
-
-        if not quantity or quantity <= 0:
-            return {"status": "error", "message": "Invalid quantity or amount"}
+        quantity, error = resolve_trade_quantity(
+            request.quantity, request.amount, request.currency, float(stock_data['05. price'])
+        )
+        if error:
+            return {"status": "error", "message": error}
 
         result = trading_service.buy_stock(request.asset, quantity)
         return {
@@ -205,10 +185,25 @@ def buy_stock(request: BuyRequest):
     
 @app.post("/sell/crypto")
 def sell_crypto(request: SellRequest):
-    """Sell a cryptocurrency"""
+    """Sell cryptocurrency (supports both quantity and amount-based sales)"""
     try:
-        result = trading_service.sell_crypto(request.asset, request.quantity)
-        return {"status": "success", "message": f"Sold {request.quantity} {request.asset} at ${result['price']}"}
+        from .fetch_crypto import get_crypto_price
+
+        price_data = get_crypto_price(request.asset)
+        if not price_data:
+            return {"status": "error", "message": f"Unable to fetch price for {request.asset}"}
+
+        quantity, error = resolve_trade_quantity(
+            request.quantity, request.amount, request.currency, price_data['usd']
+        )
+        if error:
+            return {"status": "error", "message": error}
+
+        result = trading_service.sell_crypto(request.asset, quantity)
+        return {
+            "status": "success",
+            "message": f"Sold {quantity:.4f} {request.asset} at ${result['price']} (Total: ${result['total_proceeds']:.2f})"
+        }
     except ValueError as e:
         return {"status": "error", "message": str(e)}
     except KeyError:
@@ -216,10 +211,27 @@ def sell_crypto(request: SellRequest):
 
 @app.post("/sell/stock")
 def sell_stock(request: SellRequest):
-    """Sell a stock"""
+    """Sell stock (supports both quantity and amount-based sales)"""
     try:
-        result = trading_service.sell_stock(request.asset, request.quantity)
-        return {"status": "success", "message": f"Sold {request.quantity} {request.asset} at ${result['price']}"}
+        from .fetch_stocks import get_stock_price
+
+        stock_data = get_stock_price(request.asset, get_stock_api_key())
+        if not stock_data:
+            return {"status": "error", "message": f"Unable to fetch price for {request.asset}"}
+
+        quantity, error = resolve_trade_quantity(
+            request.quantity, request.amount, request.currency, float(stock_data['05. price'])
+        )
+        if error:
+            return {"status": "error", "message": error}
+
+        result = trading_service.sell_stock(request.asset, quantity)
+        return {
+            "status": "success",
+            "message": f"Sold {quantity:.4f} {request.asset} at ${result['price']} (Total: ${result['total_proceeds']:.2f})"
+        }
+    except ValueError as e:
+        return {"status": "error", "message": str(e)}
     except KeyError:
         return {"status": "error", "message": "Stock price data not available. Try again later."}
     except Exception as e:
