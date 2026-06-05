@@ -1,7 +1,31 @@
-import React, { useState } from 'react';
-import { buyCrypto, sellCrypto, buyStock, sellStock } from '../services/api';
+import React, { useState, useEffect } from 'react';
+import { buyCrypto, sellCrypto, buyStock, sellStock, fetchPortfolioValue, fetchExchangeRates } from '../services/api';
 import SearchBar from './SearchBar';
 import { getDisplayName } from '../constants/assetNames';
+
+const CRYPTO_ALIASES = {
+  bitcoin: 'bitcoin',
+  btc: 'bitcoin',
+  ethereum: 'ethereum',
+  eth: 'ethereum',
+  solana: 'solana',
+  sol: 'solana',
+};
+
+const normalizeAssetKey = (asset) => {
+  const lower = asset.toLowerCase();
+  return CRYPTO_ALIASES[lower] || asset.toUpperCase();
+};
+
+const findHolding = (holdings, asset) => {
+  const key = normalizeAssetKey(asset);
+  return holdings?.find((h) => normalizeAssetKey(h.asset) === key) || null;
+};
+
+const formatMaxQuantity = (qty, isStock) => {
+  const decimals = isStock ? 4 : 8;
+  return parseFloat(qty.toFixed(decimals)).toString();
+};
 
 function Trading() {
   const [asset, setAsset] = useState('');
@@ -9,9 +33,32 @@ function Trading() {
   const [quantity, setQuantity] = useState('');
   const [type, setType] = useState('buy');
   const [loading, setLoading] = useState(false);
+  const [maxLoading, setMaxLoading] = useState(false);
   const [message, setMessage] = useState(null);
   const [inputMode, setInputMode] = useState('quantity'); // 'quantity' or 'amount'
   const [currency, setCurrency] = useState('USD');
+  const [availableHolding, setAvailableHolding] = useState(null);
+
+  useEffect(() => {
+    if (type !== 'sell' || !asset) {
+      setAvailableHolding(null);
+      return;
+    }
+
+    let cancelled = false;
+    const loadHolding = async () => {
+      try {
+        const resp = await fetchPortfolioValue();
+        if (cancelled || resp.status !== 'success') return;
+        setAvailableHolding(findHolding(resp.holdings, asset));
+      } catch {
+        if (!cancelled) setAvailableHolding(null);
+      }
+    };
+
+    loadHolding();
+    return () => { cancelled = true; };
+  }, [asset, type]);
 
   const handleTrade = async (e) => {
     e.preventDefault();
@@ -72,6 +119,44 @@ function Trading() {
 
   const handleAssetSelect = (selectedAsset) => {
     setAsset(selectedAsset);
+    setQuantity('');
+  };
+
+  const handleMax = async () => {
+    if (!asset) {
+      setMessage({ type: 'error', text: 'Please select an asset first' });
+      return;
+    }
+
+    setMaxLoading(true);
+    setMessage(null);
+    try {
+      const portfolioResp = await fetchPortfolioValue();
+      if (portfolioResp.status !== 'success') {
+        throw new Error(portfolioResp.message || 'Failed to fetch portfolio');
+      }
+
+      const holding = findHolding(portfolioResp.holdings, asset);
+      if (!holding || holding.quantity <= 0) {
+        setMessage({ type: 'error', text: `You don't hold any ${getDisplayName(asset)}` });
+        return;
+      }
+
+      setAvailableHolding(holding);
+
+      if (inputMode === 'quantity') {
+        setQuantity(formatMaxQuantity(holding.quantity, assetType === 'stocks'));
+      } else {
+        const ratesResp = await fetchExchangeRates();
+        const rate = ratesResp.rates?.[currency] || 1;
+        const maxAmount = holding.total_value * rate;
+        setQuantity(maxAmount.toFixed(2));
+      }
+    } catch (err) {
+      setMessage({ type: 'error', text: err.message });
+    } finally {
+      setMaxLoading(false);
+    }
   };
 
   return (
@@ -179,14 +264,37 @@ function Trading() {
           <label className="trade-label">
             {inputMode === 'quantity' ? 'Quantity' : `Amount (${currency})`}
           </label>
-          <input
-            type="number"
-            step={inputMode === 'quantity' ? "0.0001" : "0.01"}
-            value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
-            placeholder={inputMode === 'quantity' ? "Enter quantity" : `Enter amount in ${currency}`}
-            className="trade-input"
-          />
+          <div style={{ display: 'flex', gap: '8px', alignItems: 'stretch' }}>
+            <input
+              type="number"
+              step={inputMode === 'quantity' ? "0.0001" : "0.01"}
+              value={quantity}
+              onChange={(e) => setQuantity(e.target.value)}
+              placeholder={inputMode === 'quantity' ? "Enter quantity" : `Enter amount in ${currency}`}
+              className="trade-input"
+              style={{ flex: 1 }}
+            />
+            {type === 'sell' && asset && (
+              <button
+                type="button"
+                onClick={handleMax}
+                disabled={maxLoading || loading}
+                className="secondary-action"
+                style={{ flexShrink: 0, padding: '0 16px', alignSelf: 'stretch' }}
+              >
+                {maxLoading ? '...' : 'Max'}
+              </button>
+            )}
+          </div>
+          {type === 'sell' && asset && availableHolding && (
+            <div style={{ fontSize: '12px', color: 'var(--muted)', marginTop: '6px' }}>
+              Available: {formatMaxQuantity(availableHolding.quantity, assetType === 'stocks')}{' '}
+              {getDisplayName(asset)}
+              {inputMode === 'amount' && availableHolding.total_value > 0 && (
+                <span> (≈ ${availableHolding.total_value.toFixed(2)} USD)</span>
+              )}
+            </div>
+          )}
         </div>
 
         <button

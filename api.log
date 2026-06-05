@@ -2597,3 +2597,54 @@
 2026-06-05 08:16:11,611 - httpx - INFO - HTTP Request: POST http://testserver/positions/leverage/1/close "HTTP/1.1 200 OK"
 2026-06-05 08:16:11,615 - httpx - INFO - HTTP Request: POST http://testserver/positions/leverage/1/close "HTTP/1.1 200 OK"
 2026-06-05 08:16:11,619 - httpx - INFO - HTTP Request: GET http://testserver/positions/leverage "HTTP/1.1 200 OK"
+2026-06-05 06:24:45,287 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-06-05 06:24:45,304 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-06-04 12:48:30.085165
+2026-06-05 06:24:45,305 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-06-05 06:24:45,749 - backend.fetch_stocks - INFO - ✅ Fetched AAPL from Finnhub: $311.23
+2026-06-05 06:24:46,188 - backend.fetch_stocks - INFO - ✅ Fetched META from Finnhub: $627.57
+2026-06-05 06:24:46,258 - backend.fetch_crypto - INFO - ✅ Fetched price for bitcoin: $61426
+2026-06-05 06:24:46,554 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $64.97
+2026-06-05 06:24:46,576 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-06-05 06:24:46,581 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-06-04 12:48:30.085165
+2026-06-05 06:24:46,582 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-06-05 06:24:46,985 - backend.fetch_stocks - INFO - ✅ Fetched AAPL from Finnhub: $311.23
+2026-06-05 06:24:47,371 - backend.fetch_stocks - INFO - ✅ Fetched META from Finnhub: $627.57
+2026-06-05 06:24:47,424 - backend.fetch_crypto - INFO - ✅ Fetched price for bitcoin: $61426
+2026-06-05 06:24:47,474 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $64.97
+2026-06-05 06:24:54,746 - backend.api - INFO - 🔍 Stock search for 'me': found 2 results
+2026-06-05 06:25:21,569 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-06-05 06:25:21,577 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-06-04 12:48:30.085165
+2026-06-05 06:25:21,577 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-06-05 06:25:22,139 - backend.fetch_stocks - INFO - ✅ Fetched AAPL from Finnhub: $311.23
+2026-06-05 06:25:22,533 - backend.fetch_stocks - INFO - ✅ Fetched META from Finnhub: $627.57
+2026-06-05 06:25:22,600 - backend.fetch_crypto - INFO - ✅ Fetched price for bitcoin: $61408
+2026-06-05 06:25:22,655 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $64.97
+2026-06-05 06:25:22,671 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-06-05 06:25:22,674 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-06-04 12:48:30.085165
+2026-06-05 06:25:22,674 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-06-05 06:25:23,089 - backend.fetch_stocks - INFO - ✅ Fetched AAPL from Finnhub: $311.23
+2026-06-05 06:25:23,627 - backend.fetch_stocks - INFO - ✅ Fetched META from Finnhub: $627.57
+2026-06-05 06:25:23,678 - backend.fetch_crypto - INFO - ✅ Fetched price for bitcoin: $61408
+2026-06-05 06:25:23,733 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:25:30,626 - backend.api - INFO - 🔍 Stock search for 'me': found 2 results
+2026-06-05 06:25:31,216 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-06-05 06:25:31,218 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-06-04 12:48:30.085165
+2026-06-05 06:25:31,218 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-06-05 06:25:31,615 - backend.fetch_stocks - INFO - ✅ Fetched AAPL from Finnhub: $311.23
+2026-06-05 06:25:31,992 - backend.fetch_stocks - INFO - ✅ Fetched META from Finnhub: $627.57
+2026-06-05 06:25:32,036 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-06-05 06:25:32,082 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:25:33,720 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-06-05 06:25:33,721 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-06-04 12:48:30.085165
+2026-06-05 06:25:33,722 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-06-05 06:25:34,120 - backend.fetch_stocks - INFO - ✅ Fetched AAPL from Finnhub: $311.23
+2026-06-05 06:25:34,528 - backend.fetch_stocks - INFO - ✅ Fetched META from Finnhub: $627.57
+2026-06-05 06:25:34,573 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-06-05 06:25:34,612 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 06:25:38,258 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-06-05 06:25:38,259 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-06-04 12:48:30.085165
+2026-06-05 06:25:38,259 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-06-05 06:25:38,650 - backend.fetch_stocks - INFO - ✅ Fetched AAPL from Finnhub: $311.23
+2026-06-05 06:25:39,139 - backend.fetch_stocks - INFO - ✅ Fetched META from Finnhub: $627.57
+2026-06-05 06:25:39,189 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for bitcoin: $42500
+2026-06-05 06:25:39,232 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
