@@ -15,5 +15,5 @@ def client():
 
 @pytest.fixture(autouse=True)
 def mock_db_init(mocker):
-    """Prevent tests from initializing the real database."""
-    mocker.patch("backend.main.initialise_db", return_value=None)
+    """Prevent tests from initialising the real database."""
+    mocker.patch("backend.api.initialise_db", return_value=None)
