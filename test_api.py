@@ -65,6 +65,34 @@ def test_buy_crypto_success(client, mocker):
     assert data["status"] == "success"
     assert "Bought 1.0000 bitcoin" in data["message"]
 
+def test_buy_stock_with_zar_amount(client, mocker):
+    """Test that buying a stock with a ZAR amount converts correctly."""
+    mocker.patch(
+        "backend.api.trading_service.buy_stock",
+        return_value={"price": 627.57, "total_cost": 33.01}
+    )
+    mocker.patch(
+        "backend.fetch_stocks.get_stock_price",
+        return_value={"05. price": "627.57"}
+    )
+    # R1000 ZAR at ~18.5 ZAR/USD = ~$54, which at $627.57/share = ~0.086 shares
+    mocker.patch(
+        "backend.database.get_latest_exchange_rate",
+        side_effect=lambda c: 18.5 if c == 'USD' else 1.0
+    )
+
+    response = client.post("/buy/stock", json={
+        "asset": "META",
+        "amount": 1000,
+        "currency": "ZAR"
+    })
+
+    assert response.status_code == 200
+    data = response.json()
+    assert data["status"] == "success"
+    # Should be a fraction of a share, not 1000 shares
+    assert "0." in data["message"]
+
 def test_buy_crypto_invalid_quantity(client):
     """Test that missing quantity fails at the Pydantic validation layer or logic layer."""
     payload = {

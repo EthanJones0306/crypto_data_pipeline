@@ -2392,3 +2392,81 @@
 2026-06-05 05:27:28,115 - backend.services - INFO - Attempting to buy 0.003116666131157022 AAPL
 2026-06-05 05:27:28,560 - backend.fetch_stocks - INFO - ✅ Fetched AAPL from Finnhub: $311.23
 2026-06-05 05:27:28,570 - backend.services - INFO - Successfully bought 0.003116666131157022 AAPL at $311.23
+2026-06-05 05:35:43,064 - backend.fetch_stocks - INFO - ✅ Fetched AAPL from Finnhub: $311.23
+2026-06-05 05:35:43,675 - backend.fetch_stocks - INFO - ✅ Fetched META from Finnhub: $627.57
+2026-06-05 05:35:43,738 - backend.fetch_crypto - INFO - ✅ Fetched price for bitcoin: $63373
+2026-06-05 05:35:43,802 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $67.72
+2026-06-05 05:36:04,703 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $67.72
+2026-06-05 05:36:04,751 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $67.72
+2026-06-05 05:36:09,694 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $67.72
+2026-06-05 05:36:09,738 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $67.72
+2026-06-05 05:36:14,680 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:36:14,725 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:36:19,667 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:36:19,704 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:36:24,679 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:36:24,734 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:36:29,671 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:36:29,717 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:36:34,668 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:36:34,706 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:36:39,697 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:36:39,736 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:36:44,659 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:36:44,721 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:36:49,663 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:36:49,702 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:36:54,682 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:36:54,722 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:36:59,665 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:36:59,716 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:37:04,670 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:37:04,707 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:37:10,167 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:37:10,213 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:37:15,426 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $67.59
+2026-06-05 05:37:15,477 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $67.59
+2026-06-05 05:37:20,128 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $67.59
+2026-06-05 05:37:20,170 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:37:25,139 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:37:25,191 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:37:30,116 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:37:30,163 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:37:35,206 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:37:35,251 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:37:40,145 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:37:40,198 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:37:45,131 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:37:45,177 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:37:50,125 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:37:50,180 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:37:55,166 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:37:55,216 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:38:00,119 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:38:00,167 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:38:05,149 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:38:05,193 - backend.fetch_crypto - WARNING - ⚠️ Using fallback price for solana: $80
+2026-06-05 05:38:35,315 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $67.42
+2026-06-05 05:38:35,352 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $67.42
+2026-06-05 05:39:35,683 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $67.11
+2026-06-05 05:39:36,050 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $67.11
+2026-06-05 05:40:35,262 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $67.11
+2026-06-05 05:40:35,320 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $67.11
+2026-06-05 05:41:35,483 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $67.12
+2026-06-05 05:41:35,538 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $67.12
+2026-06-05 05:42:35,495 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $67.08
+2026-06-05 05:42:35,549 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $67.08
+2026-06-05 05:43:35,472 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $67.04
+2026-06-05 05:43:35,534 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $67.04
+2026-06-05 05:44:35,469 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.97
+2026-06-05 05:44:35,524 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.97
+2026-06-05 05:45:35,452 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.94
+2026-06-05 05:45:35,513 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.94
+2026-06-05 05:46:35,422 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.83
+2026-06-05 05:46:35,477 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.83
+2026-06-05 05:47:35,410 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.72
+2026-06-05 05:47:35,471 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.72
+2026-06-05 05:48:14,186 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.72
+2026-06-05 05:48:14,247 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.72
+2026-06-05 05:48:15,176 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.72
+2026-06-05 05:48:15,234 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $66.72
