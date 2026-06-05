@@ -2373,3 +2373,22 @@
 2026-06-04 15:45:58,713 - backend.api - INFO - 🔍 Stock search for 'aapl': found 1 results
 2026-06-04 15:45:58,714 - httpx - INFO - HTTP Request: GET http://testserver/search/stocks?q=aapl "HTTP/1.1 200 OK"
 2026-06-04 15:45:58,716 - httpx - INFO - HTTP Request: GET http://testserver/search/stocks?q= "HTTP/1.1 200 OK"
+2026-06-05 05:27:15,952 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-06-05 05:27:15,959 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-06-04 12:48:30.085165
+2026-06-05 05:27:15,959 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-06-05 05:27:16,354 - backend.fetch_stocks - INFO - ✅ Fetched AAPL from Finnhub: $311.23
+2026-06-05 05:27:17,097 - backend.fetch_stocks - INFO - ✅ Fetched META from Finnhub: $627.57
+2026-06-05 05:27:17,219 - backend.fetch_crypto - INFO - ✅ Fetched price for bitcoin: $63345
+2026-06-05 05:27:17,578 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $67.62
+2026-06-05 05:27:17,590 - backend.fetch_stocks - INFO - Using stock price provider: finnhub
+2026-06-05 05:27:17,591 - backend.fetch_stocks - INFO - Using cached stock prices from 2026-06-04 12:48:30.085165
+2026-06-05 05:27:17,591 - backend.fetch_stocks - INFO - Using cached stock prices
+2026-06-05 05:27:18,234 - backend.fetch_stocks - INFO - ✅ Fetched AAPL from Finnhub: $311.23
+2026-06-05 05:27:18,609 - backend.fetch_stocks - INFO - ✅ Fetched META from Finnhub: $627.57
+2026-06-05 05:27:18,665 - backend.fetch_crypto - INFO - ✅ Fetched price for bitcoin: $63345
+2026-06-05 05:27:18,710 - backend.fetch_crypto - INFO - ✅ Fetched price for solana: $67.62
+2026-06-05 05:27:23,378 - backend.api - INFO - 🔍 Stock search for 'aa': found 1 results
+2026-06-05 05:27:28,113 - backend.fetch_stocks - INFO - ✅ Fetched AAPL from Finnhub: $311.23
+2026-06-05 05:27:28,115 - backend.services - INFO - Attempting to buy 0.003116666131157022 AAPL
+2026-06-05 05:27:28,560 - backend.fetch_stocks - INFO - ✅ Fetched AAPL from Finnhub: $311.23
+2026-06-05 05:27:28,570 - backend.services - INFO - Successfully bought 0.003116666131157022 AAPL at $311.23

@@ -15,6 +15,7 @@ services:
       - ./backend/crypto_prices_cache.json:/app/crypto_prices_cache.json
       - ./backend/stock_prices_cache.json:/app/stock_prices_cache.json
       - ./backend/api_status.json:/app/api_status.json
+      - .:/app
     networks:
       - crypto-network
     healthcheck:
@@ -35,6 +36,8 @@ services:
       REACT_APP_API_BASE_URL: http://backend:8000
     networks:
       - crypto-network
+    volumes:                 
+      - ./frontend:/app      
 
 networks:
   crypto-network:

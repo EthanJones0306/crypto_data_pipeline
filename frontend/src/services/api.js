@@ -77,11 +77,16 @@ export const sellCrypto = async (asset, quantity) => {
   });
 };
 
-export const buyStock = async (symbol, quantity) => {
+export const buyStock = async (symbol, quantity, currency = null) => {
+  // Use the exact same check as buyCrypto!
+  const body = currency 
+    ? { asset: symbol, amount: quantity, currency }
+    : { asset: symbol, quantity };
+    
   return requestJson('/buy/stock', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json', ...paperHeaders() },
-    body: JSON.stringify({ asset: symbol, quantity })
+    body: JSON.stringify(body)
   });
 };
 
