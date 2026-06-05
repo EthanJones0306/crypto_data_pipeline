@@ -100,7 +100,7 @@ function App() {
             <p className="eyebrow">Private market cockpit</p>
             <h1>Portfolio Tracker</h1>
             <p className="hero-subtitle">
-              A glass-style dashboard for prices, trading, leverage simulation, and API health.
+              An interactive platform for portfolio simulation, leverage trading, and market analysis.
             </p>
           </div>
           <div className="header-controls">
