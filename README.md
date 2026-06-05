@@ -34,20 +34,22 @@ A sophisticated full-stack application for managing and analysing multi-asset in
 ### 🎮 Trading Features
 - **Paper trading simulation** — Risk-free trading at live market prices
 - **Leverage trading** — Simulate leveraged positions with liquidation price calculations
+- **Fiat-based purchases & sales** — Execute orders by specifying either unit quantity or exact fiat amounts (USD, GBP, ZAR) with automatic real-time conversion
 - **Smart asset search** — Debounced search across 1000+ cryptocurrencies and stock database
 - **Real-time price quotes** — Current prices displayed during trading workflow
 
 ### 💎 Professional UI/UX
 - **Glassmorphism design** — Modern frosted glass aesthetic with backdrop blur effects
 - **Aurora animations** — Smooth, elegant entry animations and transitions
-- **Dark/Light modes** — Theme persistence with CSS variables and semantic colors
+- **Multiple Color Themes** — 5 options including System Default, Slate Dark, Clean Light, Warm Solarized, and High Contrast mode with persistent storage saving
 - **Responsive layout** — Optimised for desktop, tablet, and mobile views
 - **Interactive components** — Hover effects, loading states, success/error messaging
 
 ### 🔌 System Features
 - **CORS-enabled REST API** — All endpoints properly configured for cross-origin requests
 - **Error resilience** — Sequential API fallback (Finnhub → Alpha Vantage), graceful price fetching
-- **Data persistence** — SQLite database with 8 optimised tables
+- **Data persistence** — SQLite database with 7 optimised tables
+- **Administrative control** — Reset database endpoint and dashboard button to wipe transactions and start fresh
 - **Live API monitoring** — Dashboard showing API health status and rate limit usage
 
 ---
@@ -281,7 +283,7 @@ Complete audit log of all trades with timestamps, execution prices, and total va
 - **Last Resort:** If no cache, use hardcoded fallback prices (ensures app never crashes)
 
 ### Database Schema (SQLite)
-8 tables for clean data organisation:
+7 tables for clean data organisation:
 - `transactions` — Buy/sell audit log
 - `crypto_prices` — Historical crypto prices
 - `stock_prices` — Historical stock prices
@@ -289,7 +291,8 @@ Complete audit log of all trades with timestamps, execution prices, and total va
 - `positions` — Current holdings (qty, avg price)
 - `paper_accounts` — Paper trading account state
 - `leverage_positions` — Active leveraged positions
-- `api_status` — Rate limit tracking
+
+API rate limits and call logs are tracked separately inside a local `api_status.json` file.
 
 ---
 
@@ -328,12 +331,13 @@ GET /search/stocks?q=aapl
 ```
 Search for assets across 1000+ cryptocurrencies and stock database.
 
-**Data**
+**Data & Administration**
 ```http
 GET /prices/latest          # Crypto and stock prices
 GET /transactions           # Transaction history
 GET /exchange-rates         # Currency rates
 GET /health                 # API health check
+POST /admin/reset-database  # Reset SQLite database (clear transactions & accounts)
 ```
 
 ---
