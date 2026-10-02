@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Command, Eye, EyeOff, MoreHorizontal, Moon, RefreshCw, Sun, X } from 'lucide-react';
 import './App.css';
 import { AppContext } from './contexts/AppContext';
-import { ThemeContext } from './contexts/ThemeContext';
+import { LIGHT_THEMES, ThemeContext } from './contexts/ThemeContext';
 import { NAV_GROUPS, NAV_ITEMS } from './components/navItems';
 import { CommandPalette, ConfirmDialog, Toasts } from './components/Overlays';
 import PortfolioValue from './components/PortfolioValue';
@@ -86,7 +86,7 @@ function TopBar() {
   const { currency, setCurrency, privacy, togglePrivacy, refreshAll, setPaletteOpen } = useContext(AppContext);
   const { resolvedTheme, setTheme } = useContext(ThemeContext);
   const [spinning, setSpinning] = useState(false);
-  const isLight = resolvedTheme === 'light';
+  const isLight = LIGHT_THEMES.includes(resolvedTheme);
   const mac = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform);
 
   const refresh = () => {

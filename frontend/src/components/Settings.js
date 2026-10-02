@@ -1,17 +1,9 @@
 import React, { useContext, useState } from 'react';
 import { Check, Loader2, Smartphone } from 'lucide-react';
-import { ThemeContext } from '../contexts/ThemeContext';
+import { THEMES, ThemeContext } from '../contexts/ThemeContext';
 import { resetDatabase } from '../services/api';
 import { NAV_ITEMS } from './navItems';
 import { Card, PageHeader, Segmented, useApp } from './ui';
-
-const THEMES = [
-  { key: 'system', label: 'System', description: 'Match your device' },
-  { key: 'dark', label: 'Midnight', description: 'Deep and focused' },
-  { key: 'light', label: 'Daylight', description: 'Crisp and bright' },
-  { key: 'solar', label: 'Solar', description: 'Warm amber tones' },
-  { key: 'high-contrast', label: 'High contrast', description: 'Maximum legibility' },
-];
 
 const SHORTCUTS = [
   { keys: ['⌘', 'K'], label: 'Command palette' },

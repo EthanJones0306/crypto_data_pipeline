@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { AlertTriangle, CheckCircle2, CornerDownLeft, Info, Search, X, XCircle } from 'lucide-react';
 import { AppContext } from '../contexts/AppContext';
-import { ThemeContext } from '../contexts/ThemeContext';
+import { THEMES, ThemeContext } from '../contexts/ThemeContext';
 import { NAV_ITEMS } from './navItems';
 
 const TOAST_ICONS = { success: CheckCircle2, error: XCircle, info: Info, warning: AlertTriangle };
@@ -153,7 +153,7 @@ export function CommandPalette() {
       { id: 'privacy', label: privacy ? 'Show balances' : 'Hide balances', hint: 'H', run: togglePrivacy },
       { id: 'refresh', label: 'Refresh all data', hint: 'R', run: refreshAll },
       ...['USD', 'EUR', 'GBP', 'ZAR'].map((c) => ({ id: `cur-${c}`, label: `Show values in ${c}`, run: () => setCurrency(c) })),
-      ...['system', 'dark', 'light', 'solar', 'high-contrast'].map((t) => ({ id: `theme-${t}`, label: `Theme: ${t.replace('-', ' ')}`, run: () => setTheme(t) })),
+      ...THEMES.map((t) => ({ id: `theme-${t.key}`, label: `Theme: ${t.label}`, run: () => setTheme(t.key) })),
     ],
     [navigate, privacy, togglePrivacy, refreshAll, setCurrency, setTheme]
   );
