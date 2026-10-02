@@ -1,25 +1,35 @@
-import requests 
+import logging
 
-# Function to fetch exchange rates for ZAR to USD, EUR, and GBP
-# Uses the Frankfurter API to get the latest exchange rates with ZAR as the base currency
+import requests
+
+from . import price_cache
+
+logger = logging.getLogger(__name__)
+
+RATES_TTL = 6 * 3600
+CURRENCIES = ('USD', 'EUR', 'GBP')
+
+
 def get_zar_exchange_rates():
-    url = "https://api.frankfurter.dev/v1/latest?base=ZAR&symbols=USD,EUR,GBP" # API endpoint for fetching exchange rates with ZAR as the base currency
+    """Return ZAR per unit of USD/EUR/GBP. Rates only update daily, so they're cached for hours."""
+    cached = {c: price_cache.get('fx', c) for c in CURRENCIES}
+    if all(cached.values()) and max(price_cache.age(e) for e in cached.values()) < RATES_TTL:
+        return {c: e['price'] for c, e in cached.items()}
 
     try:
-        response = requests.get(url) # Fetch exchange rates from API
-        response.raise_for_status()  # Check if the request was successful
-        data = response.json() # Parse  JSON response
-        rates_raw = data['rates'] # Extract the exchange rates
+        response = requests.get(
+            'https://api.frankfurter.dev/v1/latest',
+            params={'base': 'ZAR', 'symbols': ','.join(CURRENCIES)},
+            timeout=8,
+        )
+        response.raise_for_status()
+        rates_raw = response.json()['rates']
+        rates = {c: round(1 / rates_raw[c], 2) for c in CURRENCIES}
+        price_cache.put_many('fx', rates)
+        return rates
+    except (requests.RequestException, KeyError, ValueError, ZeroDivisionError) as e:
+        logger.warning(f"Currency API error: {e}")
 
-        # Calculate and return the dictionary of conversions
-        return {
-            "USD": round(1 / rates_raw['USD'], 2), 
-            "EUR": round(1 / rates_raw['EUR'], 2),
-            "GBP": round(1 / rates_raw['GBP'], 2)
-        }
-        
-    except Exception as e:
-        print(f"Currency API Error: {e}")
-        return None
-
-exchange_rates = get_zar_exchange_rates() # Fetch exchange rates
+    if all(cached.values()):
+        return {c: e['price'] for c, e in cached.items()}
+    return None

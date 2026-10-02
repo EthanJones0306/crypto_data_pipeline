@@ -8,3 +8,5 @@ backend/api_status.json
 backend/crypto_prices_cache.json
 backend/stock_prices_cache.json
 backend/*.log
+price_cache.json
+price_cache.json.tmp

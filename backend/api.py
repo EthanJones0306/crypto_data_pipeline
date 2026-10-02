@@ -46,6 +46,14 @@ trading_service = TradingService()
 def startup_event():
     initialise_db()
 
+def prime_crypto_prices(assets):
+    """Load all crypto holdings in one batched lookup instead of one API call per asset."""
+    from .fetch_crypto import get_crypto_prices
+    ids = [a for a in assets if not (len(a) <= 5 and a.isupper())]
+    if ids:
+        get_crypto_prices(ids)
+
+
 def get_stock_api_key() -> str:
     """Get the configured stock price API key"""
     provider = os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower()
@@ -358,9 +366,8 @@ def get_transactions(limit: int = 50):
 def get_portfolio_value():
     """Get current portfolio value with asset breakdown"""
     from .fetch_crypto import get_crypto_price
-    from .fetch_stocks import get_stock_price, get_stock_prices
-    import os
-    
+    from .fetch_stocks import get_stock_price
+
     conn = sqlite3.connect('crypto.db')
     cursor = conn.cursor()
     
@@ -381,9 +388,8 @@ def get_portfolio_value():
         # Get API keys
         api_key = get_stock_api_key()
         
-        # Get cached stock prices for reference
-        stock_prices_raw = get_stock_prices(api_key) or {}
-        
+        prime_crypto_prices(asset for asset, quantity in holdings if quantity > 0)
+
         portfolio_value = 0
         holdings_breakdown_dict = {}
         
@@ -441,12 +447,18 @@ def get_portfolio_value():
 @app.get("/quote")
 def get_quote(asset: str, asset_type: str = "crypto"):
     """Current price for a single asset, used for live order previews."""
+    from .fetch_crypto import get_crypto_price
+    from .fetch_stocks import get_stock_price
     try:
-        kind = 'stock' if asset_type in ('stock', 'stocks') else 'crypto'
-        price = trading_service._get_market_price(asset, kind)
+        if asset_type in ('stock', 'stocks'):
+            quote = get_stock_price(asset, get_stock_api_key())
+            price = float(quote['05. price']) if quote else None
+        else:
+            quote = get_crypto_price(asset)
+            price = quote['usd'] if quote else None
         if not price:
-            return {"status": "error", "message": f"No price available for {asset}"}
-        return {"status": "success", "asset": asset, "price": price, "timestamp": datetime.now().isoformat()}
+            return {"status": "error", "message": f"No price available for {asset} yet. Try again in a minute."}
+        return {"status": "success", "asset": asset, "price": price, "as_of": quote.get('as_of'), "timestamp": datetime.now().isoformat()}
     except Exception as e:
         return {"status": "error", "message": str(e)}
 
@@ -638,6 +650,8 @@ def get_gains_losses():
         total_current_value = 0
         total_unrealized_gains = 0
         
+        prime_crypto_prices(asset.lower() for asset, data in asset_data.items() if data['total_bought'] > data['total_sold'])
+
         for asset, data in asset_data.items():
             current_quantity = data['total_bought'] - data['total_sold']
             
@@ -723,20 +737,43 @@ def reset_db():
             "message": f"Error resetting database: {str(e)}"
         }
 
+_search_cache: dict = {}
+SEARCH_TTL = 24 * 3600
+
+
 @app.get("/search/crypto")
 def search_crypto(q: str = ""):
-    """Search for cryptocurrencies by name or symbol"""
+    """Search for cryptocurrencies by name or symbol (cached; shares CoinGecko's call budget)."""
+    import time
     import requests
-    
+    from .fetch_crypto import GATE, coingecko_headers
+    from .price_cache import retry_after
+    from .api_status import log_api_call
+
     logger = logging.getLogger(__name__)
-    
-    if not q or len(q) < 1:
+
+    query = q.strip().lower()
+    if not query:
         return {"status": "error", "message": "Search query too short"}
-    
+
+    cached = _search_cache.get(query)
+    if cached and time.time() - cached[0] < SEARCH_TTL:
+        return {"status": "success", "query": q, "results": cached[1]}
+
+    if not GATE.try_acquire():
+        return {"status": "error", "message": "Search is busy - try again in a few seconds"}
+
     try:
-        # Use CoinGecko search API
-        search_url = f"https://api.coingecko.com/api/v3/search?query={q}"
-        response = requests.get(search_url, timeout=5)
+        response = requests.get(
+            "https://api.coingecko.com/api/v3/search",
+            params={"query": query},
+            headers=coingecko_headers(),
+            timeout=5,
+        )
+        log_api_call('coingecko', rate_limit=1000)
+        if response.status_code == 429:
+            GATE.backoff(retry_after(response))
+            return {"status": "error", "message": "Search is busy - try again in a few seconds"}
         response.raise_for_status()
         data = response.json()
         
@@ -753,6 +790,9 @@ def search_crypto(q: str = ""):
             for coin in coins
         ]
         
+        if len(_search_cache) > 500:
+            _search_cache.clear()
+        _search_cache[query] = (time.time(), results)
         logger.info(f"🔍 Crypto search for '{q}': found {len(results)} results")
         return {
             "status": "success",

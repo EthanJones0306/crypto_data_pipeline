@@ -230,7 +230,9 @@ function Trading() {
                 </span>
               </div>
               <div className="summary-row">
-                <span>Market price</span>
+                <span>
+                  Market price{quote.data?.as_of && <span className="muted small"> · updated {relativeTime(quote.data.as_of)}</span>}
+                </span>
                 <span className="num">{price ? money(price, { public: true }) : '—'}</span>
               </div>
               <div className="summary-row">

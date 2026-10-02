@@ -38,7 +38,7 @@ function SearchBar({ assetType = 'crypto', onSelect, placeholder = 'Search asset
         setLoading(false);
         setIndex(0);
       }
-    }, 250);
+    }, 450);
     return () => clearTimeout(timer);
   }, [query, assetType]);
 

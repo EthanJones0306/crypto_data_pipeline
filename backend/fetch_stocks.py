@@ -1,239 +1,122 @@
-import requests
-import time
+"""Stock prices, served from the local cache.
+
+Finnhub (60 calls/min) is generous, so stale prices are refreshed on demand
+with a short TTL. Alpha Vantage allows only 25 calls/day, so it gets a long
+TTL and a hard daily budget. Either way, a failed call falls back to the last
+real price rather than a made-up one.
+"""
 import logging
-import json
 import os
-from datetime import datetime, timedelta
-from .api_status import log_api_call
+
+import requests
+
+from . import price_cache
+from .api_status import load_status, log_api_call
 
 logger = logging.getLogger(__name__)
-CACHE_FILE = 'stock_prices_cache.json'
 
-def load_cached_prices():
-    """Load stock prices from cache if available and not expired"""
-    if not os.path.exists(CACHE_FILE):
+DEFAULT_SYMBOLS = ['AAPL', 'GOOG', 'NVDA']
+FINNHUB_TTL = int(os.getenv('FINNHUB_PRICE_TTL', '60'))
+ALPHAVANTAGE_TTL = int(os.getenv('ALPHAVANTAGE_PRICE_TTL', str(6 * 3600)))
+ALPHAVANTAGE_RESERVE = 3
+
+FINNHUB_GATE = price_cache.RateGate('Finnhub', max_calls=50, period=60)
+ALPHAVANTAGE_GATE = price_cache.RateGate('Alpha Vantage', max_calls=22, period=24 * 3600)
+
+
+def _provider():
+    return os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower()
+
+
+def _resolve_key(api_key):
+    if api_key:
+        return api_key
+    return os.getenv('FINNHUB_API_KEY') if _provider() == 'finnhub' else os.getenv('ALPHA_VANTAGE_API_KEY')
+
+
+def _fetch_finnhub(symbol, api_key):
+    if not FINNHUB_GATE.try_acquire():
         return None
-    
     try:
-        with open(CACHE_FILE, 'r') as f:
-            cache = json.load(f)
-        
-        # Check if cache is less than 24 hours old
-        timestamp = datetime.fromisoformat(cache.get('timestamp'))
-        if datetime.now() - timestamp < timedelta(hours=24):
-            logger.info(f"Using cached stock prices from {timestamp}")
-            return cache.get('data')
-        else:
-            logger.info("Cache expired, will fetch fresh data")
-    except Exception as e:
-        logger.warning(f"Error reading cache: {e}")
-    
-    return None
+        response = requests.get('https://finnhub.io/api/v1/quote', params={'symbol': symbol, 'token': api_key}, timeout=6)
+        remaining = response.headers.get('X-Ratelimit-Remaining')
+        log_api_call('finnhub', int(remaining) if remaining else None, 60)
+        if response.status_code == 429:
+            FINNHUB_GATE.backoff(price_cache.retry_after(response, 60))
+            return None
+        response.raise_for_status()
+        price = response.json().get('c')
+        return float(price) if price else None
+    except (requests.RequestException, ValueError) as e:
+        logger.warning(f"Finnhub request for {symbol} failed: {e}")
+        return None
 
-def save_cached_prices(data):
-    """Save stock prices to cache with timestamp"""
+
+def _alphavantage_budget_left():
     try:
-        cache = {
-            'timestamp': datetime.now().isoformat(),
-            'data': data
-        }
-        with open(CACHE_FILE, 'w') as f:
-            json.dump(cache, f, indent=2)
-        logger.info("Cached stock prices saved")
-    except Exception as e:
-        logger.error(f"Error saving cache: {e}")
+        return load_status()['providers']['alphavantage']['calls_remaining'] > ALPHAVANTAGE_RESERVE
+    except (KeyError, TypeError):
+        return True
 
-def get_finnhub_prices(api_key):
-    """Fetch stock prices from Finnhub API"""
-    symbols = ['AAPL', 'GOOG', 'NVDA']
-    stock_data = {}
-    
-    for symbol in symbols:
-        api_url = f'https://finnhub.io/api/v1/quote?symbol={symbol}&token={api_key}'
-        
-        try:
-            response = requests.get(api_url, timeout=10)
-            response.raise_for_status()
-            data = response.json()
-            
-            # Extract rate limit info from headers
-            calls_remaining = response.headers.get('X-Ratelimit-Remaining')
-            if calls_remaining:
-                log_api_call('finnhub', int(calls_remaining), 60)
-            else:
-                log_api_call('finnhub', rate_limit=60)
-            
-            logger.debug(f"Finnhub response for {symbol}: {json.dumps(data)}")
-            
-            if 'error' in data:
-                logger.error(f"Finnhub error for {symbol}: {data['error']}")
-            elif data.get('c'):  # 'c' is current price in Finnhub
-                # Convert Finnhub format to match Alpha Vantage format for compatibility
-                stock_data[symbol] = {
-                    '05. price': str(data['c']),
-                    '02. name': symbol,
-                    '10. volume': str(int(data.get('v', 0)))
-                }
-                logger.info(f"✓ Fetched {symbol} from Finnhub: ${data['c']}")
-            else:
-                logger.warning(f"✗ No price data for {symbol} from Finnhub")
-            
-            time.sleep(0.1)  # Minimal delay, Finnhub allows 60 calls/min
-        except Exception as e:
-            logger.error(f"Exception fetching {symbol} from Finnhub: {e}")
-    
-    return stock_data if stock_data else None
 
-def get_alphavantage_prices(api_key):
-    """Fetch stock prices from Alpha Vantage API"""
-    symbols = ['AAPL', 'GOOG', 'NVDA']
-    stock_data = {}
-    
-    for symbol in symbols:
-        api_url = f'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={symbol}&apikey={api_key}'
-        
-        try:
-            response = requests.get(api_url, timeout=10)
-            response.raise_for_status()
-            data = response.json()
-            
-            # Log the call
-            log_api_call('alphavantage', rate_limit=25)
-            
-            logger.debug(f"Alpha Vantage response for {symbol}: {json.dumps(data)}")
-            
-            if 'Error Message' in data:
-                logger.error(f"Alpha Vantage error for {symbol}: {data['Error Message']}")
-            elif 'Note' in data:
-                logger.warning(f"Alpha Vantage rate limit: {data['Note']}")
-            elif 'Information' in data:
-                logger.warning(f"Alpha Vantage info: {data['Information']}")
-            else:
-                quote = data.get('Global Quote', {})
-                if quote and quote.get('05. price'):
-                    stock_data[symbol] = quote
-                    logger.info(f"✓ Fetched {symbol} from Alpha Vantage: ${quote.get('05. price')}")
-                else:
-                    logger.warning(f"✗ No quote data for {symbol} from Alpha Vantage")
-            
-            time.sleep(1)  # Alpha Vantage requires 1 second between requests
-        except Exception as e:
-            logger.error(f"Exception fetching {symbol} from Alpha Vantage: {e}")
-    
-    return stock_data if stock_data else None
-
-def get_stock_prices(api_key):
-    """Fetch stock prices using configured provider (Finnhub or Alpha Vantage)"""
-    if not api_key:
-        logger.warning("No stock price API key configured")
-        cached = load_cached_prices()
-        if cached:
-            logger.info("No API key, using cached prices")
-            return cached
+def _fetch_alphavantage(symbol, api_key):
+    if not _alphavantage_budget_left() or not ALPHAVANTAGE_GATE.try_acquire():
         return None
-    
-    # Check which provider to use (default: finnhub)
-    provider = os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower()
-    
-    logger.info(f"Using stock price provider: {provider}")
-    
-    # Try cache first
-    cached = load_cached_prices()
-    if cached:
-        logger.info("Using cached stock prices")
-        return cached
-    
-    # Fetch fresh data
-    stock_data = None
-    
-    if provider == 'finnhub':
-        stock_data = get_finnhub_prices(api_key)
-    elif provider == 'alphavantage':
-        stock_data = get_alphavantage_prices(api_key)
-    else:
-        logger.error(f"Unknown stock price provider: {provider}")
-        cached = load_cached_prices()
-        if cached:
-            return cached
+    try:
+        response = requests.get(
+            'https://www.alphavantage.co/query',
+            params={'function': 'GLOBAL_QUOTE', 'symbol': symbol, 'apikey': api_key},
+            timeout=8,
+        )
+        log_api_call('alphavantage', rate_limit=25)
+        response.raise_for_status()
+        data = response.json()
+        if 'Note' in data or 'Information' in data:
+            logger.warning(f"Alpha Vantage limit reached: {data.get('Note') or data.get('Information')}")
+            ALPHAVANTAGE_GATE.backoff(3600)
+            return None
+        price = data.get('Global Quote', {}).get('05. price')
+        return float(price) if price else None
+    except (requests.RequestException, ValueError) as e:
+        logger.warning(f"Alpha Vantage request for {symbol} failed: {e}")
         return None
-    
-    # Save successful result to cache
-    if stock_data:
-        save_cached_prices(stock_data)
-        return stock_data
-    
-    # Fall back to cache if fresh fetch failed
-    cached = load_cached_prices()
-    if cached:
-        logger.warning("Fresh fetch failed, using cached prices")
-        return cached
-    
-    return None
+
+
+def _as_result(symbol, entry):
+    return {'05. price': str(entry['price']), '02. name': symbol, 'as_of': price_cache.iso(entry)}
+
 
 def get_stock_price(symbol, api_key=None):
-    """
-    Fetch price for a single stock symbol on demand
-    
-    Args:
-        symbol: Stock ticker symbol (e.g., 'TSLA', 'AAPL')
-        api_key: API key for stock price provider
-    
-    Returns:
-        dict with '05. price' key, or None if not found
-    """
-    if not api_key:
-        api_key = os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower()
-        if api_key == 'finnhub':
-            api_key = os.getenv('FINNHUB_API_KEY')
-        else:
-            api_key = os.getenv('ALPHA_VANTAGE_API_KEY')
-    
-    if not api_key:
-        logger.warning(f"No API key available to fetch {symbol}")
-        return None
-    
-    provider = os.getenv('STOCK_PRICE_PROVIDER', 'finnhub').lower()
-    
-    try:
-        if provider == 'finnhub':
-            url = f'https://finnhub.io/api/v1/quote?symbol={symbol}&token={api_key}'
-            response = requests.get(url, timeout=5)
-            response.raise_for_status()
-            data = response.json()
-            
-            # Extract rate limit info
-            calls_remaining = response.headers.get('X-Ratelimit-Remaining')
-            if calls_remaining:
-                log_api_call('finnhub', int(calls_remaining), 60)
-            else:
-                log_api_call('finnhub', rate_limit=60)
-            
-            if data.get('c'):
-                result = {
-                    '05. price': str(data['c']),
-                    '02. name': symbol,
-                    '10. volume': str(int(data.get('v', 0)))
-                }
-                logger.info(f"✅ Fetched {symbol} from Finnhub: ${data['c']}")
-                return result
-        
-        elif provider == 'alphavantage':
-            url = f'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol={symbol}&apikey={api_key}'
-            response = requests.get(url, timeout=5)
-            response.raise_for_status()
-            data = response.json()
-            
-            # Log the call
-            log_api_call('alphavantage', rate_limit=25)
-            
-            quote = data.get('Global Quote', {})
-            if quote and quote.get('05. price'):
-                logger.info(f"✅ Fetched {symbol} from Alpha Vantage: ${quote.get('05. price')}")
-                return quote
-    
-    except Exception as e:
-        logger.warning(f"⚠️ Could not fetch {symbol}: {e}")
-    
+    """Return {'05. price': str, '02. name': symbol, 'as_of': iso} or None."""
+    symbol = symbol.upper()
+    entry = price_cache.get('stock', symbol)
+    finnhub = _provider() == 'finnhub'
+    ttl = FINNHUB_TTL if finnhub else ALPHAVANTAGE_TTL
+
+    if entry and price_cache.age(entry) < ttl:
+        return _as_result(symbol, entry)
+
+    key = _resolve_key(api_key)
+    if key:
+        price = _fetch_finnhub(symbol, key) if finnhub else _fetch_alphavantage(symbol, key)
+        if price:
+            price_cache.put_many('stock', {symbol: price})
+            entry = price_cache.get('stock', symbol)
+            logger.info(f"✅ {symbol}: ${price}")
+    else:
+        logger.warning(f"No stock API key configured; cannot refresh {symbol}")
+
+    if entry:
+        return _as_result(symbol, entry)
     logger.warning(f"❌ No price available for {symbol}")
     return None
 
+
+def get_stock_prices(api_key=None, symbols=None):
+    """Return {symbol: quote} for the tracked symbols we have prices for."""
+    result = {}
+    for symbol in symbols or DEFAULT_SYMBOLS:
+        quote = get_stock_price(symbol, api_key)
+        if quote:
+            result[symbol] = quote
+    return result or None
