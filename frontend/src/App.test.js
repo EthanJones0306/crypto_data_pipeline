@@ -1,10 +1,26 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
+import { ThemeProvider } from './contexts/ThemeContext';
+import { AppProvider } from './contexts/AppContext';
 
-test('renders the main app heading', () => {
-  render(<App />);
-  
-  const headingElement = screen.getByText(/portfolio tracker/i);
-  
-  expect(headingElement).toBeInTheDocument();
+jest.mock('recharts', () => ({}));
+
+beforeEach(() => {
+  window.matchMedia =
+    window.matchMedia ||
+    (() => ({ matches: false, addEventListener: () => {}, removeEventListener: () => {} }));
+  global.fetch = jest.fn(() => Promise.reject(new Error('offline')));
+});
+
+test('renders the app shell with navigation', () => {
+  render(
+    <ThemeProvider>
+      <AppProvider>
+        <App />
+      </AppProvider>
+    </ThemeProvider>
+  );
+
+  expect(screen.getAllByText(/portfolio tracker/i).length).toBeGreaterThan(0);
+  expect(screen.getAllByRole('button', { name: /trade/i }).length).toBeGreaterThan(0);
 });

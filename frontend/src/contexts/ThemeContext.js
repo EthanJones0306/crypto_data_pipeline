@@ -60,6 +60,13 @@ export function ThemeProvider({ children }) {
     return theme;
   }, [theme, systemTheme]);
 
+  useEffect(() => {
+    document.documentElement.dataset.theme = resolvedTheme;
+    const bg = getComputedStyle(document.documentElement).getPropertyValue('--bg').trim();
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta && bg) meta.setAttribute('content', bg);
+  }, [resolvedTheme]);
+
   return (
     <ThemeContext.Provider value={{ theme, resolvedTheme, setTheme }}>
       {children}

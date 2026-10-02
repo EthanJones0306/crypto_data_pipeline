@@ -1,199 +1,84 @@
-import React, { useState, useEffect } from 'react';
-import { PieChart, Pie, Cell, Legend, Tooltip, ResponsiveContainer } from 'recharts';
-import { motion } from 'framer-motion';
-import { fetchPortfolioValue } from '../services/api';
+import React, { useMemo, useState } from 'react';
+import { Cell, Pie, PieChart, ResponsiveContainer } from 'recharts';
+import { getAssetMeta } from '../lib/assets';
+import { useApp } from './ui';
 
-function PortfolioDonutChart() {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [activeIndex, setActiveIndex] = useState(null);
+const MAX_SLICES = 7;
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+function PortfolioDonutChart({ holdings = [] }) {
+  const { money } = useApp();
+  const [active, setActive] = useState(null);
 
-  const fetchData = async () => {
-    try {
-      setLoading(true);
-      const response = await fetchPortfolioValue();
-      
-      if (response.holdings && response.holdings.length > 0) {
-        const chartData = response.holdings
-          .map(holding => ({
-            name: holding.asset,
-            value: parseFloat(holding.total_value) || 0
-          }))
-          .filter(item => item.value > 0);
-        
-        setData(chartData);
-      }
-      setError(null);
-    } catch (err) {
-      setError('Failed to load portfolio data');
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const data = useMemo(() => {
+    const sorted = holdings
+      .filter((h) => h.total_value > 0)
+      .map((h) => ({ key: h.asset, name: getAssetMeta(h.asset).name, value: h.total_value }))
+      .sort((a, b) => b.value - a.value);
+    if (sorted.length <= MAX_SLICES + 1) return sorted;
+    const rest = sorted.slice(MAX_SLICES);
+    return [...sorted.slice(0, MAX_SLICES), { key: '__other', name: `Other (${rest.length})`, value: rest.reduce((s, d) => s + d.value, 0) }];
+  }, [holdings]);
 
-  // Premium gradient color palette
-  const COLORS = [
-    { main: '#4aa8e0', glow: 'rgba(74, 168, 224, 0.3)' },
-    { main: '#17b89a', glow: 'rgba(23, 184, 154, 0.3)' },
-    { main: '#fcb900', glow: 'rgba(252, 185, 0, 0.3)' },
-    { main: '#ff6b6b', glow: 'rgba(255, 107, 107, 0.3)' },
-    { main: '#a78bfa', glow: 'rgba(167, 139, 250, 0.3)' },
-    { main: '#06b6d4', glow: 'rgba(6, 182, 212, 0.3)' },
-    { main: '#ec4899', glow: 'rgba(236, 72, 153, 0.3)' },
-  ];
+  const total = data.reduce((s, d) => s + d.value, 0);
+  const current = active !== null ? data[active] : null;
 
-  const renderCustomLabel = ({ name, value, percent }) => {
-    return `${(percent * 100).toFixed(1)}%`;
-  };
-
-  const CustomTooltip = ({ active, payload }) => {
-    if (active && payload && payload.length) {
-      return (
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="chart-tooltip"
-        >
-          <p className="tooltip-asset">{payload[0].payload.name}</p>
-          <p className="tooltip-value">${payload[0].value.toFixed(2)}</p>
-        </motion.div>
-      );
-    }
-    return null;
-  };
-
-  if (loading) {
-    return (
-      <div className="chart-container loading">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-          style={{ fontSize: '2em' }}
-        >
-          ◉
-        </motion.div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return <div className="chart-container error">{error}</div>;
-  }
-
-  if (data.length === 0) {
-    return <div className="chart-container empty">No holdings to display</div>;
-  }
-
-  const totalValue = data.reduce((sum, item) => sum + item.value, 0);
-  const activeValue = activeIndex !== null ? data[activeIndex]?.value : null;
+  if (!data.length) return null;
 
   return (
-    <motion.div
-      className="chart-container premium-donut"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: 'easeOut' }}
-    >
-      <div className="chart-header">
-        <h3>💰 Portfolio Allocation</h3>
-        <button onClick={fetchData} className="chart-refresh" title="Refresh data">↻</button>
-      </div>
-
-      <div className="chart-wrapper-premium">
-        <div className="chart-glow-rings">
-          <div className="glow-ring-outer"></div>
-          <div className="glow-ring-middle"></div>
-          <div className="glow-ring-inner"></div>
-        </div>
-
-        <ResponsiveContainer width="100%" height={560}>
+    <div className="donut">
+      <div className="donut-chart">
+        <ResponsiveContainer width="100%" height="100%">
           <PieChart>
-            <defs>
-              {COLORS.map((color, idx) => (
-                <radialGradient key={`gradient-${idx}`} id={`gradient-${idx}`}>
-                  <stop offset="0%" stopColor={color.main} stopOpacity={0.9} />
-                  <stop offset="100%" stopColor={color.main} stopOpacity={0.7} />
-                </radialGradient>
-              ))}
-            </defs>
             <Pie
               data={data}
-              cx="50%"
-              cy="50%"
-              innerRadius={130}
-              outerRadius={200}
-              paddingAngle={3}
               dataKey="value"
-              label={renderCustomLabel}
-              labelLine={false}
-              onMouseEnter={(_, index) => setActiveIndex(index)}
-              onMouseLeave={() => setActiveIndex(null)}
+              nameKey="name"
+              innerRadius="72%"
+              outerRadius="100%"
+              paddingAngle={data.length > 1 ? 1.5 : 0}
+              cornerRadius={4}
+              stroke="var(--surface)"
+              strokeWidth={data.length > 1 ? 2 : 0}
+              startAngle={90}
+              endAngle={-270}
+              isAnimationActive
+              animationDuration={700}
+              onMouseEnter={(_, i) => setActive(i)}
+              onMouseLeave={() => setActive(null)}
             >
-              {data.map((entry, index) => (
+              {data.map((d, i) => (
                 <Cell
-                  key={`cell-${index}`}
-                  fill={`url(#gradient-${index})`}
-                  opacity={activeIndex === null || activeIndex === index ? 1 : 0.3}
-                  style={{ transition: 'opacity 0.2s ease' }}
-                  stroke={COLORS[index % COLORS.length].main}
-                  strokeWidth={2}
+                  key={d.key}
+                  fill={d.key === '__other' ? 'var(--series-other)' : `var(--series-${i + 1})`}
+                  opacity={active === null || active === i ? 1 : 0.35}
+                  style={{ transition: 'opacity 160ms ease', outline: 'none', cursor: 'pointer' }}
                 />
               ))}
             </Pie>
-            <Tooltip content={<CustomTooltip />} />
           </PieChart>
         </ResponsiveContainer>
-
-        <div className="chart-center-display">
-          <motion.div
-            key={`center-${activeValue}`}
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.2 }}
-            className="center-content"
-          >
-            <div className="center-label">{activeIndex !== null ? 'Asset Value' : 'Total Portfolio'}</div>
-            <div className="center-value">
-              ${(activeValue || totalValue).toFixed(2)}
-            </div>
-          </motion.div>
+        <div className="donut-center" aria-live="polite">
+          <span className="donut-center-label">{current ? current.name : 'Allocated'}</span>
+          <span className="donut-center-value">{money(current ? current.value : total, { compact: true })}</span>
+          {current && <span className="donut-center-sub">{((current.value / total) * 100).toFixed(1)}% of portfolio</span>}
         </div>
       </div>
 
-      <div className="chart-legend-premium">
-        {data.map((item, index) => (
-          <motion.div
-            key={`legend-${index}`}
-            className="legend-item"
-            onMouseEnter={() => setActiveIndex(index)}
-            onMouseLeave={() => setActiveIndex(null)}
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.3, delay: index * 0.05 }}
+      <ul className="donut-legend">
+        {data.map((d, i) => (
+          <li
+            key={d.key}
+            className={active === i ? 'active' : ''}
+            onMouseEnter={() => setActive(i)}
+            onMouseLeave={() => setActive(null)}
           >
-            <div
-              className="legend-color"
-              style={{
-                background: `linear-gradient(135deg, ${COLORS[index % COLORS.length].main}, ${COLORS[index % COLORS.length].main}dd)`,
-                boxShadow: `0 0 16px ${COLORS[index % COLORS.length].glow}`,
-              }}
-            />
-            <div className="legend-info">
-              <div className="legend-name">{item.name}</div>
-              <div className="legend-percent">
-                ${item.value.toFixed(2)} • {((item.value / totalValue) * 100).toFixed(1)}%
-              </div>
-            </div>
-          </motion.div>
+            <span className="legend-swatch" style={{ background: d.key === '__other' ? 'var(--series-other)' : `var(--series-${i + 1})` }} />
+            <span className="legend-name">{d.name}</span>
+            <span className="legend-value num">{((d.value / total) * 100).toFixed(1)}%</span>
+          </li>
         ))}
-      </div>
-    </motion.div>
+      </ul>
+    </div>
   );
 }
 

@@ -92,18 +92,27 @@ crypto_data_pipeline/
 │   ├── public/                           # Static assets
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── PortfolioValue.js        # Portfolio summary cards
-│   │   │   ├── PortfolioDonutChart.js   # Animated allocation visualisation
-│   │   │   ├── Analytics.js             # Gains/losses analysis dashboard
-│   │   │   ├── Trading.js               # Buy/sell interface
-│   │   │   ├── Positions.js             # Leverage positions tracker
-│   │   │   ├── Prices.js                # Live price quotes
-│   │   │   ├── Transactions.js          # Transaction history table
-│   │   │   └── Status.js                # API health monitoring
+│   │   │   ├── PortfolioValue.js        # Dashboard: balance, holdings, allocation
+│   │   │   ├── PortfolioDonutChart.js   # Allocation donut with hover readout
+│   │   │   ├── Trading.js               # Trade ticket with live quote & estimates
+│   │   │   ├── LeverageTrading.js       # Leverage ticket with liquidation preview
+│   │   │   ├── Positions.js             # Open positions with health meters
+│   │   │   ├── Prices.js                # Markets grid
+│   │   │   ├── Transactions.js          # Activity feed with filters & CSV export
+│   │   │   ├── Analytics.js             # Returns, P&L by asset, holdings table
+│   │   │   ├── Status.js                # API provider health & rate limits
+│   │   │   ├── Settings.js              # Theme, currency, privacy, reset
+│   │   │   ├── SearchBar.js             # Keyboard-navigable asset search
+│   │   │   ├── Overlays.js              # Toasts, confirm dialog, ⌘K palette
+│   │   │   ├── navItems.js              # Navigation definition
+│   │   │   └── ui.js                    # Shared primitives (cards, deltas, skeletons…)
+│   │   ├── contexts/                    # Theme + app state (currency, privacy, routing)
+│   │   ├── hooks/useApi.js              # Fetching with polling & refresh-on-focus
+│   │   ├── lib/                         # Formatting and asset metadata
 │   │   ├── services/
-│   │   │   └── api.js                   # REST client with resilience layer
-│   │   ├── App.js                       # Main app routing & tabs
-│   │   ├── App.css                      # 2250+ lines of glassmorphism design
+│   │   │   └── api.js                   # REST client
+│   │   ├── App.js                       # Shell: sidebar, top bar, mobile tab bar
+│   │   ├── App.css                      # Token-based design system (5 themes)
 │   │   ├── App.test.js                  # Frontend unit tests
 │   │   └── setupTests.js                # Test setup configurations
 │   ├── Dockerfile                        # Nginx Alpine container image definition

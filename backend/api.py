@@ -438,6 +438,19 @@ def get_portfolio_value():
         return {"status": "error", "message": str(e)}
 
 
+@app.get("/quote")
+def get_quote(asset: str, asset_type: str = "crypto"):
+    """Current price for a single asset, used for live order previews."""
+    try:
+        kind = 'stock' if asset_type in ('stock', 'stocks') else 'crypto'
+        price = trading_service._get_market_price(asset, kind)
+        if not price:
+            return {"status": "error", "message": f"No price available for {asset}"}
+        return {"status": "success", "asset": asset, "price": price, "timestamp": datetime.now().isoformat()}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
+
+
 @app.post('/simulate/order')
 def simulate_order(request: SimulateRequest):
     """Simulate opening a leveraged position (paper trading only)."""

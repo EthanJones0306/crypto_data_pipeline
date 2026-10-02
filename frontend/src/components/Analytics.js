@@ -1,268 +1,204 @@
-import React, { useState, useEffect } from 'react';
-import { BarChart, Bar, PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import React, { useMemo, useState } from 'react';
+import { Bar, BarChart, Cell, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { motion } from 'framer-motion';
+import { BarChart3, ChevronDown, ChevronUp } from 'lucide-react';
 import { fetchGainsLosses } from '../services/api';
-import StatCard from './StatCard';
+import useApi from '../hooks/useApi';
+import { getAssetMeta } from '../lib/assets';
+import { formatPct, formatQty, toneClass } from '../lib/format';
+import PortfolioDonutChart from './PortfolioDonutChart';
+import { AssetLabel, Card, Delta, EmptyState, ErrorState, PageHeader, Skeleton, UpdatedAgo, useApp } from './ui';
+
+const COLUMNS = [
+  { key: 'asset', label: 'Asset', align: 'left' },
+  { key: 'quantity', label: 'Quantity' },
+  { key: 'avg_entry_price', label: 'Avg entry' },
+  { key: 'current_price', label: 'Price' },
+  { key: 'current_value', label: 'Value' },
+  { key: 'unrealized_gain', label: 'P&L' },
+  { key: 'unrealized_gain_percent', label: 'Return' },
+];
+
+function PnlTooltip({ active, payload, money }) {
+  if (!active || !payload?.length) return null;
+  const d = payload[0].payload;
+  return (
+    <div className="chart-tooltip">
+      <strong>{d.name}</strong>
+      <span className={`num ${toneClass(d.pnl)}`}>
+        {money(d.pnl, { sign: true })} ({formatPct(d.pct)})
+      </span>
+    </div>
+  );
+}
 
 function Analytics() {
-  const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const { money, navigate } = useApp();
+  const { data, error, loading, refreshing, updatedAt, reload } = useApi(fetchGainsLosses, { interval: 120000 });
+  const [sort, setSort] = useState({ key: 'current_value', dir: 'desc' });
 
-  useEffect(() => {
-    loadData();
-  }, []);
+  const holdings = useMemo(() => data?.holdings || [], [data]);
 
-  const loadData = async () => {
-    try {
-      setLoading(true);
-      const response = await fetchGainsLosses();
-      setData(response);
-      setError(null);
-    } catch (err) {
-      setError('Failed to load analytics data');
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const chartData = useMemo(
+    () =>
+      [...holdings]
+        .sort((a, b) => b.unrealized_gain - a.unrealized_gain)
+        .map((h) => ({ name: getAssetMeta(h.asset).symbol, full: getAssetMeta(h.asset).name, pnl: h.unrealized_gain, pct: h.unrealized_gain_percent })),
+    [holdings]
+  );
+
+  const sorted = useMemo(() => {
+    const dir = sort.dir === 'asc' ? 1 : -1;
+    return [...holdings].sort((a, b) => {
+      const av = a[sort.key];
+      const bv = b[sort.key];
+      return (typeof av === 'string' ? av.localeCompare(bv) : av - bv) * dir;
+    });
+  }, [holdings, sort]);
+
+  const toggleSort = (key) => setSort((s) => ({ key, dir: s.key === key && s.dir === 'desc' ? 'asc' : 'desc' }));
 
   if (loading) {
     return (
-      <div className="analytics-loading">
-        <motion.div
-          animate={{ rotate: 360 }}
-          transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
-          style={{ fontSize: '2.5em' }}
-        >
-          ◉
-        </motion.div>
-        <p>Analyzing portfolio...</p>
-      </div>
-    );
-  }
-
-  if (error || data?.status === 'error') {
-    return (
-      <div className="analytics-error">
-        <h3>⚠️ Unable to Load Analytics</h3>
-        <p>{error || data?.message}</p>
-        <button onClick={loadData} className="retry-btn">Retry</button>
-      </div>
-    );
-  }
-
-  const summary = data?.summary || {};
-  const holdings = data?.holdings || [];
-  
-  const isPositive = summary.total_gains_losses >= 0;
-  const isGain = summary.total_gains_losses > 0;
-
-  // Prepare data for charts
-  const holdingsForChart = holdings.sort((a, b) => Math.abs(b.unrealized_gain) - Math.abs(a.unrealized_gain));
-  const gainsLossesData = holdingsForChart.map(h => ({
-    asset: h.asset,
-    gain: h.unrealized_gain > 0 ? h.unrealized_gain : 0,
-    loss: h.unrealized_gain < 0 ? Math.abs(h.unrealized_gain) : 0,
-    total: h.unrealized_gain
-  }));
-  
-  const pieData = holdings.map(h => ({
-    name: h.asset,
-    value: parseFloat(h.current_value.toFixed(2))
-  })).filter(item => item.value > 0);
-
-  const COLORS = ['#4aa8e0', '#17b89a', '#fcb900', '#ff6b6b', '#a78bfa', '#06b6d4', '#ec4899'];
-
-  const CustomTooltip = ({ active, payload, label }) => {
-    if (active && payload && payload.length) {
-      return (
-        <div className="analytics-tooltip">
-          <p className="tooltip-label">{label || payload[0].payload.name}</p>
-          <p className="tooltip-value">${payload[0].value?.toFixed(2)}</p>
+      <div className="page">
+        <PageHeader title="Analytics" />
+        <div className="kpi-grid">
+          {Array.from({ length: 4 }).map((_, i) => (
+            <div key={i} className="kpi card">
+              <Skeleton width="50%" height={11} />
+              <Skeleton width="70%" height={26} />
+            </div>
+          ))}
         </div>
-      );
-    }
-    return null;
-  };
+      </div>
+    );
+  }
+
+  if (error && !data) {
+    return (
+      <div className="page">
+        <PageHeader title="Analytics" />
+        <ErrorState message={error} onRetry={reload} />
+      </div>
+    );
+  }
+
+  const s = data.summary;
+
+  if (holdings.length === 0) {
+    return (
+      <div className="page">
+        <PageHeader title="Analytics" />
+        <Card>
+          <EmptyState
+            icon={BarChart3}
+            title="Nothing to analyse yet"
+            body="Once you hold some assets you'll see returns, allocation and P&L by asset here."
+            action={
+              <button type="button" className="btn btn-primary" onClick={() => navigate('trade', { side: 'buy' })}>
+                Start trading
+              </button>
+            }
+          />
+        </Card>
+      </div>
+    );
+  }
+
+  const kpis = [
+    { label: 'Current value', value: money(s.current_portfolio_value) },
+    { label: 'Total invested', value: money(s.total_invested) },
+    { label: 'Unrealised P&L', value: money(s.total_unrealized_gains, { sign: true }), tone: s.total_unrealized_gains },
+    { label: 'Realised P&L', value: money(s.total_realized_gains, { sign: true }), tone: s.total_realized_gains },
+  ];
+
+  const chartHeight = Math.max(160, chartData.length * 44);
+  const pnls = chartData.map((d) => d.pnl);
+  const lo = Math.min(0, ...pnls);
+  const hi = Math.max(0, ...pnls);
+  const pnlDomain = lo === hi ? [-1, 1] : [lo, hi];
 
   return (
-    <motion.div
-      className="portfolio-container analytics-container"
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-    >
-      <div className="analytics-header">
-        <h2>💼 Performance Analytics</h2>
-        <button onClick={loadData} className="refresh-btn" title="Refresh data">↻</button>
+    <div className="page">
+      <PageHeader title="Analytics" subtitle="How your portfolio is performing." actions={<UpdatedAgo at={updatedAt} refreshing={refreshing} onRefresh={reload} />} />
+
+      <motion.section className="card card-padded roi-banner" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
+        <div>
+          <span className="kpi-label">Total return</span>
+          <div className={`roi-value num ${toneClass(s.total_gains_losses)}`}>{money(s.total_gains_losses, { sign: true })}</div>
+        </div>
+        <Delta pct={s.roi_percent} size="lg" />
+      </motion.section>
+
+      <div className="kpi-grid">
+        {kpis.map((k) => (
+          <div key={k.label} className="kpi card">
+            <span className="kpi-label">{k.label}</span>
+            <span className={`kpi-value num ${k.tone === undefined ? '' : toneClass(k.tone)}`}>{k.value}</span>
+          </div>
+        ))}
       </div>
 
-      {/* Summary Stats */}
-      <div className="stats-grid">
-        <StatCard
-          label="Total Invested"
-          value={`$${summary.total_invested?.toFixed(2)}`}
-          icon="💰"
-        />
-        <StatCard
-          label="Current Value"
-          value={`$${summary.current_portfolio_value?.toFixed(2)}`}
-          icon="📊"
-        />
-        <StatCard
-          label="Unrealized Gains"
-          value={`$${Math.abs(summary.total_unrealized_gains || 0)?.toFixed(2)}`}
-          subtitle={`${summary.total_unrealized_gains >= 0 ? '+' : '-'}${Math.abs(summary.total_unrealized_gains || 0)?.toFixed(2)}`}
-          icon={summary.total_unrealized_gains >= 0 ? '📈' : '📉'}
-        />
-        <StatCard
-          label="ROI"
-          value={`${summary.roi_percent?.toFixed(2)}%`}
-          icon={summary.roi_percent >= 0 ? '🚀' : '⚠️'}
-        />
-      </div>
-
-      {/* Total Gains/Losses Highlight */}
-      <motion.div
-        className={`analytics-highlight ${isPositive ? 'gain-highlight' : 'loss-highlight'}`}
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.4, delay: 0.1 }}
-      >
-        <div className="highlight-label">
-          {isGain ? '🎉 Total Gains' : isPositive ? '💤 Neutral' : '⚠️ Total Losses'}
-        </div>
-        <div className="highlight-value">
-          {isPositive ? '+' : ''} ${summary.total_gains_losses?.toFixed(2)}
-        </div>
-        <div className="highlight-percent">
-          {isPositive ? '+' : ''} {summary.roi_percent?.toFixed(2)}% return
-        </div>
-      </motion.div>
-
-      {/* Charts Section */}
-      <div className="analytics-charts">
-        {/* Holdings by Value - Pie Chart */}
-        <motion.div
-          className="chart-card"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.2 }}
-        >
-          <h3>📍 Portfolio Allocation</h3>
-          {pieData.length > 0 ? (
-            <ResponsiveContainer width="100%" height={320}>
-              <PieChart>
-                <Pie
-                  data={pieData}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ name, value, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
-                  outerRadius={100}
-                  fill="#8884d8"
-                  dataKey="value"
-                >
-                  {pieData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+      <div className="grid-dashboard">
+        <Card title="Unrealised P&L by asset">
+          <div style={{ height: chartHeight }}>
+            <ResponsiveContainer width="100%" height="100%">
+              <BarChart data={chartData} layout="vertical" margin={{ top: 4, right: 16, bottom: 4, left: 4 }} barCategoryGap={10}>
+                <XAxis type="number" hide domain={pnlDomain} />
+                <YAxis type="category" dataKey="name" width={56} tickLine={false} axisLine={false} tick={{ fill: 'var(--text-3)', fontSize: 12 }} />
+                <ReferenceLine x={0} stroke="var(--border-strong)" />
+                <Tooltip cursor={{ fill: 'var(--hover)' }} content={<PnlTooltip money={money} />} />
+                <Bar dataKey="pnl" radius={4} maxBarSize={22} isAnimationActive animationDuration={600}>
+                  {chartData.map((d) => (
+                    <Cell key={d.name} fill={d.pnl >= 0 ? 'var(--gain)' : 'var(--loss)'} />
                   ))}
-                </Pie>
-                <Tooltip
-                  formatter={(value) => `$${value.toFixed(2)}`}
-                  contentStyle={{
-                    background: 'rgba(20, 30, 48, 0.95)',
-                    border: '1px solid rgba(74, 168, 224, 0.3)',
-                    borderRadius: '8px'
-                  }}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-          ) : (
-            <div className="empty-chart">No holdings to display</div>
-          )}
-        </motion.div>
-
-        {/* Gains/Losses by Asset - Bar Chart */}
-        <motion.div
-          className="chart-card"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.3 }}
-        >
-          <h3>📊 Gains/Losses by Asset</h3>
-          {gainsLossesData.length > 0 ? (
-            <ResponsiveContainer width="100%" height={320}>
-              <BarChart data={gainsLossesData}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(74, 168, 224, 0.2)" />
-                <XAxis dataKey="asset" stroke="#c8d8e8" />
-                <YAxis stroke="#c8d8e8" />
-                <Tooltip content={<CustomTooltip />} />
-                <Legend />
-                <Bar dataKey="gain" fill="#17b89a" name="Gains" radius={[8, 8, 0, 0]} />
-                <Bar dataKey="loss" fill="#c0444b" name="Losses" radius={[8, 8, 0, 0]} />
+                </Bar>
               </BarChart>
             </ResponsiveContainer>
-          ) : (
-            <div className="empty-chart">No data to display</div>
-          )}
-        </motion.div>
+          </div>
+        </Card>
+
+        <Card title="Allocation">
+          <PortfolioDonutChart holdings={holdings.map((h) => ({ asset: h.asset, total_value: h.current_value }))} />
+        </Card>
       </div>
 
-      {/* Holdings Table */}
-      <motion.div
-        className="holdings-section"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.4 }}
-      >
-        <h3>📋 Holdings Detail</h3>
-        {holdings.length > 0 ? (
-          <div className="table-wrapper">
-            <table className="analytics-table">
-              <thead>
-                <tr>
-                  <th>Asset</th>
-                  <th>Quantity</th>
-                  <th>Entry Price</th>
-                  <th>Current Price</th>
-                  <th>Current Value</th>
-                  <th>Gain/Loss ($)</th>
-                  <th>Return (%)</th>
-                </tr>
-              </thead>
-              <tbody>
-                {holdings.map((holding, idx) => (
-                  <motion.tr
-                    key={idx}
-                    className={holding.unrealized_gain >= 0 ? 'gain-row' : 'loss-row'}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.5 + idx * 0.05 }}
-                  >
-                    <td className="asset-name">{holding.asset}</td>
-                    <td>{holding.quantity.toFixed(4)}</td>
-                    <td>${holding.avg_entry_price?.toFixed(2)}</td>
-                    <td>${holding.current_price?.toFixed(2)}</td>
-                    <td>${holding.current_value?.toFixed(2)}</td>
-                    <td className={holding.unrealized_gain >= 0 ? 'gain-value' : 'loss-value'}>
-                      {holding.unrealized_gain >= 0 ? '+' : ''}${holding.unrealized_gain?.toFixed(2)}
-                    </td>
-                    <td className={holding.unrealized_gain_percent >= 0 ? 'gain-value' : 'loss-value'}>
-                      {holding.unrealized_gain_percent >= 0 ? '+' : ''}{holding.unrealized_gain_percent?.toFixed(2)}%
-                    </td>
-                  </motion.tr>
+      <Card title="Holdings detail" padded={false}>
+        <div className="table-scroll">
+          <table className="table">
+            <thead>
+              <tr>
+                {COLUMNS.map((c) => (
+                  <th key={c.key} className={c.align === 'left' ? 'left' : ''} aria-sort={sort.key === c.key ? (sort.dir === 'asc' ? 'ascending' : 'descending') : 'none'}>
+                    <button type="button" onClick={() => toggleSort(c.key)}>
+                      {c.label}
+                      {sort.key === c.key && (sort.dir === 'asc' ? <ChevronUp size={13} /> : <ChevronDown size={13} />)}
+                    </button>
+                  </th>
                 ))}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <div className="empty-section">
-            <p>No holdings yet. Start trading to see performance analytics.</p>
-          </div>
-        )}
-      </motion.div>
-    </motion.div>
+              </tr>
+            </thead>
+            <tbody>
+              {sorted.map((h) => (
+                <tr key={h.asset} onClick={() => navigate('trade', { asset: h.asset, side: 'sell' })}>
+                  <td className="left">
+                    <AssetLabel asset={h.asset} size={28} />
+                  </td>
+                  <td className="num">{formatQty(h.quantity)}</td>
+                  <td className="num">{money(h.avg_entry_price, { public: true })}</td>
+                  <td className="num">{money(h.current_price, { public: true })}</td>
+                  <td className="num strong">{money(h.current_value)}</td>
+                  <td className={`num ${toneClass(h.unrealized_gain)}`}>{money(h.unrealized_gain, { sign: true })}</td>
+                  <td>
+                    <Delta pct={h.unrealized_gain_percent} size="sm" subtle />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </Card>
+    </div>
   );
 }
 
